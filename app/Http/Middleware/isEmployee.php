@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\User;
 
-class isAdmin
+class isEmployee
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class isAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->check() && $request->user()->level == 'admin'){
+        if(auth()->check() && $request->user()->level == 'employee'){
             return $next($request);
         }
         

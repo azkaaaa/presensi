@@ -15,17 +15,13 @@ Route::get('/', function () {
     return view('backend/layouts/master');
 });
 
-Route::get('admin/dashboard', function () {
-    return view('backend/dashboard/dashboard');
-});
-
 Route::get('/home', 'HomeController@index');
 
+Route::auth();
 
 //START KODING
-
 Route::group(['middleware' => 'web'], function () {
-	Route::auth();
+	
 });
 
 Route::group(['middleware' => ['web', 'auth']], function () {
