@@ -66,6 +66,13 @@
 
     <!-- Main content -->
     <section class="content">
+
+      @if ($flash = session('message'))
+        <div id="flash-message" class="alert alert-success" role="alert">
+           {{ $flash }}
+        </div>
+       @endif
+
       @yield('content')
     </section>
     <!-- /.content -->
@@ -123,5 +130,9 @@
 <script src="{{ URL::asset('admin/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('admin/dist/js/demo.js') }}"></script>
+
+@section('js')
+@show
+
 </body>
 </html>

@@ -63,6 +63,8 @@ class PositionController extends Controller
       $position->user_id = $user;
       $position->save();
 
+      session()->flash('message', 'Anda berhasil menambahkan data jabatan.');
+
      return redirect('/admin/position');
     }
 
@@ -84,7 +86,7 @@ class PositionController extends Controller
         $position->user_id = $user;
         $position->save();
 
-        session()->flash('message', 'Your Position has been updated.');
+        session()->flash('message', 'Data jabatan berhasil diperbarui.');
 
         return redirect('/admin/position');
     }
@@ -93,7 +95,7 @@ class PositionController extends Controller
   	{
   		Position::find($id)->delete();
 
-          session()->flash('message', 'Your Position price has been deleted.');
+          session()->flash('message', 'Data jabatan berhasil dihapus.');
 
   		return redirect('/admin/position');
   	}

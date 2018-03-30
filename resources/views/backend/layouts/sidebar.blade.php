@@ -5,11 +5,17 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ URL::asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+
+          @if(Auth::user()->employee->profile_picture)
+           <img src="{{ URL::asset('admin/uploads/profile_picture/'.Auth::user()->employee->profile_picture) }}" class="img-circle" alt="User Image">
+          @else
+           <img src="{{ URL::asset('admin/dist/img/user.png')}}" class="img-circle" alt="User Image">
+          @endif
+          
         </div>
         <div class="pull-left info">
           <p>{{ Auth::user()->name }}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          <a href="{{ route('user.profile.index') }}"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
       <!-- search form -->

@@ -36,6 +36,14 @@ class UsersSeeder extends Seeder
             'level' => 'manager',
             'status' => '1'
           ],
+          [
+            'id'=> 4,
+            'name'=>'Admin Azka',
+            'email'=>'azka642@gmail.com',
+            'password'=>Hash::make('12341234'),
+            'level' => 'admin',
+            'status' => '1'
+          ],
         ]);
     }
 }

@@ -36,10 +36,13 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 			return view('backend.dashboard.dashboard');
 		}
 	});
+
+	// Route::resource('/user/changeprofile','Backend\AdminController');
+	
 });
 
 Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () {
-	Route::get('/dashboard', ['as'=>'admin.dashboard', 'uses'=>'AdminController@getDashboard']);
+	// Route::get('/dashboard', ['as'=>'admin.dashboard.index', 'uses'=>'Backend\AdminController@getDashboard']);
 
 	//Position Route
 	Route::resource('/position','Backend\PositionController');
@@ -53,3 +56,11 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::resource('/employee','Backend\EmployeeController');
 	Route::get('/data-employee', ['as'=>'admin.employee.data','uses'=>'Backend\EmployeeController@dataEmployees']);
 });
+
+//Update Profile Route
+	Route::put('user/change/{id}', ['as'=>'user.changeprofile.save', 'uses'=>'Backend\AdminController@postChangeProfile']);
+	Route::put('user/changepassword', ['as'=>'user.changepassword.save', 'uses'=>'Backend\AdminController@postChangePassword']);
+	Route::get('/user/profile', ['as'=>'user.profile.index', 'uses'=>'Backend\AdminController@getProfile']);
+
+	Route::get('/user/profile/picture', ['as'=>'user.changepicture.index', 'uses'=>'Backend\AdminController@getChangePicture']);
+	Route::put('user/changepicture', ['as'=>'user.changepicture.save', 'uses'=>'Backend\AdminController@postChangePicture']);

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Employee;
 use App\Position;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -91,6 +92,8 @@ class EmployeeController extends Controller
       $employee->user_id = $user->id;
       $employee->save();
 
+      session()->flash('message', 'Anda berhasil menambahkan data karyawan.');
+
      return redirect('/admin/employee');
     }
 
@@ -111,7 +114,7 @@ class EmployeeController extends Controller
         $user_id = $employee->user->id;
         $user = User::find($user_id);
 
-		$status = $request->status;
+		    $status = $request->status;
       	$registration_rules = array_merge($user->update_rules($user_id),$employee->update_rules($id));
 
       	$this->validate($request,$registration_rules);
@@ -126,7 +129,7 @@ class EmployeeController extends Controller
       	$employee->user_id = $user->id;
       	$employee->save();
 
-        session()->flash('message', 'Your Employee has been updated.');
+        session()->flash('message', 'Data jabatan berhasil diperbarui.');
 
         return redirect('/admin/employee');
     }
@@ -135,7 +138,7 @@ class EmployeeController extends Controller
   	{
   		Employee::find($id)->delete();
 
-          session()->flash('message', 'Your Employee price has been deleted.');
+          session()->flash('message', 'Data jabatan berhasil dihapus.');
 
   		return redirect('/admin/employee');
   	}

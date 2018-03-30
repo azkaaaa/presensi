@@ -57,7 +57,7 @@
                           </thead>
                         </table>
                         <div class="box-footer">
-                              <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/admin/payment ')}}'">Cancel</button>
+                              <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/admin/employee ')}}'">Cancel</button>
                          </div>
                        </div>
                     </div>

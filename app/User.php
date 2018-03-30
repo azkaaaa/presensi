@@ -22,14 +22,6 @@ class User extends Authenticatable
       'level' => 'required',
     ];
 
-    // public $update_rules = [
-    //   'name' => 'min:7',
-    //   'email' => 'required|unique:users',
-    //   // 'password' => 'required|min:8',
-    //   // 'level' => 'required',
-    //   // 'status' => 'required'
-    // ];
-
     public static function update_rules($id, $merge=[]) {
     return array_merge(
         [
@@ -49,4 +41,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function employee_detail(){
+      return $this->hasOne('App\Employee','id');
+    }
+
+    public function employee(){
+    return $this->hasOne(Employee::class);
+    }
 }

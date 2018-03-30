@@ -19,6 +19,7 @@ class Employee extends Model
       'phone',
       'education',
       'account_number',
+      'profile_picture',
       'position_id',
       'user_id'
     ];
@@ -33,19 +34,6 @@ class Employee extends Model
       'phone' => 'required|numeric|unique:employees',
       'education' => 'required',
       'account_number' => 'required|numeric|min:10|unique:employees'
-      // 'status' => 'required'
-    ];
-
-    public $update_rules = [
-      'name' => 'min:5',
-      'nik' => 'min:16|max:16|unique:employees',
-      'id_card' => 'unique:employees',
-      // 'birthday' => 'required',
-      // 'religion' => 'required',
-      // 'address' => 'required',
-      'phone' => 'numeric|unique:employees',
-      // 'education' => 'required',
-      'account_number' => 'numeric|min:10|unique:employees'
       // 'status' => 'required'
     ];
 
@@ -69,5 +57,9 @@ class Employee extends Model
     }
     public function position(){
       return $this->hasOne('App\Position','position_id');
+    }
+
+    public function user_detail(){
+      return $this->belongsTo(User::class);
     }
 }

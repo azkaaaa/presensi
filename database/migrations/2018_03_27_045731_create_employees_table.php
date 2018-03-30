@@ -23,6 +23,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone')->unique();
             $table->string('education');
             $table->string('account_number')->unique();
+            $table->string('profile_picture');
             $table->integer('position_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
