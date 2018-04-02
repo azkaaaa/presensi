@@ -24,6 +24,9 @@ Route::group(['middleware' => 'web'], function () {
 	
 });
 
+//Presence Route
+Route::resource('/presence','Backend\PresenceController');
+
 Route::group(['middleware' => ['web', 'auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	
@@ -36,9 +39,18 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 			return view('backend.dashboard.dashboard');
 		}
 	});
-
-	// Route::resource('/user/changeprofile','Backend\AdminController');
 	
+});
+
+Route::group(['middleware' => ['auth']], function () {
+
+	//Update Profile Route
+	Route::put('user/change/{id}', ['as'=>'user.changeprofile.save', 'uses'=>'Backend\AdminController@postChangeProfile']);
+	Route::put('user/changepassword', ['as'=>'user.changepassword.save', 'uses'=>'Backend\AdminController@postChangePassword']);
+	Route::get('/user/profile', ['as'=>'user.profile.index', 'uses'=>'Backend\AdminController@getProfile']);
+
+	Route::get('/user/profile/picture', ['as'=>'user.changepicture.index', 'uses'=>'Backend\AdminController@getChangePicture']);
+	Route::put('user/changepicture', ['as'=>'user.changepicture.save', 'uses'=>'Backend\AdminController@postChangePicture']);
 });
 
 Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () {
@@ -57,10 +69,4 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::get('/data-employee', ['as'=>'admin.employee.data','uses'=>'Backend\EmployeeController@dataEmployees']);
 });
 
-//Update Profile Route
-	Route::put('user/change/{id}', ['as'=>'user.changeprofile.save', 'uses'=>'Backend\AdminController@postChangeProfile']);
-	Route::put('user/changepassword', ['as'=>'user.changepassword.save', 'uses'=>'Backend\AdminController@postChangePassword']);
-	Route::get('/user/profile', ['as'=>'user.profile.index', 'uses'=>'Backend\AdminController@getProfile']);
 
-	Route::get('/user/profile/picture', ['as'=>'user.changepicture.index', 'uses'=>'Backend\AdminController@getChangePicture']);
-	Route::put('user/changepicture', ['as'=>'user.changepicture.save', 'uses'=>'Backend\AdminController@postChangePicture']);

@@ -39,6 +39,11 @@ return [
 	'change_schedule_customer_same_day'=>'Anda punya jadwal di tanggal <b>:class_date</b>',
 	'order_book_success'=>'Pesanan anda berhasil di proses, silahkan lakukan pembayaran dalam 48 Jam',
 
+	'presence_success_on'=>'Anda berhasil masuk tepat waktu <b>:Name</b>',
+	'return_presence_success_on'=>'Anda berhasil pulang <b>:Name</b>',
+	'presence_success_late'=>'Anda terlambat <b>:Name</b>',
+	'presence_failed'=>'Harap tap kartu anda kembali',
+
 	
 ];
 
