@@ -27,6 +27,10 @@ Route::group(['middleware' => 'web'], function () {
 //Presence Route
 Route::resource('/presence','Backend\PresenceController');
 
+Route::get('/capture', ['as'=>'user.capture.index','uses'=>'Backend\PresenceController@getCapture']);
+Route::post('/capture', ['as'=>'user.capture.save','uses'=>'Backend\PresenceController@postCapture']);
+
+
 Route::group(['middleware' => ['web', 'auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	

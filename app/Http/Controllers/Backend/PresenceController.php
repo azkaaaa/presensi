@@ -8,6 +8,7 @@ use App\User;
 use App\Employee;
 use App\Position;
 use App\Presence;
+use App\Capture;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -142,5 +143,30 @@ class PresenceController extends Controller
 	  	  
 	     return redirect('/presence');
 	  }      
+    }
+
+    public function getCapture()
+    {
+        return view('backend.presence.capture');
+    }
+
+    public function postCapture(Request $request)
+    {
+       	$requestData = $request->all();
+ 
+            if(!empty($_POST['namafoto'])){
+                  $encoded_data = $_POST['namafoto'];
+                    $binary_data = base64_decode( $encoded_data );
+ 
+                    // save to server (beware of permissions // set ke 775 atau 777)
+                    $namafoto = uniqid().".png";
+                    $result = file_put_contents( 'photos/shares/'.$namafoto, $binary_data );
+                    if (!$result) die("Could not save image!  Check file permissions.");
+                }
+        $employee = new Capture;
+        $employee->namafoto = $namafoto;
+        $employee->save();
+
+  		return redirect()->route('user.profile.index');
     }
 }

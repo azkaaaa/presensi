@@ -44,6 +44,7 @@
 <script src="{{ URL::asset('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ URL::asset('admin/plugins/iCheck/icheck.min.js') }}"></script>
+
 <script>
   $(function () {
     $('input').iCheck({
