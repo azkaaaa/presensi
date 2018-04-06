@@ -26,6 +26,8 @@ Route::group(['middleware' => 'web'], function () {
 
 //Presence Route
 Route::resource('/presence','Backend\PresenceController');
+Route::get('/dopresence', ['as'=>'user.presence.index','uses'=>'Backend\PresenceController@getDoPresence']);
+
 
 Route::get('/capture', ['as'=>'user.capture.index','uses'=>'Backend\PresenceController@getCapture']);
 Route::post('/capture', ['as'=>'user.capture.save','uses'=>'Backend\PresenceController@postCapture']);
@@ -71,6 +73,11 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	//Employee Route
 	Route::resource('/employee','Backend\EmployeeController');
 	Route::get('/data-employee', ['as'=>'admin.employee.data','uses'=>'Backend\EmployeeController@dataEmployees']);
+
+	//Employee Route
+	Route::get('/presence/data', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);
+	Route::resource('/presence','Backend\PresenceController');
+	Route::get('/data-presence', ['as'=>'admin.presence.data','uses'=>'Backend\PresenceController@dataPresences']);
 });
 
 

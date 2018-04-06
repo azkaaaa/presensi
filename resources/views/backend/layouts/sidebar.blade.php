@@ -111,6 +111,7 @@
             <li><a href="{{ url('/admin/employee')}}"><i class="fa fa-circle-o"></i> Karyawan</a></li>
             <li><a href="{{ url('/admin/user')}}"><i class="fa fa-circle-o"></i> Pengguna</a></li>
             <li><a href="{{ url('/admin/position')}}"><i class="fa fa-circle-o"></i> Jabatan</a></li>
+            <li><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi</a></li>
             <!-- <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li> -->
           </ul>
         </li>

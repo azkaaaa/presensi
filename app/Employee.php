@@ -56,7 +56,7 @@ class Employee extends Model
       return $this->belongsTo('App\User','user_id');
     }
     public function position(){
-      return $this->hasOne('App\Position','position_id');
+      return $this->belongsTo('App\Position','position_id');
     }
 
     public function user_detail(){

@@ -44,9 +44,16 @@
   </div>
   @endif
 
-   @if(session()->has('return_presence_success_on'))
+   @if(session()->has('return_presence_normal_success_on'))
   <div class="alert alert-success" role="alert">
-    @lang('alert.return_presence_success_on',['name'=>session()->get('return_presence_success_on')])
+    @lang('alert.return_presence_normal_success_on',['name'=>session()->get('return_presence_normal_success_on')]) 
+  </div>
+  @endif
+
+  @if(session()->has('return_presence_overtime_success_on'))
+  <div class="alert alert-success" role="alert">
+    @lang('alert.return_presence_success_on',['name'=>session()->get('return_presence_success_on')]) 
+    </br>@lang('alert.return_presence_overtime_success_on',['overtime'=>session()->get('return_presence_overtime_success_on')]) 
   </div>
   @endif
 

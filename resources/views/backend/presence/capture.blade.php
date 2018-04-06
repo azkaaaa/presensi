@@ -4,7 +4,7 @@
 		h2, h3 { margin-top:0; }
 		form { margin-top: 15px; }
 		form > input { margin-right: 15px; }
-		#results { float:right; margin:20px; padding:20px; border:1px solid; background:#ccc; }
+		#results {  }
 	</style>
 
 	<div id="results">Your captured image will appear here...</div>
@@ -31,7 +31,6 @@
 	
 	<!-- A button for taking snaps -->
 	<form>
-             <input type="hidden" name="_token" value="{{csrf_token()}}">
 		<input type=button value="Take Snapshot" onClick="take_snapshot()">
 	</form>
 	
@@ -45,7 +44,7 @@
 				document.getElementById('results').innerHTML = 
 					'<h2>Processing:</h2>';
 					
-				Webcam.upload( data_uri, 'saveimage.php', function(code, text) {
+				Webcam.upload( data_uri, '{{ route("user.capture.save") }}', function(code, text) {
 					document.getElementById('results').innerHTML = 
 					'<h2>Here is your image:</h2>' + 
 					'<img src="'+text+'"/>';

@@ -41,6 +41,8 @@ return [
 
 	'presence_success_on'=>'Anda berhasil masuk tepat waktu <b>:Name</b>',
 	'return_presence_success_on'=>'Anda berhasil pulang <b>:Name</b>',
+	'return_presence_normal_success_on'=>'Anda berhasil pulang <b>:Name</b>',
+	'return_presence_overtime_success_on'=>'Selamat Anda lembur selama <b>:Overtime</b>',
 	'presence_success_late'=>'Anda terlambat <b>:Name</b>',
 	'presence_failed'=>'Harap tap kartu anda kembali',
 

@@ -11,19 +11,22 @@ class Presence extends Model
     protected $fillable =
     [
       'employee_id',
-      'time',
+      'time_in',
+      'time_out',
       'date',
       'shift',
       'info',
-      'additional'
+      'additional',
+      'overtime',
+      'overtime_status',
+      'overtime_permit'
     ];
 
-    // public $rules = [
-    //   'name' => 'required|min:5',
-    //   'salary' => 'required'
-    // ];
+    public $rules = [
+      'overtime' => 'required'
+    ];
 
     public function employee(){
-      return $this->hasOne('App\Employee','employee_id');
+      return $this->belongsTo('App\Employee','employee_id');
     }
 }

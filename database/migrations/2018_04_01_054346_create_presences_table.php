@@ -15,11 +15,15 @@ class CreatePresencesTable extends Migration
         Schema::create('presences', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
-            $table->time('time');
+            $table->time('time_in');
+            $table->time('time_out');
             $table->date('date');
             $table->string('shift');
             $table->string('info');
             $table->string('additional');
+            $table->integer('overtime');
+            $table->string('overtime_status');
+            $table->string('overtime_permit');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
