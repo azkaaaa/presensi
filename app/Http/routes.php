@@ -37,11 +37,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	
 	Route::get('/', function(){
-		if (Auth::user()->level == 'admin'){
+		if (Auth::user()->level == 'Admin'){
 			return view('backend.dashboard.dashboard');
-		}elseif (Auth::user()->level == 'employee'){
+		}elseif (Auth::user()->level == 'Karyawan'){
 			return view('backend.dashboard.dashboard');
-		}elseif (Auth::user()->level == 'manager'){
+		}elseif (Auth::user()->level == 'Manajer'){
 			return view('backend.dashboard.dashboard');
 		}
 	});
@@ -73,6 +73,14 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	//Employee Route
 	Route::resource('/employee','Backend\EmployeeController');
 	Route::get('/data-employee', ['as'=>'admin.employee.data','uses'=>'Backend\EmployeeController@dataEmployees']);
+
+	//Allowance Route
+	Route::resource('/allowance','Backend\AllowanceController');
+	Route::get('/data-allowance', ['as'=>'admin.allowance.data','uses'=>'Backend\AllowanceController@dataAllowances']);
+
+	//Employee Allowance Route
+	Route::resource('/empallowance','Backend\EmployeeAllowanceController');
+	Route::get('/data-empallowance', ['as'=>'admin.empallowance.data','uses'=>'Backend\EmployeeAllowanceController@dataEmpAllowance']);
 
 	//Employee Route
 	Route::get('/presence/data', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);

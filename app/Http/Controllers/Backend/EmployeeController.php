@@ -33,7 +33,9 @@ class EmployeeController extends Controller
 
 	public function dataEmployees()
   	{
-    	 $employees = Employee::select(['id', 'name', 'nik', 'id_card', 'birthday', 'religion', 'address', 'phone', 'education', 'account_number', 'position_id', 'created_at', 'updated_at']);
+      $employees = DB::table('employees')
+            ->join('positions', 'positions.id', '=', 'employees.position_id')
+            ->select('employees.*', 'positions.name as position_name');
 
 	      return Datatables::of($employees)
 	      ->addColumn('action', function ($employees) {

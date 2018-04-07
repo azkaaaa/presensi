@@ -44,6 +44,7 @@
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
           </ul> -->
         </li>
+
         <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
@@ -99,7 +100,7 @@
             <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
           </ul>
         </li> -->
-        @if (Auth::user()->level == 'admin')
+        @if (Auth::user()->level == 'Admin')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Manage Data</span>
@@ -109,13 +110,27 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ url('/admin/employee')}}"><i class="fa fa-circle-o"></i> Karyawan</a></li>
-            <li><a href="{{ url('/admin/user')}}"><i class="fa fa-circle-o"></i> Pengguna</a></li>
             <li><a href="{{ url('/admin/position')}}"><i class="fa fa-circle-o"></i> Jabatan</a></li>
-            <li><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi</a></li>
+            <li><a href="{{ url('/admin/allowance')}}"><i class="fa fa-circle-o"></i> Tunjangan</a></li>
+            <li><a href="{{ url('/admin/empallowance')}}"><i class="fa fa-circle-o"></i> Tunjangan Karyawan</a></li>
+            <!-- <li><a href="{{ url('/admin/user')}}"><i class="fa fa-circle-o"></i> Pengguna</a></li> -->
             <!-- <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li> -->
           </ul>
         </li>
-        @elseif (Auth::user()->level == 'employee')
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>Manage Process</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Penggajian</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Penjadwalan</a></li>
+          </ul>
+        </li>
+        @elseif (Auth::user()->level == 'Karyawan')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Data</span>
@@ -124,12 +139,19 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> Presensi</a></li>
-            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Jadwal</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Presensi</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Jadwal</a></li>
             <!-- <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li> -->
           </ul>
         </li>
         @endif
+        <li class="header">OTHER NAVIGATION</li>
+        <li>
+          <a href="{{ route('user.presence.index') }}">
+            <i class="fa fa-laptop"></i>
+            <span>Presensi</span>
+          </a>
+        </li>
        <!--  <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>

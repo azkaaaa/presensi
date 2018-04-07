@@ -32,11 +32,11 @@
                         url: '{{ url("/admin/data-employee") }}'
                     },
                     columns: [
-                    {data: 'name', name: 'name'},
-                    {data: 'nik', name: 'nik'},
-                    {data: 'address', name: 'address'},
-                    {data: 'phone', name: 'phone'},
-                    {data: 'position_id', name: 'position_id'},
+                    {data: 'name', name: 'employees.name'},
+                    {data: 'nik', name: 'employees.nik'},
+                    {data: 'address', name: 'employees.address'},
+                    {data: 'phone', name: 'employees.phone'},
+                    {data: 'position_name', name: 'positions.name'},
                     {data: 'action', 'searchable': false, 'orderable':false }
                   ],
                   });

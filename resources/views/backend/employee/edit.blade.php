@@ -97,6 +97,7 @@
                     <label for="level" class="col-md-2 control-label">Jabatan</label>
                     <div class="col-md-10">
                         <select class="form-control" name="position_id">
+                              <option value="{{$employee->position->id}}">{{$employee->position->name}}</option>
                               @foreach($position as $data)
                               <option value="{{$data->id}}">{{$data->name}}</option>
                               @endforeach
@@ -143,9 +144,10 @@
                     <label for="level" class="col-md-2 control-label">Level</label>
                     <div class="col-md-10">
                         <select class="form-control" name="level">
-                              <option value="admin">Admin</option>
-                              <option value="employee">Karyawan</option>
-                              <option value="manager">Manajer</option>
+                              <option value="{{$employee->user->level}}">{{$employee->user->level}}</option>
+                              <option value="Admin">Admin</option>
+                              <option value="Karyawan">Karyawan</option>
+                              <option value="Manajer">Manajer</option>
                         </select>
                         <p class="text-danger">{{$errors->first('level')}}</p>
                     </div>

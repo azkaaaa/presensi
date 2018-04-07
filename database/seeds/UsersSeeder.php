@@ -17,7 +17,7 @@ class UsersSeeder extends Seeder
             'name'=>'Admin Arief',
             'email'=>'arozenh@gmail.com',
             'password'=>Hash::make('12341234'),
-            'level' => 'admin',
+            'level' => 'Admin',
             'status' => '1'
           ],
           [
@@ -25,7 +25,7 @@ class UsersSeeder extends Seeder
             'name'=>'Karyawan Arief',
             'email'=>'arief_11@live.com',
             'password'=>Hash::make('12341234'),
-            'level' => 'employee',
+            'level' => 'Karyawan',
             'status' => '1'
           ],
           [
@@ -33,7 +33,7 @@ class UsersSeeder extends Seeder
             'name'=>'Manajer Arief',
             'email'=>'ariefdwityo11@gmail.com',
             'password'=>Hash::make('12341234'),
-            'level' => 'manager',
+            'level' => 'Manajer',
             'status' => '1'
           ],
           [
@@ -41,7 +41,7 @@ class UsersSeeder extends Seeder
             'name'=>'Admin Azka',
             'email'=>'azka642@gmail.com',
             'password'=>Hash::make('12341234'),
-            'level' => 'admin',
+            'level' => 'Admin',
             'status' => '1'
           ],
         ]);

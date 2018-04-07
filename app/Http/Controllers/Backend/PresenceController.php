@@ -39,16 +39,16 @@ class PresenceController extends Controller
 
     public function dataPresences()
   	{
-    	 $oresences = DB::table('presences')
+    	 $presences = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
             ->select('presences.*', 'employees.name as employee_name', 'positions.name as position_name');
 
-	      return Datatables::of($oresences)
-	      ->addColumn('action', function ($oresences) {
-                return '<a href="'.url('admin/presence/'. $oresences->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>
+	      return Datatables::of($presences)
+	      ->addColumn('action', function ($presences) {
+                return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>
 
-                		<a href="'.url('admin/presence/'. $oresences->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Lembur</a>';
+                		<a href="'.url('admin/presence/'. $presences->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Lembur</a>';
             }
             )
             ->make(true);
