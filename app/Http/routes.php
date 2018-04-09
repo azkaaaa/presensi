@@ -82,10 +82,14 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::resource('/empallowance','Backend\EmployeeAllowanceController');
 	Route::get('/data-empallowance', ['as'=>'admin.empallowance.data','uses'=>'Backend\EmployeeAllowanceController@dataEmpAllowance']);
 
-	//Employee Route
+	//Presence Route
 	Route::get('/presence/data', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);
 	Route::resource('/presence','Backend\PresenceController');
 	Route::get('/data-presence', ['as'=>'admin.presence.data','uses'=>'Backend\PresenceController@dataPresences']);
+
+	//Salary Route
+	Route::resource('/salary','Backend\SalaryController');
+	Route::get('/data-salary', ['as'=>'admin.salary.data','uses'=>'Backend\SalaryController@dataSalaries']);
 });
 
 

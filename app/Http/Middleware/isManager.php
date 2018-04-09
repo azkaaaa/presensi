@@ -16,7 +16,7 @@ class isManager
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->check() && $request->user()->level == 'manager'){
+        if(auth()->check() && $request->user()->level == 'Manajer'){
             return $next($request);
         }
         

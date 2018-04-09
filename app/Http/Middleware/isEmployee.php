@@ -16,7 +16,7 @@ class isEmployee
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->check() && $request->user()->level == 'employee'){
+        if(auth()->check() && $request->user()->level == 'Karyawan'){
             return $next($request);
         }
         
