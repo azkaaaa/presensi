@@ -90,6 +90,10 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	//Salary Route
 	Route::resource('/salary','Backend\SalaryController');
 	Route::get('/data-salary', ['as'=>'admin.salary.data','uses'=>'Backend\SalaryController@dataSalaries']);
+	Route::get('/historysalary', ['as'=>'admin.historysalary.data','uses'=>'Backend\SalaryController@getList']);
+	Route::get('/salary/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\SalaryController@printHistorySalary']);
+	Route::get('/salary/search', ['as' => 'admin.salary.search', 'uses' => 'Backend\SalaryController@searchSalary']);
+
 });
 
 

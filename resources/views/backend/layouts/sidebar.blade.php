@@ -119,14 +119,35 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-folder"></i> <span>Manage Process</span>
+            <i class="fa fa-clock-o"></i> <span>Manage Presensi</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dollar"></i> <span>Manage Penggajian</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
             <li><a href="{{ url('/admin/salary')}}"><i class="fa fa-circle-o"></i> Penggajian</a></li>
+            <li><a href="{{ url('/admin/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-calendar-plus-o"></i> <span>Manage Jadwal</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
             <li><a href="#"><i class="fa fa-circle-o"></i> Penjadwalan</a></li>
           </ul>
         </li>

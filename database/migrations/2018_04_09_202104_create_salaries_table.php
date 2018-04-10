@@ -15,6 +15,9 @@ class CreateSalariesTable extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
+            $table->integer('month');
+            $table->integer('years');
+            $table->integer('list');
             $table->integer('salary');
             $table->integer('total_allowance');
             $table->integer('total_overtime');

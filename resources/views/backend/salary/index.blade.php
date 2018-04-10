@@ -10,7 +10,7 @@
               <!-- /.box-body -->
               <div class="box-footer">
                 <!-- <button type="submit" class="btn btn-info pull-right">Sign in</button> -->
-                @if($salary->employee_id)
+                @if($salary)
                 <button style="float:right" type="submit" class="btn btn-primary" disabled="">Gaji Bulan Ini Telah Dibuat</button>
                 @else
                 <button style="float:right" type="submit" class="btn btn-primary">Buat Gaji Bulan Ini</button>

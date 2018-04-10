@@ -14,6 +14,7 @@ use Yajra\Datatables\Datatables;
 
 use Auth;
 use DB;
+use PDF;
 use Carbon\Carbon;
 
 class SalaryController extends Controller
@@ -32,9 +33,15 @@ class SalaryController extends Controller
         return view('backend.salary.index', ['salary'=>$salary]);
     }
 
-  public function getIndex()
+  public function getList()
     {
-        return view('backend.salary.index');
+    	$salary = DB::table('salaries')
+            ->join('employees', 'employees.id', '=', 'salaries.employee_id')
+            ->select('employees.name as employee_name', 'salaries.*', DB::raw('sum(salaries.total_salary) as total_all'))
+            ->groupBy('salaries.created_at')
+            ->get();
+            // ->whereMonth('presences.date', '=', $dt->month);
+        return view('backend.salary.history', ['salary'=>$salary]);
     }
 
 
@@ -68,7 +75,6 @@ class SalaryController extends Controller
   
   	}
 
-
     public function create()
     {
     	$employee = Employee::all();
@@ -79,7 +85,15 @@ class SalaryController extends Controller
     public function store(Request $request)
     { 
     	$dt = Carbon::now();
-	    $date = $dt->toDateString(); 
+	    $date = $dt->toDateString();
+	    $list = Salary::latest()->first();
+
+	    if($list){
+	    	$list = $list->list + 1;
+	    }
+		else{
+			$list = 0;
+		}
 
     	 $salary = DB::table('employees')
             ->join('presences', 'presences.employee_id', '=', 'employees.id')
@@ -102,6 +116,9 @@ class SalaryController extends Controller
 
           	$new_salary =  new Salary();
       		$new_salary->employee_id = $data['employee_id'];
+      		$new_salary->month = $dt->month;
+      		$new_salary->years = $dt->year;
+      		$new_salary->list = $list;
       		$new_salary->salary = $data['salary'];
       		$new_salary->total_allowance = $data['total_allowance'];
       		$new_salary->total_overtime = $data['total_overtime'];
@@ -115,14 +132,45 @@ class SalaryController extends Controller
      return redirect('/admin/salary');
     }
 
+    public function printHistorySalary($history)
+    { 
+      // $salary = Salary::where('history', $history)->get();
 
-    public function destroy($id)
-  	{
-  		Salary::find($id)->delete();
+      $salary = DB::table('salaries')
+            ->join('employees', 'employees.id', '=', 'salaries.employee_id')
+            ->select('employees.name as employee_name', 'salaries.*', DB::raw('sum(salaries.total_salary) as total_all'))
+            ->groupBy('salaries.employee_id')
+            ->where('salaries.history', '=', $history)
+            ->get();
 
-          session()->flash('message', 'Data gaji berhasi dihapus.');
+      $total = DB::table('salaries')
+            ->select( DB::raw('sum(salaries.total_salary) as total_all'), 'salaries.*')
+            ->groupBy('salaries.created_at')
+            ->where('salaries.history', '=', $history)
+            ->first();
 
-  		return redirect('/admin/empallowance');
-  	}
+        $pdf = PDF::loadView('backend/pdf/payroll', ['salary' => $salary, 'total' => $total]);
+        return $pdf->stream('Payroll_'.Carbon::parse($total->created_at)->format('F').'_'.Carbon::parse($total->created_at)->format('Y').'.pdf');
+    }
+
+    public function searchSalary(Request $request)
+    {
+        $month = $request->month;
+        $years = $request->years;
+
+        $salary = Salary::whereMonth('created_at', $month)->get();
+
+        return view('backend.salary.search', ['salary'=>$salary]);
+    }
+
+    public function show(Request $request)
+    {
+        $month = $request->month;
+        $year = $request->years;
+
+        $salary = Salary::where('month', $month)->where('years', $year)->get();
+
+        return view('backend.salary.search', ['salary'=>$salary]);
+    }
 
 }
