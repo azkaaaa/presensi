@@ -111,10 +111,9 @@
           <ul class="treeview-menu">
             <li><a href="{{ url('/admin/employee')}}"><i class="fa fa-circle-o"></i> Karyawan</a></li>
             <li><a href="{{ url('/admin/position')}}"><i class="fa fa-circle-o"></i> Jabatan</a></li>
-            <li><a href="{{ url('/admin/allowance')}}"><i class="fa fa-circle-o"></i> Tunjangan</a></li>
-            <li><a href="{{ url('/admin/empallowance')}}"><i class="fa fa-circle-o"></i> Tunjangan Karyawan</a></li>
+          <!--   <li><a href="{{ url('/admin/allowance')}}"><i class="fa fa-circle-o"></i> Tunjangan</a></li>
+            <li><a href="{{ url('/admin/empallowance')}}"><i class="fa fa-circle-o"></i> Tunjangan Karyawan</a></li> -->
             <!-- <li><a href="{{ url('/admin/user')}}"><i class="fa fa-circle-o"></i> Pengguna</a></li> -->
-            <!-- <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li> -->
           </ul>
         </li>
         <li class="treeview">

@@ -30,7 +30,7 @@ class SalaryController extends Controller
            ->whereMonth('salaries.created_at', '=', $dt->month)
            ->first();
 
-        return view('backend.salary.index', ['salary'=>$salary]);
+        return view('backend.salary.index', ['salary'=>$salary, 'dt'=>$dt]);
     }
 
   public function getList()
@@ -53,9 +53,7 @@ class SalaryController extends Controller
     	 $salary = DB::table('employees')
             ->join('presences', 'presences.employee_id', '=', 'employees.id')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
-            ->join('employee_allowances', 'employee_allowances.employee_id', '=', 'employees.id')
-            ->join('allowances', 'allowances.id', '=', 'employee_allowances.allowance_id')
-            ->select('employees.*', DB::raw('count(presences.employee_id)*positions.salary as total_salary'), DB::raw('sum(allowances.price) as total_allowance'), DB::raw('sum(presences.overtime)*20000 as total_overtime'), DB::raw('(count(presences.employee_id)*positions.salary) + sum(allowances.price) + (sum(presences.overtime)*20000) as total_all'))
+            ->select('employees.*', DB::raw('count(presences.employee_id) as total_presences'), DB::raw('count(presences.employee_id)*positions.salary as total_salary'), DB::raw('sum(positions.transport) as total_transport'), DB::raw('sum(presences.overtime)*20000 as total_overtime'), DB::raw('(count(presences.employee_id)*positions.salary) + sum(positions.transport) + (sum(presences.overtime)*20000) as total_all'))
             ->groupBy('employees.id')
             ->whereMonth('presences.date', '=', $dt->month);
 
@@ -98,9 +96,7 @@ class SalaryController extends Controller
     	 $salary = DB::table('employees')
             ->join('presences', 'presences.employee_id', '=', 'employees.id')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
-            ->join('employee_allowances', 'employee_allowances.employee_id', '=', 'employees.id')
-            ->join('allowances', 'allowances.id', '=', 'employee_allowances.allowance_id')
-            ->select('employees.id as employee_id','employees.name', DB::raw('count(presences.employee_id)*positions.salary as total_salary'), DB::raw('sum(allowances.price) as total_allowance'), DB::raw('sum(presences.overtime)*20000 as total_overtime'), DB::raw('(count(presences.employee_id)*positions.salary) + sum(allowances.price) + (sum(presences.overtime)*20000) as total_all'))
+            ->select('employees.id as employee_id','employees.name', DB::raw('count(presences.employee_id) as total_presences'), DB::raw('count(presences.employee_id)*positions.salary as total_salary'), DB::raw('sum(positions.transport) as total_transport'), DB::raw('sum(presences.overtime)*20000 as total_overtime'), DB::raw('(count(presences.employee_id)*positions.salary) + sum(positions.transport) + (sum(presences.overtime)*20000) as total_all'))
             ->groupBy('employees.id')
             ->whereMonth('presences.date', '=', date('m'))
             ->get();
@@ -109,7 +105,8 @@ class SalaryController extends Controller
           $data = [
                 'employee_id' => $row->employee_id,
                 'salary' => $row->total_salary,
-                'total_allowance' => $row->total_allowance,
+                'total_presences' => $row->total_presences,
+                'total_transport' => $row->total_transport,
                 'total_overtime' => $row->total_overtime,
                 'total_salary' => $row->total_all
                 ];
@@ -120,7 +117,8 @@ class SalaryController extends Controller
       		$new_salary->years = $dt->year;
       		$new_salary->list = $list;
       		$new_salary->salary = $data['salary'];
-      		$new_salary->total_allowance = $data['total_allowance'];
+          $new_salary->total_presences = $data['total_presences'];
+      		$new_salary->total_transport = $data['total_transport'];
       		$new_salary->total_overtime = $data['total_overtime'];
       		$new_salary->total_salary = $data['total_salary'];
       		$new_salary->save();
@@ -140,13 +138,13 @@ class SalaryController extends Controller
             ->join('employees', 'employees.id', '=', 'salaries.employee_id')
             ->select('employees.name as employee_name', 'salaries.*', DB::raw('sum(salaries.total_salary) as total_all'))
             ->groupBy('salaries.employee_id')
-            ->where('salaries.history', '=', $history)
+            ->where('salaries.list', '=', $history)
             ->get();
 
       $total = DB::table('salaries')
             ->select( DB::raw('sum(salaries.total_salary) as total_all'), 'salaries.*')
             ->groupBy('salaries.created_at')
-            ->where('salaries.history', '=', $history)
+            ->where('salaries.list', '=', $history)
             ->first();
 
         $pdf = PDF::loadView('backend/pdf/payroll', ['salary' => $salary, 'total' => $total]);
@@ -158,7 +156,12 @@ class SalaryController extends Controller
         $month = $request->month;
         $years = $request->years;
 
-        $salary = Salary::whereMonth('created_at', $month)->get();
+        $salary = Salary::where('month', $month)
+        ->where('years', $year)
+        ->groupBy('list')
+        ->get();
+
+        dd($salary);
 
         return view('backend.salary.search', ['salary'=>$salary]);
     }
@@ -168,8 +171,19 @@ class SalaryController extends Controller
         $month = $request->month;
         $year = $request->years;
 
-        $salary = Salary::where('month', $month)->where('years', $year)->get();
+        $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
+        ->where('month', $month)
+        ->where('years', $year)
+        ->groupBy('list')
+        ->get();
 
+        if ($salary){
+          session()->flash('salary_found', true);
+        }
+        else{
+          session()->flash('salary_not_found', true);
+        }
+        
         return view('backend.salary.search', ['salary'=>$salary]);
     }
 

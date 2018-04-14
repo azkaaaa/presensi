@@ -43,6 +43,7 @@
                 <thead>
                 <tr>
                   <th>No</th>
+                  <th>Tes</th>
                   <th>Bulan</th>
                   <th>Tahun</th>
                   <th>Total Gaji</th>
@@ -56,6 +57,7 @@
               <tbody>
                 <tr>
                   <td>{{$no}}</td>
+                  <td>{{$row->employee_id}}</td>
                   <td>{{ Carbon\Carbon::parse($row->created_at)->format('F') }}</td>
                   <td>{{ Carbon\Carbon::parse($row->created_at)->format('Y') }}</td>
                   <td>{{ number_format($row->total_all, 2, ',', '.') }}</td>

@@ -15,13 +15,14 @@ class CreateSalariesTable extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
-            $table->integer('month');
-            $table->integer('years');
-            $table->integer('list');
-            $table->integer('salary');
-            $table->integer('total_allowance');
-            $table->integer('total_overtime');
-            $table->integer('total_salary');
+            $table->integer('month')->unsigned();
+            $table->integer('years')->unsigned();
+            $table->integer('list')->unsigned();
+            $table->integer('salary')->unsigned();
+            $table->integer('total_presences')->unsigned();
+            $table->integer('total_transport')->unsigned();
+            $table->integer('total_overtime')->unsigned();
+            $table->integer('total_salary')->unsigned();
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');

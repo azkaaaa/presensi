@@ -4,7 +4,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Daftar Salary</h3>
+              <h3 class="box-title">Daftar Gaji Bulan {{ $dt->format('F') }}</h3>
               <form method="POST" action="{{url('/admin/salary')}}" class="form-horizontal">
               <input type="hidden" name="_token" value="{{csrf_token()}}">
               <!-- /.box-body -->
@@ -26,8 +26,9 @@
                 <thead>
                 <tr>
                   <th>Nama Karyawan</th>
+                  <th>Jumlah Masuk</th>
                   <th>Gaji Bersih</th>
-                  <th>Total Tunjangan</th>
+                  <th>Total Transport</th>
                   <th>Gaji Lembur</th>
                   <th>Total Gaji</th>
                   <th width="23%">Aksi</th>
@@ -46,8 +47,9 @@
                     },
                     columns: [
                     {data: 'name', name: 'employees.name'},
+                    {data: 'total_presences', name: 'total_presences'},
                     {data: 'total_salary', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_salary'},
-                    {data: 'total_allowance', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_allowance'},
+                    {data: 'total_transport', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_transport'},
                     {data: 'total_overtime', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_overtime'},
                     {data: 'total_all', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_all'},
                     {data: 'action', 'searchable': false, 'orderable':false }

@@ -28,6 +28,14 @@
 		                <p class="text-danger">{{$errors->first('salary')}}</p>
                   </div>
                 </div>
+                <div class="form-group {{($errors->has('transport')?'has-error':'')}}">
+                  <label for="inputTransport" class="col-sm-2 control-label">Uang Transport</label>
+
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" placeholder="Uang Transport" name="transport">
+                    <p class="text-danger">{{$errors->first('transport')}}</p>
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

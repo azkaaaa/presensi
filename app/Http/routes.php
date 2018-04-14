@@ -74,13 +74,13 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::resource('/employee','Backend\EmployeeController');
 	Route::get('/data-employee', ['as'=>'admin.employee.data','uses'=>'Backend\EmployeeController@dataEmployees']);
 
-	//Allowance Route
-	Route::resource('/allowance','Backend\AllowanceController');
-	Route::get('/data-allowance', ['as'=>'admin.allowance.data','uses'=>'Backend\AllowanceController@dataAllowances']);
+	// //Allowance Route
+	// Route::resource('/allowance','Backend\AllowanceController');
+	// Route::get('/data-allowance', ['as'=>'admin.allowance.data','uses'=>'Backend\AllowanceController@dataAllowances']);
 
-	//Employee Allowance Route
-	Route::resource('/empallowance','Backend\EmployeeAllowanceController');
-	Route::get('/data-empallowance', ['as'=>'admin.empallowance.data','uses'=>'Backend\EmployeeAllowanceController@dataEmpAllowance']);
+	// //Employee Allowance Route
+	// Route::resource('/empallowance','Backend\EmployeeAllowanceController');
+	// Route::get('/data-empallowance', ['as'=>'admin.empallowance.data','uses'=>'Backend\EmployeeAllowanceController@dataEmpAllowance']);
 
 	//Presence Route
 	Route::get('/presence/data', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);

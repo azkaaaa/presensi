@@ -16,18 +16,21 @@ class PositionsSeeder extends Seeder
             'id'=> 1,
             'name'=>'Pegawai Cafe',
             'salary'=>'70000',
+            'transport'=>'10000',
             'user_id'=>1
           ],
           [
             'id'=> 2,
             'name'=>'Pegawai Warnet',
             'salary'=>'50000',
+            'transport'=>'15000',
             'user_id'=>1
           ],
           [
             'id'=> 3,
             'name'=>'Manajer',
             'salary'=>'100000',
+            'transport'=>'20000',
             'user_id'=>1
           ],
         ]);

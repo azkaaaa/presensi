@@ -45,6 +45,8 @@ return [
 	'return_presence_overtime_success_on'=>'Selamat Anda lembur selama <b>:Overtime</b>',
 	'presence_success_late'=>'Anda terlambat <b>:Name</b>',
 	'presence_failed'=>'Harap tap kartu anda kembali',
+	'salary_found'=>'Data gaji ditemukan',
+	'salary_not_found'=>'Data gaji tidak ditemukan',
 
 	
 ];

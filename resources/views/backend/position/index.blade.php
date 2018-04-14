@@ -14,6 +14,7 @@
                 <tr>
                   <th>Nama Jabatan</th>
                   <th>Gaji Pokok</th>
+                  <th>Uang Transport</th>
                   <th width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -31,6 +32,7 @@
                     columns: [
                     {data: 'name', name: 'name'},
                     {data: 'salary', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'salary'},
+                    {data: 'transport', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'transport'},
                     {data: 'action', 'searchable': false, 'orderable':false }
                 ],
                 });

@@ -29,7 +29,7 @@ class PositionController extends Controller
 
 	public function dataPositions()
   	{
-    	 $positions = Position::select(['id', 'name', 'salary', 'created_at', 'updated_at']);
+    	 $positions = Position::select(['id', 'name', 'salary', 'transport', 'created_at', 'updated_at']);
 
 	      return Datatables::of($positions)
 	      ->addColumn('action', function ($positions) {

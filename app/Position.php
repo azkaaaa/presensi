@@ -12,12 +12,14 @@ class Position extends Model
     [
       'name',
       'salary',
+      'transport',
       'user_id'
     ];
 
     public $rules = [
       'name' => 'required|min:5',
-      'salary' => 'required'
+      'salary' => 'required',
+      'transport' => 'required'
     ];
 
     public function user(){
