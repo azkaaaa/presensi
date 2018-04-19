@@ -124,7 +124,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi</a></li>
+            <li><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi Bulan Ini</a></li>
+            <li><a href="{{ url('/admin/historypresence')}}"><i class="fa fa-circle-o"></i> Daftar Presensi</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -135,7 +136,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/admin/salary')}}"><i class="fa fa-circle-o"></i> Penggajian</a></li>
+            <li><a href="{{ url('/admin/salary')}}"><i class="fa fa-circle-o"></i> Penggajian Bulan Ini</a></li>
             <li><a href="{{ url('/admin/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
           </ul>
         </li>

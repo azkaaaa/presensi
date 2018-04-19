@@ -2,14 +2,14 @@
       <!-- /.row -->
       <div class="row">
         <div class="col-xs-12">
-        @if(session()->has('salary_found'))
+        @if(session()->has('presence_found'))
         <div class="alert alert-success" role="alert">
-          @lang('alert.salary_found',['name'=>session()->get('salary_found')])
+          @lang('alert.presence_found',['name'=>session()->get('presence_found')])
         </div>
         @endif
-        @if(session()->has('salary_not_found'))
+        @if(session()->has('presence_not_found'))
         <div class="alert alert-danger" role="alert">
-          @lang('alert.salary_not_found',['name'=>session()->get('salary_not_found')])
+          @lang('alert.presence_not_found',['name'=>session()->get('presence_not_found')])
         </div>
         @endif
           <div class="box">
@@ -18,7 +18,7 @@
 
               <div class="box-tools">
                 <div class="input-group input-group-sm">
-                  <form method="GET" action="{{route('admin.salary.search')}}" class="form-horizontal">
+                  <form method="GET" action="{{route('admin.presence.search')}}" class="form-horizontal">
                     <div class="col-md-3">
                               <select class="form-control pull-left" style="width: 100px" name="month">
                                     <option>Bulan</option>
@@ -65,22 +65,21 @@
                   <th>No</th>
                   <th>Bulan</th>
                   <th>Tahun</th>
-                  <th>Total Gaji</th>
-                  <th>Status</th>
+                  <th>Jumlah Jam Lembur</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <?php $no = 1; ?>
-              @if($salary)
-              @foreach($salary as $row)
+              @if($presence)
+              @foreach($presence as $row)
               <tbody>
                 <tr>
                   <td>{{$no}}</td>
-                  <td>{{ date("F", mktime(0, 0, 0, $row->month, 1)) }}</td>
-                  <td>{{ $row->years }}</td>
-                  <td>{{ number_format($row->total_all, 2, ',', '.') }}</td>
-                  <td><span class="label label-success">Approved</span></td>
-                  <td style="width: 20px; float: left"><a href="{{route('admin.printsalary.save', $row->list)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
+                  <td>{{ Carbon\Carbon::parse($row->date)->format('F') }}</td>
+                  <td>{{ Carbon\Carbon::parse($row->date)->format('Y') }}</td>
+                  <td>{{ $row->total_overtime }}</td>
+                  <!-- <td><span class="label label-success">Approved</span></td> -->
+                  <td style="width: 20px; float: left"><a href="{{route('admin.printpresence.save', $row->new_date)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
                 </tr>
                 </tbody>
                 <?php $no++; ?>

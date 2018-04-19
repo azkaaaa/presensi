@@ -47,6 +47,8 @@ return [
 	'presence_failed'=>'Harap tap kartu anda kembali',
 	'salary_found'=>'Data gaji ditemukan',
 	'salary_not_found'=>'Data gaji tidak ditemukan',
+	'presence_found'=>'Daftar Presensi ditemukan',
+	'presence_not_found'=>'Daftar Presensi tidak ditemukan',
 
 	
 ];

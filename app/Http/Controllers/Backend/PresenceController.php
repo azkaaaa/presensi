@@ -18,6 +18,7 @@ use Yajra\Datatables\Datatables;
 
 use Auth;
 use DB;
+use PDF;
 use Carbon\Carbon;
 
 class PresenceController extends Controller
@@ -35,6 +36,16 @@ class PresenceController extends Controller
     public function getPresence()
     {
         return view('backend.presence.index');
+    }
+
+    public function getList()
+    {
+      $presence = DB::table('presences')
+            ->join('employees', 'employees.id', '=', 'presences.employee_id')
+            ->select('employees.name as employee_name', 'presences.*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),  DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'), DB::raw('sum(presences.overtime) as total_overtime'))
+            ->groupby('year','month')
+            ->get();
+        return view('backend.presence.history', ['presence'=>$presence]);
     }
 
     public function dataPresences()
@@ -275,5 +286,61 @@ class PresenceController extends Controller
         $employee->save();
 
   		return redirect()->route('user.profile.index');
+    }
+
+    public function printHistoryPresence($history)
+    { 
+      $presences = DB::table('presences')
+            ->join('employees', 'employees.id', '=', 'presences.employee_id')
+            ->select('employees.name as employee_name', 'presences.*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),  DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'))
+            // ->groupby('year','month')
+            ->where(DB::raw("DATE_FORMAT(presences.date, '%m-%Y')"), '=', $history)
+            ->get();
+
+      $total = DB::table('presences')
+            ->select('presences.*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),  DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'), DB::raw('sum(presences.overtime) as total_overtime'))
+            ->groupby('year','month')
+            ->where(DB::raw("DATE_FORMAT(presences.date, '%m-%Y')"), '=', $history)
+            ->first();
+
+            // dd($presences);
+
+        $pdf = PDF::loadView('backend/pdf/presence', ['presences' => $presences, 'total' => $total]);
+        return $pdf->stream('Absen_'.Carbon::parse($total->date)->format('F').'_'.Carbon::parse($total->date)->format('Y').'.pdf');
+    }
+
+    public function searchPresence(Request $request)
+    {
+        $month = $request->month;
+        $year = $request->years;
+
+        if($month==0){
+            $presence = Presence::select('*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'), DB::raw('sum(presences.overtime) as total_overtime'))
+            ->where(DB::raw('YEAR(presences.date)'), $year)
+            ->groupby('year','month')
+            ->get();
+        }
+        elseif($year==0){
+              $presence = Presence::select('*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'),DB::raw('sum(presences.overtime) as total_overtime'))
+              ->where(DB::raw('MONTH(presences.date)'), $month)
+              ->groupby('year','month')
+              ->get();
+        }
+        else{
+            $presence = Presence::select('*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'),DB::raw('sum(presences.overtime) as total_overtime'))
+              ->where(DB::raw('YEAR(presences.date)'), $year)
+              ->where(DB::raw('MONTH(presences.date)'), $month)
+              ->groupby('year','month')
+              ->get();
+        }
+
+        if ($presence){
+          session()->flash('presence_found', true);
+        }
+        else{
+          session()->flash('presence_not_found', true);
+        }
+        
+        return view('backend.presence.history', ['presence'=>$presence]);
     }
 }

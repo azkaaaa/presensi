@@ -38,7 +38,7 @@ class SalaryController extends Controller
     	$salary = DB::table('salaries')
             ->join('employees', 'employees.id', '=', 'salaries.employee_id')
             ->select('employees.name as employee_name', 'salaries.*', DB::raw('sum(salaries.total_salary) as total_all'))
-            ->groupBy('salaries.created_at')
+            ->groupBy('salaries.list')
             ->get();
             // ->whereMonth('presences.date', '=', $dt->month);
         return view('backend.salary.history', ['salary'=>$salary]);
@@ -148,35 +148,33 @@ class SalaryController extends Controller
             ->first();
 
         $pdf = PDF::loadView('backend/pdf/payroll', ['salary' => $salary, 'total' => $total]);
-        return $pdf->stream('Payroll_'.Carbon::parse($total->created_at)->format('F').'_'.Carbon::parse($total->created_at)->format('Y').'.pdf');
+        return $pdf->stream('Payroll_'.$total->month.'_'.$total->years.'.pdf');
     }
 
     public function searchSalary(Request $request)
     {
         $month = $request->month;
-        $years = $request->years;
-
-        $salary = Salary::where('month', $month)
-        ->where('years', $year)
-        ->groupBy('list')
-        ->get();
-
-        dd($salary);
-
-        return view('backend.salary.search', ['salary'=>$salary]);
-    }
-
-    public function show(Request $request)
-    {
-        $month = $request->month;
         $year = $request->years;
 
-        $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
-        ->where('month', $month)
-        ->where('years', $year)
-        ->groupBy('list')
-        ->get();
-
+        if($month==0){
+            $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
+            ->where('years', $year)
+            ->groupBy('list')
+            ->get();
+        }
+      elseif($year==0){
+            $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
+            ->where('month', $month)
+            ->groupBy('list')
+            ->get();
+      }
+      else{
+      $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
+            ->where('month', $month)
+            ->where('years', $year)
+            ->groupBy('list')
+            ->get();
+      }
         if ($salary){
           session()->flash('salary_found', true);
         }
@@ -184,7 +182,28 @@ class SalaryController extends Controller
           session()->flash('salary_not_found', true);
         }
         
-        return view('backend.salary.search', ['salary'=>$salary]);
+        return view('backend.salary.history', ['salary'=>$salary]);
     }
+
+    // public function show(Request $request)
+    // {
+    //     $month = $request->month;
+    //     $year = $request->years;
+
+    //     $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
+    //     ->where('month', $month)
+    //     ->where('years', $year)
+    //     ->groupBy('list')
+    //     ->get();
+
+    //     if ($salary){
+    //       session()->flash('salary_found', true);
+    //     }
+    //     else{
+    //       session()->flash('salary_not_found', true);
+    //     }
+        
+    //     return view('backend.salary.search', ['salary'=>$salary]);
+    // }
 
 }
