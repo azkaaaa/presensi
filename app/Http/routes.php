@@ -97,6 +97,13 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::get('/salary/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\SalaryController@printHistorySalary']);
 	Route::get('/searchsalary', ['as' => 'admin.salary.search', 'uses' => 'Backend\SalaryController@searchSalary']);
 
+	//Schedule Route
+	Route::resource('/schedule','Backend\ScheduleController');
+	Route::get('/data-schedule', ['as'=>'admin.schedule.data','uses'=>'Backend\ScheduleController@dataSchedules']);
+	// Route::get('/historysalary', ['as'=>'admin.historysalary.data','uses'=>'Backend\SalaryController@getList']);
+	// Route::get('/salary/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\SalaryController@printHistorySalary']);
+	// Route::get('/searchsalary', ['as' => 'admin.salary.search', 'uses' => 'Backend\SalaryController@searchSalary']);
+
 });
 
 

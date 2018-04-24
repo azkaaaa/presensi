@@ -111,7 +111,7 @@ class SalaryController extends Controller
                 'total_salary' => $row->total_all
                 ];
 
-          	$new_salary =  new Salary();
+          $new_salary =  new Salary();
       		$new_salary->employee_id = $data['employee_id'];
       		$new_salary->month = $dt->month;
       		$new_salary->years = $dt->year;
