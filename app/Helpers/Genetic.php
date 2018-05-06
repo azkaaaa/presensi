@@ -36,7 +36,6 @@ class Genetic {
         $emp_times= Employee::count();
         $week_times= Week::count();
         $shift_times= (Week::count() * Employee::count())/2;
-
         $rs_employee = Employee::all();
         for($x=0; $week_times>$x; $x++){
         foreach ($rs_employee as $data) {
@@ -45,14 +44,12 @@ class Genetic {
             $this->employee[]    = intval($data->id);
             }
         }
-
         $rs_shift = Shift::all();
         for($x=0; $shift_times>$x; $x++){
         foreach ($rs_shift as $data) {
             $this->shift[]    = intval($data->id);
             }
         }
-
         $emp_numbers = $this->employee;
         asort($emp_numbers);
         
@@ -63,6 +60,8 @@ class Genetic {
         $emp_shift = $this->shift;
         asort($emp_shift);
         
+        // $days_name = [1,1,2,2,2,2,1,1,1,1,2,2,2,2,1,1];
+
         foreach($emp_shift as $y => $y_value) {
         $this->ord_shift[]    = $y_value;
         }
@@ -73,17 +72,13 @@ class Genetic {
             $this->day[]    = intval($data->id);
             }
         }
-
         $rs_day = Day::all();
         for($x=0; $emp_times>$x; $x++){
         foreach ($rs_day as $data) {
             $this->sum_days[]    = intval($data->id);
             }
         }
-
-        dd($this->ord_employee);
-
-
+    
         $rs_new_week = Week::all();
         $i = 0;
         foreach ($rs_new_week as $data) {
@@ -92,13 +87,10 @@ class Genetic {
             }
         
         // $days_name = ['1','2','3','4','5'];
-
         // foreach($days_name as $y => $y_value) {
         // $this->sum_days[]    = $y_value;
         // }
-
         // dd($this->sum_days);
-
     }
     
     
@@ -108,10 +100,7 @@ class Genetic {
         $all_shift = $this->ord_shift;
         $all_day = count($this->day);
         $all_sum_days = count($this->sum_days);
-
         //dd($this->sum_days);
-
-
         // $jumlah_ruang_reguler = count($this->ruangReguler);
         // $jumlah_ruang_lab = count($this->ruangLaboratorium);
         
@@ -127,7 +116,6 @@ class Genetic {
                 
                 // Penentuan karyawan secara urut 
                 $this->individu[$i][$j][2] = $all_employee[$j];
-
                 // Penentuan libur secara acak
                 $this->individu[$i][$j][3] = mt_rand(0,  $all_sum_days - 1);
                 
@@ -142,7 +130,6 @@ class Genetic {
         $penalty = 0;
         
         $all_week = count($this->week);
-
         //dd($all_week);
         
         for ($i = 1; $i < $all_week; $i++)
@@ -159,11 +146,12 @@ class Genetic {
                 $shift_b = intval($this->individu[$indv][$j][1]);
                 $employee_b = intval($this->individu[$indv][$j][2]);
                 $off_b = intval($this->individu[$indv][$i][3]);
+
+                 //dd($all_week);
                 
                 //ketika pemasaran matakuliah sama, maka langsung ke perulangan berikutnya
                 if ($i == $j)
                     continue;
-
                 //Ketika libur dan minggunya sama, maka penalty + satu
                 if (
                     //ketika libur sama
@@ -173,7 +161,6 @@ class Genetic {
                 {
                     $penalty += 1;
                 }
-
                 //Ketika shift,libur dan minggunya sama, maka penalty + satu
                 if (
                     //ketika shift sama
@@ -347,13 +334,10 @@ class Genetic {
         $fitness = array();
         //proses perandoman atau penggantian komponen untuk tiap jadwal baru
         $r       = mt_rand(0, mt_getrandmax() - 1) / mt_getrandmax();
-
         $all_day = count($this->day);
         $all_sum_days = count($this->sum_days);
-
         $all_employee = $this->ord_employee;        
         $all_shift = $this->ord_shift;
-
         // $jumlah_jam = count($this->jam);
         // $jumlah_hari = count($this->hari);
         // $jumlah_ruang_reguler = count($this->ruangReguler);
@@ -387,7 +371,6 @@ class Genetic {
             $fitness[$i] = $this->CekFitness($i);
         }
         // dd($fitness);     
-
         return $fitness;
     }
     
