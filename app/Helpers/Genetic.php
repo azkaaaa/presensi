@@ -1,153 +1,199 @@
 <?php
-
 namespace App\Helpers;
-
-
 use App\Schedule;
 use App\Employee;
 use App\Shift;
+use App\Week;
 use App\Day;
-
 class Genetic {
     //
     private $month;
     private $populasi;
     private $crossOver;
     private $mutasi;
-
     private $employee = array();
     private $shift = array();
     private $day = array();
-
+    private $week = array();
+    private $off_day = array();
+    private $sum_days = array();
+    private $ord_employee = array();
+    private $ord_shift = array();
     private $logAmbilData;
     private $logInisialisasi;
     
     private $log;
     private $induk = array();
     private $individu = array(array(array()));
-
     public function __construct($month,$populasi,$crossOver,$mutasi){
-      $this->month 			= $month;
+      $this->month          = $month;
       $this->populasi       = intval($populasi);
       $this->crossOver      = $crossOver;
       $this->mutasi         = $mutasi;
     }
-
     public function AmbilData()
     {
-         //Fill Array of Employee Variables
+        $emp_times= Employee::count();
+        $week_times= Week::count();
+        $shift_times= (Week::count() * Employee::count())/2;
+
         $rs_employee = Employee::all();
-        $i = 0;
+        for($x=0; $week_times>$x; $x++){
         foreach ($rs_employee as $data) {
-            $this->employee[$i]    = intval($data->id);
-            $i++;
+            array_unshift($this->employee,"");
+            unset($this->employee[0]);
+            $this->employee[]    = intval($data->id);
+            }
         }
 
         $rs_shift = Shift::all();
-        $i = 0;
+        for($x=0; $shift_times>$x; $x++){
         foreach ($rs_shift as $data) {
-            $this->shift[$i]    = intval($data->id);
-            $i++;
+            $this->shift[]    = intval($data->id);
+            }
+        }
+
+        $emp_numbers = $this->employee;
+        asort($emp_numbers);
+        
+        foreach($emp_numbers as $x => $x_value) {
+        $this->ord_employee[]    = $x_value;
+        }
+
+        $emp_shift = $this->shift;
+        asort($emp_shift);
+        
+        foreach($emp_shift as $y => $y_value) {
+        $this->ord_shift[]    = $y_value;
+        }
+
+        $rs_week = Week::all();
+        for($x=0; $emp_times>$x; $x++){
+        foreach ($rs_week as $data) {
+            $this->day[]    = intval($data->id);
+            }
         }
 
         $rs_day = Day::all();
-        $i = 0;
+        for($x=0; $emp_times>$x; $x++){
         foreach ($rs_day as $data) {
-            $this->day[$i]    = intval($data->id);
-            $i++; 
+            $this->sum_days[]    = intval($data->id);
+            }
+        }
+
+        dd($this->ord_employee);
+
+
+        $rs_new_week = Week::all();
+        $i = 0;
+        foreach ($rs_new_week as $data) {
+            $this->week[]    = intval($data->id);
+            $i++;
+            }
+        
+        // $days_name = ['1','2','3','4','5'];
+
+        // foreach($days_name as $y => $y_value) {
+        // $this->sum_days[]    = $y_value;
+        // }
+
+        // dd($this->sum_days);
+
     }
-	}
     
     
     public function Inisialisai()
-    {
-        
-        $all_employee = count($this->employee);        
-        $all_shift = count($this->shift);
+    {        
+        $all_employee = $this->ord_employee;        
+        $all_shift = $this->ord_shift;
         $all_day = count($this->day);
+        $all_sum_days = count($this->sum_days);
+
+        //dd($this->sum_days);
+
+
         // $jumlah_ruang_reguler = count($this->ruangReguler);
         // $jumlah_ruang_lab = count($this->ruangLaboratorium);
         
         for ($i = 0; $i < $this->populasi; $i++) {
             
-            for ($j = 0; $j < $all_employee; $j++) {
+            for ($j = 0; $j < $all_day; $j++) {
                 
-                // $sks = $this->sks[$j];
-                
+                // Penentuan minggu secara berurut              
                 $this->individu[$i][$j][0] = $j;
                 
                 // Penentuan shift secara acak 
-                $this->individu[$i][$j][1] = mt_rand(0,  $all_shift - 1);
+                $this->individu[$i][$j][1] = $all_shift[$j];
                 
-                // Penentuan hari secara acak 
-                $this->individu[$i][$j][2] = mt_rand(0, $all_day - 1);
-           
+                // Penentuan karyawan secara urut 
+                $this->individu[$i][$j][2] = $all_employee[$j];
+
+                // Penentuan libur secara acak
+                $this->individu[$i][$j][3] = mt_rand(0,  $all_sum_days - 1);
+                
+                
             }
         }
-
-        // dd($this->individu);
+        // dd($this->day);
     }
     
     private function CekFitness($indv)
     {
         $penalty = 0;
         
-        $all_employee = count($this->employee);
+        $all_week = count($this->week);
+
+        //dd($all_week);
         
-        for ($i = 0; $i < $all_employee; $i++)
+        for ($i = 1; $i < $all_week; $i++)
         {
-          
           // $sks = intval($this->sks[$i]);
-          
+          $week_a = intval($this->day[$i]);        
           $shift_a = intval($this->individu[$indv][$i][1]);
-          $day_a = intval($this->individu[$indv][$i][2]);
-          $employee_a = intval($this->employee[$i]);        
+          $employee_a = intval($this->individu[$indv][$i][2]);
+          $off_a = intval($this->individu[$indv][$i][3]);
           
-          
-            for ($j = 0; $j < $all_employee; $j++) {                 
-              
+            for ($j = 1; $j < $all_week; $j++) {                 
+                
+                $week_b = intval($this->day[$j]);
                 $shift_b = intval($this->individu[$indv][$j][1]);
-                $day_b = intval($this->individu[$indv][$j][2]);
-                $employee_b = intval($this->employee[$j]);
-                  
-                  
-                //1.bentrok ruang dan waktu dan 3.bentrok dosen
+                $employee_b = intval($this->individu[$indv][$j][2]);
+                $off_b = intval($this->individu[$indv][$i][3]);
                 
                 //ketika pemasaran matakuliah sama, maka langsung ke perulangan berikutnya
                 if ($i == $j)
                     continue;
-                
-                //#region Bentrok Ruang dan Waktu
-                //Ketika jam,hari dan ruangnya sama, maka penalty + satu
-                if ($shift_a == $shift_b &&
-                    $day_a == $day_b)
+
+                //Ketika libur dan minggunya sama, maka penalty + satu
+                if (
+                    //ketika libur sama
+                    $off_a == $off_b && 
+                    //dan ketika minggu sama
+                    $week_a == $week_b)
                 {
                     $penalty += 1;
                 }
-                
-                //______________________BENTROK DOSEN
+
+                //Ketika shift,libur dan minggunya sama, maka penalty + satu
                 if (
-                //ketika jam sama
-                    $shift_a == $shift_b && 
-                //dan hari sama
-                    $day_a == $day_b && 
-                //dan dosennya sama
-                    $employee_a == $employee_b)
+                    //ketika shift sama
+                    $shift_a == $shift_b &&
+                    //ketika libur sama
+                    $off_a == $off_b && 
+                    //da ketika minggu sama
+                    $week_a == $week_b)
                 {
-                  //maka...
-                  $penalty += 1;
-                }               
-                             
+                    $penalty += 1;
+                }
+                            
             }                  
             
         }      
         
         $fitness = floatval(1 / (1 + $penalty)); 
-
-           // dd($fitness);     
+        // dd($fitness);     
         
         return $fitness;
-
          
     }
     
@@ -229,7 +275,7 @@ class Genetic {
     public function StartCrossOver()
     {
         $individu_baru = array(array(array()));
-        $all_employee = count($this->employee);
+        $all_day = count($this->day);
         
         for ($i = 0; $i < $this->populasi; $i += 2) //perulangan untuk jadwal yang terpilih
         {
@@ -242,9 +288,9 @@ class Genetic {
                 //ketika nilai random kurang dari nilai probabilitas pertukaran
                 //maka jadwal mengalami prtukaran
                 
-                $a = mt_rand(0, $all_employee - 2);
+                $a = mt_rand(0, $all_day - 2);
                 while ($b <= $a) {
-                    $b = mt_rand(0, $all_employee - 1);
+                    $b = mt_rand(0, $all_day - 1);
                 }
                 
                 
@@ -259,7 +305,7 @@ class Genetic {
                     }
                 }
                 
-                //Penentuan jadwal baru dai titik pertama sampai titik kedua
+                //Penentuan jadwal baru dari titik pertama sampai titik kedua
                 for ($j = $a; $j < $b; $j++) {
                     for ($k = 0; $k < 3; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i + 1]][$j][$k];
@@ -268,14 +314,14 @@ class Genetic {
                 }
                 
                 //penentuan jadwal baru dari titik kedua sampai akhir
-                for ($j = $b; $j < $all_employee; $j++) {
+                for ($j = $b; $j < $all_day; $j++) {
                     for ($k = 0; $k < 3; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
                     }
                 }
             } else { //Ketika nilai random lebih dari nilai probabilitas pertukaran, maka jadwal baru sama dengan jadwal terpilih
-                for ($j = 0; $j < $all_employee; $j++) {
+                for ($j = 0; $j < $all_day; $j++) {
                     for ($k = 0; $k < 3; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
@@ -284,10 +330,10 @@ class Genetic {
             }
         }
         
-        $all_employee = count($this->employee);
+        $all_day = count($this->day);
         
         for ($i = 0; $i < $this->populasi; $i += 2) {
-          for ($j = 0; $j < $all_employee ; $j++) {
+          for ($j = 0; $j < $all_day ; $j++) {
             for ($k = 0; $k < 3; $k++) {
                 $this->individu[$i][$j][$k] = $individu_baru[$i][$j][$k];
                 $this->individu[$i + 1][$j][$k] = $individu_baru[$i + 1][$j][$k];
@@ -301,9 +347,12 @@ class Genetic {
         $fitness = array();
         //proses perandoman atau penggantian komponen untuk tiap jadwal baru
         $r       = mt_rand(0, mt_getrandmax() - 1) / mt_getrandmax();
-        $all_employee = count($this->employee);
-        $all_shift = count($this->shift);
+
         $all_day = count($this->day);
+        $all_sum_days = count($this->sum_days);
+
+        $all_employee = $this->ord_employee;        
+        $all_shift = $this->ord_shift;
 
         // $jumlah_jam = count($this->jam);
         // $jumlah_hari = count($this->hari);
@@ -316,14 +365,14 @@ class Genetic {
             
             if ($r < $this->mutasi) {
                 //Penentuan pada matakuliah dan kelas yang mana yang akan dirandomkan atau diganti
-                $krom = mt_rand(0, $all_employee - 1);
+                $krom = mt_rand(0, $all_day - 1);
                 
                 // $j = intval($this->sks[$krom]);
-
-                $this->individu[$i][$krom][1] = mt_rand(0,  $all_shift - 1);
-                //Proses penggantian hari
-                $this->individu[$i][$krom][2] = mt_rand(0, $all_day - 1);
-                
+                //$this->individu[$i][$krom][1] = $all_shift;
+                //Proses penggantian karyawan
+                //$this->individu[$i][$krom][2] = $all_employee;
+                 //Proses penggantian hari libur
+                $this->individu[$i][$krom][3] = mt_rand(0,  $all_sum_days - 1);    
                 //proses penggantian ruang               
                 
                 // if ($this->jenis_mk[$krom] === $this->TEORI) {
@@ -337,6 +386,8 @@ class Genetic {
             
             $fitness[$i] = $this->CekFitness($i);
         }
+        // dd($fitness);     
+
         return $fitness;
     }
     
@@ -348,13 +399,13 @@ class Genetic {
         //int[,] individu_solusi = new int[mata_kuliah.Length, 4];
         $individu_solusi = array(array());
         
-        for ($j = 0; $j < count($this->employee); $j++)
+        for ($j = 0; $j < count($this->day); $j++)
         {
-            $individu_solusi[$j][0] = intval($this->employee[$this->individu[$indv][$j][0]]);
+            $individu_solusi[$j][0] = intval($this->day[$this->individu[$indv][$j][0]]);
             $individu_solusi[$j][1] = intval($this->shift[$this->individu[$indv][$j][1]]);
-            $individu_solusi[$j][2] = intval($this->day[$this->individu[$indv][$j][2]]);       
+            $individu_solusi[$j][2] = intval($this->employee[$this->individu[$indv][$j][2]]);       
+            $individu_solusi[$j][3] = intval($this->sum_days[$this->individu[$indv][$j][3]]);       
         }
-
         // dd($individu_solusi);
         
         return $individu_solusi;

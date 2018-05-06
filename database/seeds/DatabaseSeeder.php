@@ -16,5 +16,9 @@ class DatabaseSeeder extends Seeder
          $this->call(EmployeesSeeder::class);
          $this->call(PositionsSeeder::class);
          $this->call(PresencesSeeder::class);
+         $this->call(DaysSeeder::class);
+         $this->call(WeeksSeeder::class);
+         $this->call(MonthsSeeder::class);
+         $this->call(ShiftsSeeder::class);
     }
 }

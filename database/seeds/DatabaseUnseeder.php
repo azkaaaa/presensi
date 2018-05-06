@@ -17,5 +17,9 @@ class DatabaseUnseeder extends Seeder
         DB::table('employees')->truncate();
         DB::table('users')->truncate();
         DB::table('presences')->truncate();
+        DB::table('days')->truncate();
+        DB::table('weeks')->truncate();
+        DB::table('months')->truncate();
+        DB::table('shifts')->truncate();
     }
 }

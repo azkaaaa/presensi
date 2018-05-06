@@ -15,13 +15,18 @@ class CreateSchedulesTable extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
-            $table->string('shift');
-            $table->string('day');
-            $table->date('date');
+            $table->integer('shift_id')->unsigned();
+            $table->integer('week_id')->unsigned();
+            $table->integer('day_id')->unsigned();
+            $table->integer('month_id')->unsigned();
             $table->string('status');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
+            $table->foreign('shift_id')->references('id')->on('shifts');
+            $table->foreign('day_id')->references('id')->on('days');
+            $table->foreign('week_id')->references('id')->on('weeks');
+            $table->foreign('month_id')->references('id')->on('months');
         });
     }
 

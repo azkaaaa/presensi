@@ -21,7 +21,7 @@ Route::auth();
 
 //START KODING
 Route::group(['middleware' => 'web'], function () {
-	
+ 	
 });
 
 //Presence Route

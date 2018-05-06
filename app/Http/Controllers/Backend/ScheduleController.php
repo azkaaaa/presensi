@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Schedule;
+use App\Month;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -14,6 +15,7 @@ use App\Helpers\Genetic;
 use Yajra\Datatables\Datatables;
 
 use Auth;
+use DB;
 
 class ScheduleController extends Controller
 {
@@ -31,7 +33,13 @@ class ScheduleController extends Controller
 
 	public function dataSchedules()
   	{
-    	 $schedules = Schedule::select(['id', 'employee_id', 'shift', 'day', 'date', 'status', 'created_at', 'updated_at']);
+    	 $schedules = DB::table('schedules')
+            ->join('employees', 'employees.id', '=', 'schedules.employee_id')
+            ->join('shifts', 'shifts.id', '=', 'schedules.shift_id')
+            ->join('days', 'days.id', '=', 'schedules.day_id')
+            ->join('weeks', 'weeks.id', '=', 'schedules.week_id')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('schedules.*', 'employees.name as employee_name', 'shifts.name as shift_name', 'days.name as day_name', 'weeks.name as week_name', 'months.name as month_name');
 
 	      return Datatables::of($schedules)
 	      ->addColumn('action', function ($schedules) {
@@ -52,7 +60,8 @@ class ScheduleController extends Controller
 
     public function create()
     {
-        return view('backend.schedule.create');
+    	$month = Month::all();
+        return view('backend.schedule.create', ['month'=>$month]);
     }
 
     public function store(Request $request)
@@ -82,8 +91,6 @@ class ScheduleController extends Controller
 	  $genetik->AmbilData();
 	  $genetik->Inisialisai();
 					
-					
-					
 					$found = false;
 					
 					for($i = 0;$i < $jumlah_generasi;$i++ ){
@@ -98,6 +105,7 @@ class ScheduleController extends Controller
 						$genetik->StartCrossOver();
 						
 						$fitnessAfterMutation = $genetik->Mutasi();
+
 						
 						for ($j = 0; $j < count($fitnessAfterMutation); $j++){
 							//test here
@@ -113,16 +121,19 @@ class ScheduleController extends Controller
 								
 								for($k = 0; $k < count($jadwal_kuliah);$k++){
 									
-									$employee_id = intval($jadwal_kuliah[$k][0]);
-									$time_id = intval($jadwal_kuliah[$k][1]);
-									$day_id = intval($jadwal_kuliah[$k][2]);
+									$week_id = intval($jadwal_kuliah[$k][0]);
+									$shift_id = intval($jadwal_kuliah[$k][1]);
+									$employee_id = intval($jadwal_kuliah[$k][2]);
+									$day_id = intval($jadwal_kuliah[$k][3]);
 									
 									$schedule =  new Schedule();
 									$status = 1;
 							    
 							        $schedule->employee_id = $employee_id;
-							        $schedule->shift = $time_id;
-							        $schedule->day = $day_id;
+							        $schedule->shift_id = $shift_id;
+							        $schedule->day_id = $day_id;
+							        $schedule->week_id = $week_id;
+							        $schedule->month_id = $month;
 							        $schedule->status = $status;
 							        $schedule->save();									
 								}

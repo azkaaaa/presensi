@@ -12,10 +12,10 @@
               <table class="table table-bordered table-striped" id="schedules-data">
                 <thead>
                 <tr>
-                  <th>Karyawan</th>
+                  <th>Minggu</th>
                   <th>Shift</th>
-                  <th>Hari</th>
-                  <th>Tanggal</th>
+                  <th>Karyawan</th>
+                  <th>Libur</th>
                   <th>Status</th>
                   <th width="15%">Aksi</th>
                 </tr>
@@ -32,10 +32,10 @@
                         url: '{{ url("/admin/data-schedule") }}'
                     },
                     columns: [
-                    {data: 'employee_id', name: 'employee_id'},
-                    {data: 'shift', name: 'shift'},
-                    {data: 'day', name: 'day'},
-                    {data: 'date', name: 'date'},
+                    {data: 'week_name', name: 'weeks.name'},
+                    {data: 'shift_name', name: 'shifts.name'},
+                    {data: 'employee_name', name: 'employees.name'},
+                    {data: 'day_name', name: 'days.name'},
                     {data: 'status', name: 'status'},
                     {data: 'action', 'searchable': false, 'orderable':false }
                 ],

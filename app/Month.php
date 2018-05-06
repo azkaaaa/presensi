@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Day extends Model
+class Month extends Model
 {
-    protected $table = 'days';
+    protected $table = 'months';
 
     protected $fillable =
     [
