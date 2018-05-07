@@ -75,18 +75,21 @@ class ScheduleController extends Controller
       // $position->save();
 
       $month = $request->month;
+      $schedule_week = $request->schedule_week;
       $jumlah_populasi = $request->jumlah_populasi;
       $crossOver = $request->probabilitas_crossover;
       $mutasi = $request->probabilitas_mutasi;
       $jumlah_generasi = $request->jumlah_generasi;
 
       $data['month'] = $month;
+      $data['schedule_week'] = $schedule_week;
 	  $data['jumlah_populasi'] = $jumlah_populasi;
 	  $data['probabilitas_crossover'] = $crossOver;
 	  $data['probabilitas_mutasi'] = $mutasi;
 	  $data['jumlah_generasi'] = $jumlah_generasi;
 
-	  $genetik = new Genetic($month,$jumlah_populasi,$crossOver,$mutasi,$jumlah_generasi);
+      $data['month'] = $month;
+	  $genetik = new Genetic($month,$schedule_week,$jumlah_populasi,$crossOver,$mutasi,$jumlah_generasi);
 					
 	  $genetik->AmbilData();
 	  $genetik->Inisialisai();

@@ -8,6 +8,7 @@ use App\Day;
 class Genetic {
     //
     private $month;
+    private $schedule_week;
     private $populasi;
     private $crossOver;
     private $mutasi;
@@ -25,7 +26,8 @@ class Genetic {
     private $log;
     private $induk = array();
     private $individu = array(array(array()));
-    public function __construct($month,$populasi,$crossOver,$mutasi){
+    public function __construct($month,$schedule_week,$populasi,$crossOver,$mutasi){
+      $this->schedule_week  = $schedule_week;
       $this->month          = $month;
       $this->populasi       = intval($populasi);
       $this->crossOver      = $crossOver;
@@ -34,8 +36,8 @@ class Genetic {
     public function AmbilData()
     {
         $emp_times= Employee::count();
-        $week_times= Week::count();
-        $shift_times= (Week::count() * Employee::count())/2;
+        $week_times= 2;
+        $shift_times= ($week_times * Employee::count())/2;
         $rs_employee = Employee::all();
         for($x=0; $week_times>$x; $x++){
         foreach ($rs_employee as $data) {
@@ -44,12 +46,7 @@ class Genetic {
             $this->employee[]    = intval($data->id);
             }
         }
-        $rs_shift = Shift::all();
-        for($x=0; $shift_times>$x; $x++){
-        foreach ($rs_shift as $data) {
-            $this->shift[]    = intval($data->id);
-            }
-        }
+
         $emp_numbers = $this->employee;
         asort($emp_numbers);
         
@@ -57,21 +54,36 @@ class Genetic {
         $this->ord_employee[]    = $x_value;
         }
 
-        $emp_shift = $this->shift;
-        asort($emp_shift);
-        
-        // $days_name = [1,1,2,2,2,2,1,1,1,1,2,2,2,2,1,1];
+        $rs_shift = Shift::all();
+        for($x=0; $shift_times>$x; $x++){
+        foreach ($rs_shift as $data) {
+            $this->shift[]    = intval($data->id);
+            }
+        }
+
+        if($this->schedule_week == 'week_12'){
+            $emp_shift = $this->shift;
+            asort($emp_shift);
+            $rs_week = Week::orderBy('id','asc')->take(2)->get();
+
+        }
+        else{
+            $emp_shift = $this->shift;
+            rsort($emp_shift);
+            $rs_week = Week::orderBy('id','desc')->take(2)->get();
+
+        }
 
         foreach($emp_shift as $y => $y_value) {
         $this->ord_shift[]    = $y_value;
         }
 
-        $rs_week = Week::all();
         for($x=0; $emp_times>$x; $x++){
         foreach ($rs_week as $data) {
             $this->day[]    = intval($data->id);
             }
         }
+
         $rs_day = Day::all();
         for($x=0; $emp_times>$x; $x++){
         foreach ($rs_day as $data) {
@@ -79,9 +91,8 @@ class Genetic {
             }
         }
     
-        $rs_new_week = Week::all();
         $i = 0;
-        foreach ($rs_new_week as $data) {
+        foreach ($rs_week as $data) {
             $this->week[]    = intval($data->id);
             $i++;
             }
