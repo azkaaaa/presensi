@@ -74,14 +74,6 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::resource('/employee','Backend\EmployeeController');
 	Route::get('/data-employee', ['as'=>'admin.employee.data','uses'=>'Backend\EmployeeController@dataEmployees']);
 
-	// //Allowance Route
-	// Route::resource('/allowance','Backend\AllowanceController');
-	// Route::get('/data-allowance', ['as'=>'admin.allowance.data','uses'=>'Backend\AllowanceController@dataAllowances']);
-
-	// //Employee Allowance Route
-	// Route::resource('/empallowance','Backend\EmployeeAllowanceController');
-	// Route::get('/data-empallowance', ['as'=>'admin.empallowance.data','uses'=>'Backend\EmployeeAllowanceController@dataEmpAllowance']);
-
 	//Presence Route
 	Route::get('/presence/data', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);
 	Route::resource('/presence','Backend\PresenceController');
@@ -100,10 +92,40 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	//Schedule Route
 	Route::resource('/schedule','Backend\ScheduleController');
 	Route::get('/data-schedule', ['as'=>'admin.schedule.data','uses'=>'Backend\ScheduleController@dataSchedules']);
-	// Route::get('/historysalary', ['as'=>'admin.historysalary.data','uses'=>'Backend\SalaryController@getList']);
-	// Route::get('/salary/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\SalaryController@printHistorySalary']);
-	// Route::get('/searchsalary', ['as' => 'admin.salary.search', 'uses' => 'Backend\SalaryController@searchSalary']);
 
 });
 
+Route::group(['prefix'=>'employee','middleware' => ['auth', 'employee']], function () {
+
+	//Presence Route
+	Route::get('/presence', ['as' => 'employee.presence.index', 'uses' => 'Backend\PresenceController@getPresencesEmployee']);
+	Route::get('/data-presence-employee', ['as'=>'employee.presence.data','uses'=>'Backend\PresenceController@dataPresencesEmployee']);
+
+	//Schedule Route
+	Route::get('/schedule', ['as' => 'employee.schedule.index', 'uses' => 'Backend\ScheduleController@getSchedulesEmployee']);
+	Route::get('/data-schedule-employee', ['as'=>'employee.schedule.data','uses'=>'Backend\ScheduleController@dataSchedulesEmployee']);
+});
+
+Route::group(['prefix'=>'manager','middleware' => ['auth', 'manager']], function () {
+
+	//Employee Route
+	Route::get('/employee', ['as' => 'manager.employee.index', 'uses' => 'Backend\EmployeeController@getEmployees']);
+	Route::get('/detailemployee/{id}', ['as' => 'manager.employee.detail', 'uses' => 'Backend\EmployeeController@getDetailEmployee']);
+	Route::get('/data-employee-manager', ['as'=>'manager.employee.data','uses'=>'Backend\EmployeeController@dataEmployeesManager']);
+
+	//Presence Route
+	Route::get('/presence/data', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);
+	Route::resource('/presence','Backend\PresenceController');
+	Route::get('/data-presence', ['as'=>'admin.presence.data','uses'=>'Backend\PresenceController@dataPresences']);
+	Route::get('/historypresence', ['as'=>'admin.historypresence.data','uses'=>'Backend\PresenceController@getList']);
+	Route::get('/presence/print/{id}', ['as' => 'admin.printpresence.save', 'uses' => 'Backend\PresenceController@printHistoryPresence']);
+	Route::get('/searchpresence', ['as' => 'admin.presence.search', 'uses' => 'Backend\PresenceController@searchPresence']);
+
+	//Salary Route
+	Route::resource('/salary','Backend\SalaryController');
+	Route::get('/data-salary', ['as'=>'admin.salary.data','uses'=>'Backend\SalaryController@dataSalaries']);
+	Route::get('/historysalary', ['as'=>'admin.historysalary.data','uses'=>'Backend\SalaryController@getList']);
+	Route::get('/salary/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\SalaryController@printHistorySalary']);
+	Route::get('/searchsalary', ['as' => 'admin.salary.search', 'uses' => 'Backend\SalaryController@searchSalary']);
+});
 

@@ -30,6 +30,11 @@ class EmployeeController extends Controller
         return view('backend.employee.index');
     }
 
+  public function getEmployees()
+    {
+        return view('backend.employee.manager_index');
+    }
+
 
 	public function dataEmployees()
   	{
@@ -55,6 +60,22 @@ class EmployeeController extends Controller
   
   	}
 
+    public function dataEmployeesManager()
+    {
+      $employees = DB::table('employees')
+            ->join('positions', 'positions.id', '=', 'employees.position_id')
+            ->select('employees.*', 'positions.name as position_name');
+
+        return Datatables::of($employees)
+        ->addColumn('action', function ($employees) {
+                return '<a href="'.url('manager/detailemployee/'. $employees->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>';
+            }
+            )
+            ->make(true);
+    
+  
+    }
+
   	public function show($id){
         //select * from tugas where id=$id
         // $data = School::find($id);
@@ -65,6 +86,18 @@ class EmployeeController extends Controller
         ->select('employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','positions.name as position_name','users.email','users.level','users.status')
         ->first();
         return view('backend.employee.detail')->with('employee', $employee);
+    }
+
+    public function getDetailEmployee($id){
+        //select * from tugas where id=$id
+        // $data = School::find($id);
+        $employee = DB::table('employees')
+        ->where('employees.id', $id)
+        ->join('users', 'users.id', '=','employees.user_id')
+        ->join('positions', 'positions.id', '=','employees.position_id')
+        ->select('employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','positions.name as position_name','users.email','users.level','users.status')
+        ->first();
+        return view('backend.employee.manager_detail')->with('employee', $employee);
     }
 
 

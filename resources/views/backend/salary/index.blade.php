@@ -31,12 +31,13 @@
                   <th>Total Transport</th>
                   <th>Gaji Lembur</th>
                   <th>Total Gaji</th>
-                  <th width="23%">Aksi</th>
+                  <th width="10%">Aksi</th>
                 </tr>
                 </thead>
               </table>
             </div>
 
+            @if (Auth::user()->level == 'Admin')
             <script type="text/javascript">
             $(function() {
                 var oTable = $('#salaries-data').DataTable({
@@ -57,6 +58,28 @@
                   });
               });
             </script>
+            @elseif (Auth::user()->level == 'Manajer')
+            <script type="text/javascript">
+            $(function() {
+                var oTable = $('#salaries-data').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ url("/manager/data-salary") }}'
+                    },
+                    columns: [
+                    {data: 'name', name: 'employees.name'},
+                    {data: 'total_presences', name: 'total_presences'},
+                    {data: 'total_salary', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_salary'},
+                    {data: 'total_transport', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_transport'},
+                    {data: 'total_overtime', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_overtime'},
+                    {data: 'total_all', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_all'},
+                    {data: 'action', 'searchable': false, 'orderable':false }
+                  ],
+                  });
+              });
+            </script>
+            @endif
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

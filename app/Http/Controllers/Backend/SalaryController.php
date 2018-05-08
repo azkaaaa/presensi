@@ -39,11 +39,11 @@ class SalaryController extends Controller
             ->join('employees', 'employees.id', '=', 'salaries.employee_id')
             ->select('employees.name as employee_name', 'salaries.*', DB::raw('sum(salaries.total_salary) as total_all'))
             ->groupBy('salaries.list')
+            ->orderBy('salaries.created_at', 'desc')
             ->get();
             // ->whereMonth('presences.date', '=', $dt->month);
         return view('backend.salary.history', ['salary'=>$salary]);
     }
-
 
 	public function dataSalaries()
   	{
@@ -57,18 +57,25 @@ class SalaryController extends Controller
             ->groupBy('employees.id')
             ->whereMonth('presences.date', '=', $dt->month);
 
-	      return Datatables::of($salary)
-	      ->addColumn('action', function ($salary) {
-                return '<a href="'.url('admin/salary/'. $salary->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
-                
-                <form method="POST" action="'.url('admin/salary/'. $salary->id).'" style="display: inline">  
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="' .csrf_token(). '">
-                        <button class="btn-sm btn-danger" type="submit" style="border: none"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
-                 </form>';
-            }
+        if (Auth::user()->level == 'Admin'){
+          return Datatables::of($salary)
+          ->addColumn('action', function ($salary) {
+                return '<a href="'.url('admin/salary/'. $salary->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Detail</a>';
+              }
+            )
+          ->make(true);
+        }
+
+        elseif (Auth::user()->level == 'Manajer'){
+          return Datatables::of($salary)
+          ->addColumn('action', function ($salary) {
+                return '<a href="'.url('manager/salary/'. $salary->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Detail</a>';
+              }
             )
             ->make(true);
+        }
+	      
+        
     
   
   	}

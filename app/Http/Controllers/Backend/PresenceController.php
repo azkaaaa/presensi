@@ -38,13 +38,20 @@ class PresenceController extends Controller
         return view('backend.presence.index');
     }
 
+    public function getPresencesEmployee()
+    {
+        return view('backend.presence.employee_index');
+    }
+
     public function getList()
     {
       $presence = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->select('employees.name as employee_name', 'presences.*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),  DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'), DB::raw('sum(presences.overtime) as total_overtime'))
             ->groupby('year','month')
+            ->orderBy('presences.date', 'desc')
             ->get();
+
         return view('backend.presence.history', ['presence'=>$presence]);
     }
 
@@ -66,6 +73,22 @@ class PresenceController extends Controller
     
   
   	}
+
+    public function dataPresencesEmployee()
+    {
+       $user = Auth::id();
+       $dt = Carbon::now();
+       $date = $dt->toDateString(); 
+
+       $presences = DB::table('presences')
+            ->join('employees', 'employees.id', '=', 'presences.employee_id')
+            ->join('positions', 'positions.id', '=', 'employees.position_id')
+            ->select('presences.*', 'employees.name as employee_name', 'positions.name as position_name')
+            ->where('employees.id', '=', $user)
+            ->whereMonth('presences.date', '=', $dt->month);
+          
+        return Datatables::of($presences)->make(true);
+    }
 
   	public function show($id){
         //select * from tugas where id=$id

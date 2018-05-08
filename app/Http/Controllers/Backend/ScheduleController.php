@@ -16,6 +16,7 @@ use Yajra\Datatables\Datatables;
 
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 class ScheduleController extends Controller
 {
@@ -25,14 +26,19 @@ class ScheduleController extends Controller
         return view('backend.schedule.index');
     }
 
-  public function getIndex()
+  	public function getIndex()
     {
         return view('backend.schedule.index');
     }
 
+    public function getSchedulesEmployee()
+    {
+        return view('backend.schedule.employee_index');
+    }
+
 
 	public function dataSchedules()
-  	{
+  	{ 
     	 $schedules = DB::table('schedules')
             ->join('employees', 'employees.id', '=', 'schedules.employee_id')
             ->join('shifts', 'shifts.id', '=', 'schedules.shift_id')
@@ -52,11 +58,28 @@ class ScheduleController extends Controller
                  </form>';
             }
             )
-            ->make(true);
-    
-  
+            ->make(true);  
   	}
 
+  	public function dataSchedulesEmployee()
+  	{	
+  		$user = Auth::id();
+        $dt = Carbon::now();
+        $date = $dt->toDateString();
+
+    	 $schedules = DB::table('schedules')
+            ->join('employees', 'employees.id', '=', 'schedules.employee_id')
+            ->join('shifts', 'shifts.id', '=', 'schedules.shift_id')
+            ->join('days', 'days.id', '=', 'schedules.day_id')
+            ->join('weeks', 'weeks.id', '=', 'schedules.week_id')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('schedules.*', 'employees.name as employee_name', 'shifts.name as shift_name', 'days.name as day_name', 'weeks.name as week_name', 'months.name as month_name')
+            ->where('employees.id', '=', $user)
+            ->where('schedules.month_id', '=', $dt->month);
+
+
+	      return Datatables::of($schedules)->make(true);  
+  	}
 
     public function create()
     {

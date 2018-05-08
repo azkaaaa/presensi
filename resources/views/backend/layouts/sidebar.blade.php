@@ -152,17 +152,47 @@
           </ul>
         </li>
         @elseif (Auth::user()->level == 'Karyawan')
+        <li>
+          <a href="{{ url('/employee/presence')}}">
+            <i class="fa fa-address-card-o"></i>
+            <span>Daftar Presensi</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('/employee/schedule')}}">
+            <i class="fa fa-calendar-check-o"></i>
+            <span>Daftar Jadwal</span>
+          </a>
+        </li>
+        @elseif (Auth::user()->level == 'Manajer')
+        <li>
+          <a href="{{ url('/manager/employee')}}">
+            <i class="fa fa-users"></i>
+            <span>Daftar Karyawan</span>
+          </a>
+        </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-edit"></i> <span>Data</span>
+            <i class="fa fa-clock-o"></i> <span>Manage Presensi</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Presensi</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Jadwal</a></li>
-            <!-- <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li> -->
+            <li><a href="{{ url('/manager/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi Bulan Ini</a></li>
+            <li><a href="{{ url('/manager/historypresence')}}"><i class="fa fa-circle-o"></i> Daftar Presensi</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dollar"></i> <span>Manage Penggajian</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('/manager/salary')}}"><i class="fa fa-circle-o"></i> Penggajian Bulan Ini</a></li>
+            <li><a href="{{ url('/manager/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
           </ul>
         </li>
         @endif
