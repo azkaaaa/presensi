@@ -22,12 +22,12 @@ class EmployeeController extends Controller
 
 	public function index()
     {
-        return view('backend.employee.index');
+        return view('backend.employee.index_employee');
     }
 
   public function getIndex()
     {
-        return view('backend.employee.index');
+        return view('backend.employee.index_employee');
     }
 
   public function getEmployees()
@@ -79,7 +79,7 @@ class EmployeeController extends Controller
         ->join('positions', 'positions.id', '=','employees.position_id')
         ->select('employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','employees.profile_picture','positions.name as position_name','users.email','users.level','users.status')
         ->first();
-        return view('backend.employee.detail')->with('employee', $employee);
+        return view('backend.employee.detail_employee')->with('employee', $employee);
     }
 
     public function getDetailEmployee($id){

@@ -17,7 +17,7 @@
                   <th>Alamat</th>
                   <th>No Telepon</th>
                   <th>Jabatan</th>
-                  <th width="10%">Aksi</th>
+                  <th width="18%">Aksi</th>
                 </tr>
                 </thead>
               </table>
