@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Employee;
 use App\Allowance;
 use App\Salary;
+use App\Month;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -139,7 +140,8 @@ class SalaryController extends Controller
 
     public function printHistorySalary($history)
     { 
-      // $salary = Salary::where('history', $history)->get();
+      $dt = Carbon::now();
+      $date = $dt->toDateString();
 
       $salary = DB::table('salaries')
             ->join('employees', 'employees.id', '=', 'salaries.employee_id')
@@ -154,7 +156,9 @@ class SalaryController extends Controller
             ->where('salaries.list', '=', $history)
             ->first();
 
-        $pdf = PDF::loadView('backend/pdf/payroll', ['salary' => $salary, 'total' => $total]);
+      $month = Month::find($total->month);
+
+        $pdf = PDF::loadView('backend/pdf/payroll', ['salary' => $salary, 'total' => $total, 'date' => $date, 'month' => $month->name]);
         return $pdf->stream('Payroll_'.$total->month.'_'.$total->years.'.pdf');
     }
 

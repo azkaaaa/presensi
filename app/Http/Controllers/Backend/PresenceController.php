@@ -10,6 +10,7 @@ use App\Employee;
 use App\Position;
 use App\Presence;
 use App\Capture;
+use App\Month;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -322,6 +323,8 @@ class PresenceController extends Controller
 
     public function printHistoryPresence($history)
     { 
+      $dt = Carbon::now();
+      $date = $dt->toDateString();
       $presences = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->select('employees.name as employee_name', 'presences.*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),  DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'))
@@ -334,10 +337,12 @@ class PresenceController extends Controller
             ->groupby('year','month')
             ->where(DB::raw("DATE_FORMAT(presences.date, '%m-%Y')"), '=', $history)
             ->first();
-
+      $tes =  date('m',strtotime($total->date));
+      
+      $month = Month::find($tes);
             // dd($presences);
 
-        $pdf = PDF::loadView('backend/pdf/presence', ['presences' => $presences, 'total' => $total]);
+        $pdf = PDF::loadView('backend/pdf/presence', ['presences' => $presences, 'total' => $total, 'date' => $date, 'month' => $month->name]);
         return $pdf->stream('Absen_'.Carbon::parse($total->date)->format('F').'_'.Carbon::parse($total->date)->format('Y').'.pdf');
     }
 

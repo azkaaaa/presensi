@@ -3,6 +3,7 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    font-size: 12px;
 }
 
 td, th {
@@ -11,18 +12,32 @@ td, th {
     padding: 8px;
 }
 
-tr:nth-child(even) {
+/*tr:nth-child(even) {
     background-color: #dddddd;
-}
+}*/
 </style>
 <table>
+            <tr>
+                <td colspan="6">
+                    <table>
+                        <tr>
+                            <td><a style="font-weight: bold; font-size: 20px;"><center>Cafe Omboy</a><br>
+                                <center>Jalan Boulevard Raya Blok RGA No.1, Jakasetia, Bekasi<br><br>
+
+                                <a style="font-weight: bold;">Penggajian Bulan {{ $month }}</a><br>
+                                {{ date('d-m-Y', strtotime($date)) }}<br>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
   <tr>
     <th style="width: 130px">Nama Karyawan</th>
     <th>Gaji Pokok</th>
-    <th style="width: 30px">Total Kehadiran</th>
-    <th>Total Transport</th>
-    <th>Total Lembur</th>
-    <th>Total Gaji</th>
+    <th style="width: 30px">Kehadiran</th>
+    <th>Transport</th>
+    <th>Lembur</th>
+    <th>Gaji</th>
   </tr>
   @foreach($salary as $row)
   <tr>
