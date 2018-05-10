@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\Position;
+use App\Employee;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Yajra\Datatables\Datatables;
 
 use Auth;
+use Carbon\Carbon;
+
 
 class PositionController extends Controller
 {
@@ -38,7 +41,7 @@ class PositionController extends Controller
                 <form method="POST" action="'.url('admin/position/'. $positions->id).'" style="display: inline">  
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="' .csrf_token(). '">
-                        <button class="btn-sm btn-danger" type="submit" style="border: none"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+                        <button class="btn-sm btn-danger" type="submit" style="border: none" onclick="return myFunction();"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
                  </form>';
             }
             )
@@ -93,11 +96,26 @@ class PositionController extends Controller
 
     public function destroy($id)
   	{
-  		Position::find($id)->delete();
+  		$delete = Position::findOrFail($id);
+      $employees = Employee::all();
 
-          session()->flash('message', 'Data jabatan berhasil dihapus.');
+      foreach ($employees as $employee)
+      {
+          if ($employee->position_id == $id)
+          {
+              $match = 'found';
+          }
+      }
 
-  		return redirect('/admin/position');
-  	}
-
+      if ($match == 'found')
+      {
+          session()->flash('message', 'Hapus data karyawan dengan jabatan bersangkutan dahulu.');
+          return redirect('/admin/position');
+      } 
+      else {
+          $delete->delete();
+          session()->flash('message', 'Data jabatan berhasil dihapus');
+  		    return redirect('/admin/position');
+  	   }
+    }
 }

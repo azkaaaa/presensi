@@ -39,6 +39,13 @@
             });
           </script>
 
+          <script>
+            function myFunction() {
+                if(!confirm("Apa anda yakin menghapus data ini"))
+                event.preventDefault();
+            }
+          </script>
+
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

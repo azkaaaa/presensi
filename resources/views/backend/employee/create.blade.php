@@ -135,9 +135,9 @@
                     <label for="level" class="col-md-2 control-label">Level</label>
                     <div class="col-md-10">
                         <select class="form-control" name="level">
-                              <option value="admin">Admin</option>
-                              <option value="employee">Karyawan</option>
-                              <option value="manager">Manajer</option>
+                              <option value="Admin">Admin</option>
+                              <option value="Karyawan">Karyawan</option>
+                              <option value="Manajer">Manajer</option>
                         </select>
                         <p class="text-danger">{{$errors->first('level')}}</p>
                     </div>

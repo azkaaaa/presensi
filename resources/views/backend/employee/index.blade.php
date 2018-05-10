@@ -17,7 +17,7 @@
                   <th>Alamat</th>
                   <th>No Telepon</th>
                   <th>Jabatan</th>
-                  <th width="23%">Aksi</th>
+                  <th width="10%">Aksi</th>
                 </tr>
                 </thead>
               </table>
@@ -41,6 +41,13 @@
                   ],
                   });
               });
+            </script>
+
+            <script>
+              function myFunction() {
+                  if(!confirm("Apa anda yakin menghapus data ini"))
+                  event.preventDefault();
+              }
             </script>
             <!-- /.box-body -->
           </div>

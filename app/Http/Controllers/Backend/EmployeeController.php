@@ -44,15 +44,9 @@ class EmployeeController extends Controller
 
 	      return Datatables::of($employees)
 	      ->addColumn('action', function ($employees) {
-                return '<a href="'.url('admin/employee/'. $employees->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>
+                return '<a href="'.url('admin/employee/'. $employees->id).'" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>
 
-                		<a href="'.url('admin/employee/'. $employees->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
-                
-		                <form method="POST" action="'.url('admin/employee/'. $employees->id).'" style="display: inline">  
-		                        <input type="hidden" name="_method" value="DELETE">
-		                        <input type="hidden" name="_token" value="' .csrf_token(). '">
-		                        <button class="btn-sm btn-danger" type="submit" style="border: none"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
-		                 </form>';
+                		<a href="'.url('admin/employee/'. $employees->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>';
             }
             )
             ->make(true);
@@ -68,7 +62,7 @@ class EmployeeController extends Controller
 
         return Datatables::of($employees)
         ->addColumn('action', function ($employees) {
-                return '<a href="'.url('manager/detailemployee/'. $employees->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>';
+                return '<a href="'.url('manager/detailemployee/'. $employees->id).'" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>';
             }
             )
             ->make(true);
@@ -83,7 +77,7 @@ class EmployeeController extends Controller
         ->where('employees.id', $id)
         ->join('users', 'users.id', '=','employees.user_id')
         ->join('positions', 'positions.id', '=','employees.position_id')
-        ->select('employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','positions.name as position_name','users.email','users.level','users.status')
+        ->select('employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','employees.profile_picture','positions.name as position_name','users.email','users.level','users.status')
         ->first();
         return view('backend.employee.detail')->with('employee', $employee);
     }
@@ -95,7 +89,7 @@ class EmployeeController extends Controller
         ->where('employees.id', $id)
         ->join('users', 'users.id', '=','employees.user_id')
         ->join('positions', 'positions.id', '=','employees.position_id')
-        ->select('employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','positions.name as position_name','users.email','users.level','users.status')
+        ->select('employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','employees.profile_picture','positions.name as position_name','users.email','users.level','users.status')
         ->first();
         return view('backend.employee.manager_detail')->with('employee', $employee);
     }

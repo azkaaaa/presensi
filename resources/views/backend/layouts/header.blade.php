@@ -37,11 +37,11 @@
               @endif
                 <p>
                   {{ Auth::user()->name }} - <b>{{ Auth::user()->level }}</b>
-                  <small>Member since Nov. 2012</small>
+                  <small>Karyawan sejak {{ date('d M Y', strtotime(Auth::user()->created_at)) }}</small>
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
+              <!-- <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -53,8 +53,7 @@
                     <a href="#">Friends</a>
                   </div>
                 </div>
-                <!-- /.row -->
-              </li>
+              </li> -->
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">

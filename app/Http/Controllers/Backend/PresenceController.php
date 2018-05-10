@@ -57,21 +57,30 @@ class PresenceController extends Controller
 
     public function dataPresences()
   	{
+
     	 $presences = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
-            ->select('presences.*', 'employees.name as employee_name', 'positions.name as position_name');
+            ->select('presences.*', DB::raw("DATE_FORMAT(presences.date, '%d %M %Y') new_date"), 'employees.name as employee_name', 'positions.name as position_name')
+            ->orderBy('presences.date', 'desc');
 
 	      return Datatables::of($presences)
 	      ->addColumn('action', function ($presences) {
-                return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>
 
-                		<a href="'.url('admin/presence/'. $presences->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Lembur</a>';
+                $dt = Carbon::now();
+                $date = $dt->toDateString();
+
+                if ($presences->date == $date){
+                    return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>
+                  
+                    <a href="'.url('admin/presence/'. $presences->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Lembur</a>';
+                }
+                else{
+                    return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>';
+                }                
             }
             )
             ->make(true);
-    
-  
   	}
 
     public function dataPresencesEmployee()

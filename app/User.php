@@ -49,4 +49,9 @@ class User extends Authenticatable
     public function employee(){
     return $this->hasOne(Employee::class);
     }
+
+    public function hasRole($role)
+    {
+    return User::where('level', $role)->get();
+    }
 }

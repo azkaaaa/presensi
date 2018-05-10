@@ -80,7 +80,11 @@
                   <td>{{ $row->years }}</td>
                   <td>{{ number_format($row->total_all, 2, ',', '.') }}</td>
                   <td><span class="label label-success">Approved</span></td>
+                  @if (Auth::user()->level == 'Admin')
                   <td style="width: 20px; float: left"><a href="{{route('admin.printsalary.save', $row->list)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
+                  @elseif (Auth::user()->level == 'Manajer')
+                  <td style="width: 20px; float: left"><a href="{{route('manager.printsalary.save', $row->list)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
+                  @endif
                 </tr>
                 </tbody>
                 <?php $no++; ?>

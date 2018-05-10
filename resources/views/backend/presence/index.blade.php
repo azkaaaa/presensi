@@ -39,7 +39,7 @@
                     columns: [
                     {data: 'employee_name', name: 'employees.name'},
                     {data: 'position_name', name: 'positions.name'},
-                    {data: 'date', name: 'presences.date'},
+                    {data: 'new_date', name: 'presences.date'},
                     {data: 'time_in', name: 'presences.time_in'},
                     {data: 'time_out', name: 'presences.time_out'},
                     {data: 'shift', name: 'presences.shift'},

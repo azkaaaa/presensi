@@ -114,18 +114,18 @@ Route::group(['prefix'=>'manager','middleware' => ['auth', 'manager']], function
 	Route::get('/data-employee-manager', ['as'=>'manager.employee.data','uses'=>'Backend\EmployeeController@dataEmployeesManager']);
 
 	//Presence Route
-	Route::get('/presence/data', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);
+	Route::get('/presence/data', ['as'=>'manager.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);
 	Route::resource('/presence','Backend\PresenceController');
-	Route::get('/data-presence', ['as'=>'admin.presence.data','uses'=>'Backend\PresenceController@dataPresences']);
-	Route::get('/historypresence', ['as'=>'admin.historypresence.data','uses'=>'Backend\PresenceController@getList']);
-	Route::get('/presence/print/{id}', ['as' => 'admin.printpresence.save', 'uses' => 'Backend\PresenceController@printHistoryPresence']);
-	Route::get('/searchpresence', ['as' => 'admin.presence.search', 'uses' => 'Backend\PresenceController@searchPresence']);
+	Route::get('/data-presence', ['as'=>'manager.presence.data','uses'=>'Backend\PresenceController@dataPresences']);
+	Route::get('/historypresence', ['as'=>'manager.historypresence.data','uses'=>'Backend\PresenceController@getList']);
+	Route::get('/presence/print/{id}', ['as' => 'manager.printpresence.save', 'uses' => 'Backend\PresenceController@printHistoryPresence']);
+	Route::get('/searchpresence', ['as' => 'manager.presence.search', 'uses' => 'Backend\PresenceController@searchPresence']);
 
 	//Salary Route
 	Route::resource('/salary','Backend\SalaryController');
-	Route::get('/data-salary', ['as'=>'admin.salary.data','uses'=>'Backend\SalaryController@dataSalaries']);
-	Route::get('/historysalary', ['as'=>'admin.historysalary.data','uses'=>'Backend\SalaryController@getList']);
-	Route::get('/salary/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\SalaryController@printHistorySalary']);
-	Route::get('/searchsalary', ['as' => 'admin.salary.search', 'uses' => 'Backend\SalaryController@searchSalary']);
+	Route::get('/data-salary', ['as'=>'manager.salary.data','uses'=>'Backend\SalaryController@dataSalaries']);
+	Route::get('/historysalary', ['as'=>'manager.historysalary.data','uses'=>'Backend\SalaryController@getList']);
+	Route::get('/salary/print/{id}', ['as' => 'manager.printsalary.save', 'uses' => 'Backend\SalaryController@printHistorySalary']);
+	Route::get('/searchsalary', ['as' => 'manager.salary.search', 'uses' => 'Backend\SalaryController@searchSalary']);
 });
 
