@@ -13,7 +13,7 @@
                 @if($salary)
                 <button style="float:right" type="submit" class="btn btn-primary" disabled="">Gaji Bulan Ini Telah Dibuat</button>
                 @else
-                <button style="float:right" type="submit" class="btn btn-primary">Buat Gaji Bulan Ini</button>
+                <button style="float:right" type="submit" class="btn btn-primary" onclick="return myFunctionConfirm();">Buat Gaji Bulan Ini</button>
                 @endif
               </div>
               <!-- /.box-footer -->
@@ -27,11 +27,11 @@
                 <tr>
                   <th>Nama Karyawan</th>
                   <th>Jumlah Masuk</th>
+                  <th>Jumlah Lembur</th>
                   <th>Gaji Bersih</th>
                   <th>Total Transport</th>
                   <th>Gaji Lembur</th>
                   <th>Total Gaji</th>
-                  <th width="10%">Aksi</th>
                 </tr>
                 </thead>
               </table>
@@ -43,17 +43,18 @@
                 var oTable = $('#salaries-data').DataTable({
                     processing: true,
                     serverSide: true,
+                    bFilter: false,
                     ajax: {
                         url: '{{ url("/admin/data-salary") }}'
                     },
                     columns: [
                     {data: 'name', name: 'employees.name'},
                     {data: 'total_presences', name: 'total_presences'},
+                    {data: 'times_overtime', name: 'times_overtime'},
                     {data: 'total_salary', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_salary'},
                     {data: 'total_transport', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_transport'},
                     {data: 'total_overtime', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_overtime'},
                     {data: 'total_all', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_all'},
-                    {data: 'action', 'searchable': false, 'orderable':false }
                   ],
                   });
               });
@@ -64,6 +65,7 @@
                 var oTable = $('#salaries-data').DataTable({
                     processing: true,
                     serverSide: true,
+                    bFilter: false,
                     ajax: {
                         url: '{{ url("/manager/data-salary") }}'
                     },
@@ -80,6 +82,12 @@
               });
             </script>
             @endif
+            <script>
+            function myFunctionConfirm() {
+                if(!confirm("Apa anda yakin membuat gaji bulan ini"))
+                event.preventDefault();
+            }
+          </script>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->

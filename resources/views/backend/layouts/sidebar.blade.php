@@ -136,7 +136,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/admin/salary')}}"><i class="fa fa-circle-o"></i> Penggajian Bulan Ini</a></li>
+            <li><a href="{{ url('/admin/salary')}}"><i class="fa fa-circle-o"></i> Progres Gaji Bulan Ini</a></li>
+            <li><a href="{{ url('/admin/employeesalary')}}"><i class="fa fa-circle-o"></i> Penggajian Karyawan</a></li>
             <li><a href="{{ url('/admin/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
           </ul>
         </li>

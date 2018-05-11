@@ -20,6 +20,7 @@ class CreateSalariesTable extends Migration
             $table->integer('list')->unsigned();
             $table->integer('salary')->unsigned();
             $table->integer('total_presences')->unsigned();
+            $table->integer('all_overtime')->unsigned();
             $table->integer('total_transport')->unsigned();
             $table->integer('total_overtime')->unsigned();
             $table->integer('total_salary')->unsigned();
