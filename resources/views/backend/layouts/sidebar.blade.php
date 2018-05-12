@@ -32,7 +32,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li>
+        <li class="{{ Request::is('/') ? 'active' : '' }}">
           <a href="{{ url('/')}}">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <!-- <span class="pull-right-container">
@@ -101,7 +101,9 @@
           </ul>
         </li> -->
         @if (Auth::user()->level == 'Admin')
-        <li class="treeview">
+        <li class="treeview 
+        {{ Request::is('admin/employee') ? 'active' : '' }}
+        {{ Request::is('admin/position') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Manage Data</span>
             <span class="pull-right-container">
@@ -109,14 +111,16 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/admin/employee')}}"><i class="fa fa-circle-o"></i> Karyawan</a></li>
-            <li><a href="{{ url('/admin/position')}}"><i class="fa fa-circle-o"></i> Jabatan</a></li>
+            <li class="{{ Request::is('admin/employee') ? 'active' : '' }}"><a href="{{ url('/admin/employee')}}"><i class="fa fa-circle-o"></i> Karyawan</a></li>
+            <li class="{{ Request::is('admin/position') ? 'active' : '' }}"><a href="{{ url('/admin/position')}}"><i class="fa fa-circle-o"></i> Jabatan</a></li>
           <!--   <li><a href="{{ url('/admin/allowance')}}"><i class="fa fa-circle-o"></i> Tunjangan</a></li>
             <li><a href="{{ url('/admin/empallowance')}}"><i class="fa fa-circle-o"></i> Tunjangan Karyawan</a></li> -->
             <!-- <li><a href="{{ url('/admin/user')}}"><i class="fa fa-circle-o"></i> Pengguna</a></li> -->
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview 
+        {{ Request::is('admin/presence/data') ? 'active' : '' }} 
+        {{ Request::is('admin/historypresence') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-clock-o"></i> <span>Manage Presensi</span>
             <span class="pull-right-container">
@@ -124,11 +128,15 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi Bulan Ini</a></li>
-            <li><a href="{{ url('/admin/historypresence')}}"><i class="fa fa-circle-o"></i> Daftar Presensi</a></li>
+            <li class="{{ Request::is('admin/presence/data') ? 'active' : '' }}"><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi Bulan Ini</a></li>
+            <li class="{{ Request::is('admin/historypresence') ? 'active' : '' }}"><a href="{{ url('/admin/historypresence')}}"><i class="fa fa-circle-o"></i> Daftar Presensi</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview
+        {{ Request::is('admin/salary') ? 'active' : '' }}
+        {{ Request::is('admin/employeesalary') ? 'active' : '' }}
+        {{ Request::is('admin/historysalary') ? 'active' : '' }}
+        ">
           <a href="#">
             <i class="fa fa-dollar"></i> <span>Manage Penggajian</span>
             <span class="pull-right-container">
@@ -136,12 +144,14 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/admin/salary')}}"><i class="fa fa-circle-o"></i> Progres Gaji Bulan Ini</a></li>
-            <li><a href="{{ url('/admin/employeesalary')}}"><i class="fa fa-circle-o"></i> Penggajian Karyawan</a></li>
-            <li><a href="{{ url('/admin/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
+            <li class="{{ Request::is('admin/salary') ? 'active' : '' }}"><a href="{{ url('/admin/salary')}}"><i class="fa fa-circle-o"></i> Progres Gaji Bulan Ini</a></li>
+            <li class="{{ Request::is('admin/employeesalary') ? 'active' : '' }}"><a href="{{ url('/admin/employeesalary')}}"><i class="fa fa-circle-o"></i> Penggajian Karyawan</a></li>
+            <li class="{{ Request::is('admin/historysalary') ? 'active' : '' }}"><a href="{{ url('/admin/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview
+        {{ Request::is('admin/schedule') ? 'active' : '' }}
+        {{ Request::is('admin/historyschedule') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-calendar-plus-o"></i> <span>Manage Jadwal</span>
             <span class="pull-right-container">
@@ -149,31 +159,33 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/admin/schedule')}}"><i class="fa fa-circle-o"></i> Penjadwalan</a></li>
-            <li><a href="{{ url('/admin/historyschedule')}}"><i class="fa fa-circle-o"></i> Daftar Penjadwalan</a></li>
+            <li class="{{ Request::is('admin/schedule') ? 'active' : '' }}"><a href="{{ url('/admin/schedule')}}"><i class="fa fa-circle-o"></i> Penjadwalan</a></li>
+            <li class="{{ Request::is('admin/historyschedule') ? 'active' : '' }}"><a href="{{ url('/admin/historyschedule')}}"><i class="fa fa-circle-o"></i> Daftar Penjadwalan</a></li>
           </ul>
         </li>
         @elseif (Auth::user()->level == 'Karyawan')
-        <li>
+        <li class="{{ Request::is('employee/presence') ? 'active' : '' }}">
           <a href="{{ url('/employee/presence')}}">
             <i class="fa fa-address-card-o"></i>
             <span>Daftar Presensi</span>
           </a>
         </li>
-        <li>
+        <li class="{{ Request::is('employee/schedule') ? 'active' : '' }}">
           <a href="{{ url('/employee/schedule')}}">
             <i class="fa fa-calendar-check-o"></i>
             <span>Daftar Jadwal</span>
           </a>
         </li>
         @elseif (Auth::user()->level == 'Manajer')
-        <li>
+        <li class="{{ Request::is('manager/employee') ? 'active' : '' }}">
           <a href="{{ url('/manager/employee')}}">
             <i class="fa fa-users"></i>
             <span>Daftar Karyawan</span>
           </a>
         </li>
-        <li class="treeview">
+        <li class="treeview
+        {{ Request::is('manager/presence/data') ? 'active' : '' }}
+        {{ Request::is('manager/historypresence') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-clock-o"></i> <span>Manage Presensi</span>
             <span class="pull-right-container">
@@ -181,11 +193,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/manager/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi Bulan Ini</a></li>
-            <li><a href="{{ url('/manager/historypresence')}}"><i class="fa fa-circle-o"></i> Daftar Presensi</a></li>
+            <li class="{{ Request::is('manager/presence/data') ? 'active' : '' }}"><a href="{{ url('/manager/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi Bulan Ini</a></li>
+            <li class="{{ Request::is('manager/historypresence') ? 'active' : '' }}"><a href="{{ url('/manager/historypresence')}}"><i class="fa fa-circle-o"></i> Daftar Presensi</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview
+        {{ Request::is('manager/salary') ? 'active' : '' }}
+        {{ Request::is('manager/historysalary') ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-dollar"></i> <span>Manage Penggajian</span>
             <span class="pull-right-container">
@@ -193,8 +207,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('/manager/salary')}}"><i class="fa fa-circle-o"></i> Penggajian Bulan Ini</a></li>
-            <li><a href="{{ url('/manager/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
+            <li class="{{ Request::is('manager/salary') ? 'active' : '' }}"><a href="{{ url('/manager/salary')}}"><i class="fa fa-circle-o"></i> Penggajian Bulan Ini</a></li>
+            <li class="{{ Request::is('manager/historysalary') ? 'active' : '' }}"><a href="{{ url('/manager/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
           </ul>
         </li>
         @endif
