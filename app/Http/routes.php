@@ -93,7 +93,6 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::get('/data-employeesalary', ['as'=>'admin.employeesalary.data','uses'=>'Backend\SalaryController@dataEmployeeSalaries']);
 	Route::get('/employeesalary', ['as'=>'admin.employeesalary.index','uses'=>'Backend\SalaryController@getEmployeeSalary']);
 
-
 	//Schedule Route
 	Route::resource('/schedule','Backend\ScheduleController');
 	Route::get('/data-schedule', ['as'=>'admin.schedule.data','uses'=>'Backend\ScheduleController@dataSchedules']);
@@ -136,7 +135,8 @@ Route::group(['prefix'=>'manager','middleware' => ['auth', 'manager']], function
 	Route::get('/salary/print/{id}', ['as' => 'manager.printsalary.save', 'uses' => 'Backend\SalaryController@printHistorySalary']);
 	Route::get('/searchsalary', ['as' => 'manager.salary.search', 'uses' => 'Backend\SalaryController@searchSalary']);
 
-	Route::get('/data-employeesalary', ['as'=>'admin.employeesalary.data','uses'=>'Backend\SalaryController@dataEmployeeSalaries']);
-	Route::get('/employeesalary', ['as'=>'admin.employeesalary.index','uses'=>'Backend\SalaryController@getEmployeeSalary']);
+	Route::get('/data-employeesalary', ['as'=>'manager.employeesalary.data','uses'=>'Backend\SalaryController@dataEmployeeSalaries']);
+	Route::get('/employeesalary', ['as'=>'manager.employeesalary.index','uses'=>'Backend\SalaryController@getEmployeeSalary']);
+	Route::get('/employeesalary/print/{id}', ['as' => 'manager.printemployeesalary.save', 'uses' => 'Backend\SalaryController@printEmployeeSalary']);
 });
 

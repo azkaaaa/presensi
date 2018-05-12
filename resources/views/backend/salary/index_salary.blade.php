@@ -73,10 +73,10 @@
                     {data: 'name', name: 'employees.name'},
                     {data: 'total_presences', name: 'total_presences'},
                     {data: 'total_salary', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_salary'},
+                    {data: 'times_overtime', name: 'times_overtime'},
                     {data: 'total_transport', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_transport'},
                     {data: 'total_overtime', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_overtime'},
                     {data: 'total_all', render: $.fn.dataTable.render.number(',', '.', 2, ''), name: 'total_all'},
-                    {data: 'action', 'searchable': false, 'orderable':false }
                   ],
                   });
               });

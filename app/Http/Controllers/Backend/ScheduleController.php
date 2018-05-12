@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Schedule;
 use App\Month;
+use App\Day;
+use App\Position;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -69,13 +71,7 @@ class ScheduleController extends Controller
 
 	      return Datatables::of($schedules)
 	      ->addColumn('action', function ($schedules) {
-                return '<a href="'.url('admin/schedule/'. $schedules->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
-                
-                <form method="POST" action="'.url('admin/schedule/'. $schedules->id).'" style="display: inline">  
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="' .csrf_token(). '">
-                        <button class="btn-sm btn-danger" type="submit" style="border: none"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
-                 </form>';
+                return '<a href="'.url('admin/schedule/'. $schedules->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Libur</a>';
             }
             )
             ->make(true);  
@@ -218,24 +214,32 @@ class ScheduleController extends Controller
 
     public function edit($id)
     {
-        $position = Position::find($id);
+        $schedule = Schedule::find($id);
+        $schedule = DB::table('schedules')
+            ->join('employees', 'employees.id', '=', 'schedules.employee_id')
+            ->join('shifts', 'shifts.id', '=', 'schedules.shift_id')
+            ->join('days', 'days.id', '=', 'schedules.day_id')
+            ->join('weeks', 'weeks.id', '=', 'schedules.week_id')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('schedules.*', 'employees.name as employee_name', 'shifts.name as shift_name', 'days.name as day_name', 'weeks.name as week_name', 'months.name as month_name')
+            ->where('schedules.id', '=', $id)
+            ->first();
+        $days = Day::all();
 
-        return view('backend.position.edit')->with('position', $position);
+        return view('backend.schedule.edit', ['schedule'=>$schedule, 'days'=>$days]);
     }
     
     public function update(Request $request, $id)
-    {
-        $user = Auth::id();
+    {   
 
-        $position = Position::find($id);
-        $this->validate($request,$position->rules);
-        $position->fill($request->all());
-        $position->user_id = $user;
-        $position->save();
+        $schedule = Schedule::find($id);
+        // $this->validate($request,$position->rules);
+        $schedule->day_id = $request->day_id;
+        $schedule->save();
 
-        session()->flash('message', 'Data jabatan berhasil diperbarui.');
+        session()->flash('message', 'Data jadwal berhasil diperbarui.');
 
-        return redirect('/admin/position');
+        return redirect('/admin/schedule');
     }
 
     public function destroy($id)

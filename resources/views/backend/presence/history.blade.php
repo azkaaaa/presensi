@@ -18,7 +18,11 @@
 
               <div class="box-tools">
                 <div class="input-group input-group-sm">
+                  @if (Auth::user()->level == 'Admin')
                   <form method="GET" action="{{route('admin.presence.search')}}" class="form-horizontal">
+                  @elseif (Auth::user()->level == 'Manajer')
+                  <form method="GET" action="{{route('manager.presence.search')}}" class="form-horizontal">
+                  @endif
                     <div class="col-md-3">
                               <select class="form-control pull-left" style="width: 100px" name="month">
                                     <option>Bulan</option>
@@ -51,9 +55,15 @@
                           <div class="input-group-btn">
                             <button type="submit" class="btn btn-info">Cari</button>
                           </div>
+                          @if (Auth::user()->level == 'Admin')
                           <div class="input-group-btn">
                             <button class="btn-default btn" type="reset" onclick="window.location='{{ route('admin.historypresence.data')}}'">Kembali</button>
                           </div>
+                          @elseif (Auth::user()->level == 'Manajer')
+                          <div class="input-group-btn">
+                            <button class="btn-default btn" type="reset" onclick="window.location='{{ route('manager.historypresence.data')}}'">Kembali</button>
+                          </div>
+                          @endif
                       </div>
                   </form>
                 </div>
