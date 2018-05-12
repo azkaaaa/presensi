@@ -2,23 +2,23 @@
       <!-- /.row -->
       <div class="row">
         <div class="col-xs-12">
-        @if(session()->has('salary_found'))
+        @if(session()->has('schedule_found'))
         <div class="alert alert-success" role="alert">
-          @lang('alert.salary_found',['name'=>session()->get('salary_found')])
+          @lang('alert.schedule_found',['name'=>session()->get('schedule_found')])
         </div>
         @endif
-        @if(session()->has('salary_not_found'))
+        @if(session()->has('schedule_not_found'))
         <div class="alert alert-danger" role="alert">
-          @lang('alert.salary_not_found',['name'=>session()->get('salary_not_found')])
+          @lang('alert.schedule_not_found',['name'=>session()->get('schedule_not_found')])
         </div>
         @endif
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Daftar Presensi Sebelumnya</h3>
+              <h3 class="box-title">Daftar Jadwal Sebelumnya</h3>
 
               <div class="box-tools">
                 <div class="input-group input-group-sm">
-                  <form method="GET" action="{{route('admin.salary.search')}}" class="form-horizontal">
+                  <form method="GET" action="{{route('admin.schedule.search')}}" class="form-horizontal">
                     <div class="col-md-3">
                               <select class="form-control pull-left" style="width: 100px" name="month">
                                     <option>Bulan</option>
@@ -41,7 +41,7 @@
                                     <option>Tahun</option>
                                     @if($years)
                                     @foreach($years as $row)
-                                    <option value="{{ $row->years }}">{{ $row->years }}</option>
+                                    <option value="{{ $row->year }}">{{ $row->year }}</option>
                                     @endforeach
                                     @endif
                               </select>
@@ -52,7 +52,7 @@
                             <button type="submit" class="btn btn-info">Cari</button>
                           </div>
                           <div class="input-group-btn">
-                            <button class="btn-default btn" type="reset" onclick="window.location='{{ route('admin.historypresence.data')}}'">Kembali</button>
+                            <button class="btn-default btn" type="reset" onclick="window.location='{{ route('admin.historyschedule.index')}}'">Kembali</button>
                           </div>
                       </div>
                   </form>
@@ -67,26 +67,18 @@
                   <th>No</th>
                   <th>Bulan</th>
                   <th>Tahun</th>
-                  <th>Total Gaji</th>
-                  <th>Status</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <?php $no = 1; ?>
-              @if($salary)
-              @foreach($salary as $row)
+              @if($schedule)
+              @foreach($schedule as $row)
               <tbody>
                 <tr>
                   <td>{{$no}}</td>
-                  <td>{{ date("F", mktime(0, 0, 0, $row->month, 1)) }}</td>
-                  <td>{{ $row->years }}</td>
-                  <td>{{ number_format($row->total_all, 2, ',', '.') }}</td>
-                  <td><span class="label label-success">Approved</span></td>
-                  @if (Auth::user()->level == 'Admin')
+                  <td>{{ $row->month_name }}</td>
+                  <td>{{ $row->year }}</td>
                   <td style="width: 20px; float: left"><a href="{{route('admin.printsalary.save', $row->list)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
-                  @elseif (Auth::user()->level == 'Manajer')
-                  <td style="width: 20px; float: left"><a href="{{route('manager.printsalary.save', $row->list)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
-                  @endif
                 </tr>
                 </tbody>
                 <?php $no++; ?>

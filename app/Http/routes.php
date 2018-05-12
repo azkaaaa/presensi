@@ -97,6 +97,9 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	//Schedule Route
 	Route::resource('/schedule','Backend\ScheduleController');
 	Route::get('/data-schedule', ['as'=>'admin.schedule.data','uses'=>'Backend\ScheduleController@dataSchedules']);
+	Route::get('/historyschedule', ['as'=>'admin.historyschedule.index','uses'=>'Backend\ScheduleController@getList']);
+	Route::get('/schedule/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\ScheduleController@printHistorySchedule']);
+	Route::get('/searchschedule', ['as' => 'admin.schedule.search', 'uses' => 'Backend\ScheduleController@searchSchedule']);
 
 });
 

@@ -46,6 +46,12 @@ class PresenceController extends Controller
 
     public function getList()
     {
+      $years = DB::table('presences')
+      ->select(DB::raw('YEAR(presences.date) year'))
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->get();
+
       $presence = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->select('employees.name as employee_name', 'presences.*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),  DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'), DB::raw('sum(presences.overtime) as total_overtime'))
@@ -53,7 +59,7 @@ class PresenceController extends Controller
             ->orderBy('presences.date', 'desc')
             ->get();
 
-        return view('backend.presence.history', ['presence'=>$presence]);
+        return view('backend.presence.history', ['presence'=>$presence, 'years'=>$years]);
     }
 
     public function dataPresences()
@@ -351,6 +357,12 @@ class PresenceController extends Controller
         $month = $request->month;
         $year = $request->years;
 
+        $years = DB::table('presences')
+        ->select(DB::raw('YEAR(presences.date) year'))
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->get();
+
         if($month==0){
             $presence = Presence::select('*', DB::raw("DATE_FORMAT(presences.date, '%m-%Y') new_date"),DB::raw('YEAR(presences.date) year, MONTH(presences.date) month'), DB::raw('sum(presences.overtime) as total_overtime'))
             ->where(DB::raw('YEAR(presences.date)'), $year)
@@ -378,6 +390,6 @@ class PresenceController extends Controller
           session()->flash('presence_not_found', true);
         }
         
-        return view('backend.presence.history', ['presence'=>$presence]);
+        return view('backend.presence.history', ['presence'=>$presence, 'years'=>$years]);
     }
 }

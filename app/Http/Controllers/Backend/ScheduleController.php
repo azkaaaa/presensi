@@ -17,6 +17,7 @@ use Yajra\Datatables\Datatables;
 use Auth;
 use DB;
 use Carbon\Carbon;
+use PDF;
 
 class ScheduleController extends Controller
 {
@@ -34,6 +35,25 @@ class ScheduleController extends Controller
     public function getSchedulesEmployee()
     {
         return view('backend.schedule.employee_index');
+    }
+
+    public function getList()
+    { 
+      $years = DB::table('schedules')
+      ->select('schedules.year')
+            ->groupBy('schedules.year')
+            ->orderBy('schedules.year', 'desc')
+            ->get();
+
+      $schedule = DB::table('schedules')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('months.name as month_name', 'schedules.*')
+            ->groupBy('schedules.month_id')
+            ->groupBy('schedules.year')
+            ->orderBy('schedules.created_at', 'desc')
+            ->get();
+            // ->whereMonth('presences.date', '=', $dt->month);
+        return view('backend.schedule.history', ['schedule'=>$schedule, 'years'=>$years]);
     }
 
 
@@ -90,32 +110,40 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {   
       $user = Auth::id();
-
-      // $position =  new Position();
-      // // $this->validate($request,$position->rules);
-      // $position->fill($request->all());
-      // $position->user_id = $user;
-      // $position->save();
-
       $month = $request->month;
       $schedule_week = $request->schedule_week;
       $jumlah_populasi = $request->jumlah_populasi;
       $crossOver = $request->probabilitas_crossover;
       $mutasi = $request->probabilitas_mutasi;
       $jumlah_generasi = $request->jumlah_generasi;
+      $year = Carbon::now()->year;
 
       $data['month'] = $month;
       $data['schedule_week'] = $schedule_week;
-	  $data['jumlah_populasi'] = $jumlah_populasi;
-	  $data['probabilitas_crossover'] = $crossOver;
-	  $data['probabilitas_mutasi'] = $mutasi;
-	  $data['jumlah_generasi'] = $jumlah_generasi;
+	    $data['jumlah_populasi'] = $jumlah_populasi;
+	    $data['probabilitas_crossover'] = $crossOver;
+	    $data['probabilitas_mutasi'] = $mutasi;
+	    $data['jumlah_generasi'] = $jumlah_generasi;
+
+      $list_schedule = Schedule::latest()->first();
+
+      if($list_schedule){
+        if($list_schedule->month_id == $month && $list_schedule->year == $year){
+          $list = $list_schedule->list;
+        }
+        else{
+          $list = $list_schedule->list + 1;
+        }
+      }
+      else{
+        $list = 0;
+      }
 
       $data['month'] = $month;
-	  $genetik = new Genetic($month,$schedule_week,$jumlah_populasi,$crossOver,$mutasi,$jumlah_generasi);
+	    $genetik = new Genetic($month,$schedule_week,$jumlah_populasi,$crossOver,$mutasi,$jumlah_generasi);
 					
-	  $genetik->AmbilData();
-	  $genetik->Inisialisai();
+	    $genetik->AmbilData();
+	    $genetik->Inisialisai();
 					
 					$found = false;
 					
@@ -154,12 +182,14 @@ class ScheduleController extends Controller
 									
 									$schedule =  new Schedule();
 									$status = 1;
-							    
+
 							        $schedule->employee_id = $employee_id;
 							        $schedule->shift_id = $shift_id;
 							        $schedule->day_id = $day_id;
 							        $schedule->week_id = $week_id;
-							        $schedule->month_id = $month;
+                      $schedule->month_id = $month;
+                      $schedule->year = $year;
+							        $schedule->list = $list;
 							        $schedule->status = $status;
 							        $schedule->save();									
 								}
@@ -216,5 +246,77 @@ class ScheduleController extends Controller
 
   		return redirect('/admin/position');
   	}
+
+    public function printHistorySchedule($history)
+    { 
+      $dt = Carbon::now();
+      $date = $dt->toDateString();
+
+      $schedule = DB::table('schedules')
+            ->join('employees', 'employees.id', '=', 'schedules.employee_id')
+            ->join('shifts', 'shifts.id', '=', 'schedules.shift_id')
+            ->join('days', 'days.id', '=', 'schedules.day_id')
+            ->join('weeks', 'weeks.id', '=', 'schedules.week_id')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('schedules.*', 'employees.name as employee_name', 'shifts.name as shift_name', 'days.name as day_name', 'weeks.name as week_name', 'months.name as month_name')
+            ->where('schedules.list', '=', $history)
+            ->orderBy('schedules.week_id', 'asc')
+            ->get();
+
+      $spec_schedule = DB::table('schedules')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('schedules.*', 'months.name as month_name')
+            ->where('schedules.list', '=', $history)
+            ->first();
+
+        $pdf = PDF::loadView('backend/pdf/schedule', ['schedule' => $schedule, 'spec_schedule' => $spec_schedule, 'date' => $date]);
+        return $pdf->stream('Schedule_'.$spec_schedule->month_id.'_'.$spec_schedule->year.'.pdf');
+    }
+
+    public function searchSchedule(Request $request)
+    {
+        $month = $request->month;
+        $year = $request->years;
+
+        $years = DB::table('schedules')
+        ->select('schedules.year')
+            ->groupBy('schedules.year')
+            ->orderBy('schedules.year', 'desc')
+            ->get();
+
+        if($month==0){
+            $schedule = DB::table('schedules')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('schedules.*', 'months.name as month_name')
+            ->where('year', $year)
+            ->groupBy('list')
+            ->get();
+        }
+        elseif($year==0){
+            $schedule = DB::table('schedules')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('schedules.*', 'months.name as month_name')
+            ->where('month_id', $month)
+            ->groupBy('list')
+            ->get();
+        }
+        else{
+            $schedule = DB::table('schedules')
+            ->join('months', 'months.id', '=', 'schedules.month_id')
+            ->select('schedules.*', 'months.name as month_name')
+            ->where('month_id', $month)
+            ->where('year', $year)
+            ->groupBy('list')
+            ->get();
+        }
+        if ($schedule){
+          session()->flash('schedule_found', true);
+        }
+        else{
+          session()->flash('schedule_not_found', true);
+        }
+        
+        return view('backend.schedule.history', ['schedule'=>$schedule, 'years'=>$years]);
+    }
 
 }

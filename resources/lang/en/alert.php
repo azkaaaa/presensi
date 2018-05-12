@@ -49,6 +49,8 @@ return [
 	'salary_not_found'=>'Data gaji tidak ditemukan',
 	'presence_found'=>'Daftar Presensi ditemukan',
 	'presence_not_found'=>'Daftar Presensi tidak ditemukan',
+	'schedule_found'=>'Jadwal ditemukan',
+	'schedule_not_found'=>'Jadwal tidak ditemukan',
 
 	
 ];

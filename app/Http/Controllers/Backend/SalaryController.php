@@ -50,6 +50,12 @@ class SalaryController extends Controller
 
   public function getList()
     {
+      $years = DB::table('salaries')
+      ->select('salaries.years')
+            ->groupBy('salaries.years')
+            ->orderBy('salaries.years', 'desc')
+            ->get();
+
     	$salary = DB::table('salaries')
             ->join('employees', 'employees.id', '=', 'salaries.employee_id')
             ->select('employees.name as employee_name', 'salaries.*', DB::raw('sum(salaries.total_salary) as total_all'))
@@ -57,7 +63,7 @@ class SalaryController extends Controller
             ->orderBy('salaries.created_at', 'desc')
             ->get();
             // ->whereMonth('presences.date', '=', $dt->month);
-        return view('backend.salary.history', ['salary'=>$salary]);
+        return view('backend.salary.history', ['salary'=>$salary, 'years'=>$years]);
     }
 
 	public function dataSalaries()
@@ -207,25 +213,34 @@ class SalaryController extends Controller
         $month = $request->month;
         $year = $request->years;
 
+        $years = DB::table('salaries')
+        ->select('salaries.years')
+            ->groupBy('salaries.years')
+            ->orderBy('salaries.years', 'desc')
+            ->get();
+
         if($month==0){
-            $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
+            $salary = DB::table('salaries')
+            ->select('*', DB::raw('sum(salaries.total_salary) as total_all'))
             ->where('years', $year)
             ->groupBy('list')
             ->get();
         }
-      elseif($year==0){
-            $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
+        elseif($year==0){
+            $salary = DB::table('salaries')
+            ->select('*', DB::raw('sum(salaries.total_salary) as total_all'))
             ->where('month', $month)
             ->groupBy('list')
             ->get();
-      }
-      else{
-      $salary = Salary::select('*', DB::raw('sum(salaries.total_salary) as total_all'))
+        }
+        else{
+        $salary = DB::table('salaries')
+            ->select('*', DB::raw('sum(salaries.total_salary) as total_all'))
             ->where('month', $month)
             ->where('years', $year)
             ->groupBy('list')
             ->get();
-      }
+        }
         if ($salary){
           session()->flash('salary_found', true);
         }
@@ -233,7 +248,7 @@ class SalaryController extends Controller
           session()->flash('salary_not_found', true);
         }
         
-        return view('backend.salary.history', ['salary'=>$salary]);
+        return view('backend.salary.history', ['salary'=>$salary, 'years'=>$years]);
     }
 
     public function printEmployeeSalary($id)

@@ -19,6 +19,8 @@ class CreateSchedulesTable extends Migration
             $table->integer('week_id')->unsigned();
             $table->integer('day_id')->unsigned();
             $table->integer('month_id')->unsigned();
+            $table->integer('year')->unsigned();
+            $table->integer('list')->unsigned();
             $table->string('status');
             $table->timestamps();
 

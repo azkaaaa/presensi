@@ -39,9 +39,11 @@
                             <div class="col-md-3">
                               <select class="form-control pull-left" style="width: 100px" name="years">
                                     <option>Tahun</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
+                                    @if($years)
+                                    @foreach($years as $row)
+                                    <option value="{{ $row->year }}">{{ $row->year }}</option>
+                                    @endforeach
+                                    @endif
                               </select>
                             </div>
                     <!-- /.box-body -->

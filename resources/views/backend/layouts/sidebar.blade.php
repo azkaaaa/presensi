@@ -150,6 +150,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ url('/admin/schedule')}}"><i class="fa fa-circle-o"></i> Penjadwalan</a></li>
+            <li><a href="{{ url('/admin/historyschedule')}}"><i class="fa fa-circle-o"></i> Daftar Penjadwalan</a></li>
           </ul>
         </li>
         @elseif (Auth::user()->level == 'Karyawan')
