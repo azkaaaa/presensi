@@ -155,10 +155,10 @@ class PresenceController extends Controller
       ->where('overtime_permit', 'Y')->first();
 
         //PULANG
-      if($have_presence_two AND $have_overtime AND $time <= '08:00'){
+      if($have_presence_two AND $have_overtime AND $time <= '24:00'){
            $shift = 2;
            $info = 'Masuk';
-           $date = $date->additional;
+           $date = $presence->date;
            $additional = $presence->additional;
            $presence->time_out = $time;
            $overtime = $presence->overtime;
@@ -169,7 +169,7 @@ class PresenceController extends Controller
             session()->flash('return_presence_overtime_success_on', $presence->overtime);
         }
         //PULANG
-      elseif($have_presence AND $have_overtime AND $time >= '17:00'){
+      elseif($have_presence AND $have_overtime AND $time >= '15:00'){
            $shift = 1;
            $info = 'Masuk';
            $additional = $presence->additional;
@@ -182,7 +182,7 @@ class PresenceController extends Controller
             session()->flash('return_presence_overtime_success_on', $presence->overtime); 
         }
         //PULANG
-      elseif($have_presence AND $time >= '17:00'){
+      elseif($have_presence AND $time >= '15:00'){
            $shift = 1;
            $info = 'Masuk';
            $additional = $presence->additional;
@@ -194,7 +194,7 @@ class PresenceController extends Controller
             session()->flash('return_presence_normal_success_on',$employee->name);
         }
         //PULANG
-      elseif($have_presence_two AND $time <= '08:00'){
+      elseif($have_presence_two AND $time <= '24:00'){
            $shift = 2;
            $info = 'Masuk';
            $date = $presence->date;
@@ -230,8 +230,20 @@ class PresenceController extends Controller
 
           	session()->flash('presence_success_late',$employee->name);
       	}
+         //OTHERS
+      elseif($time > '10:00' AND $time <= '12:00'){
+           $shift = 1;
+           $info = 'Masuk';
+           $additional = 'Sangat Terlambat';
+           $overtime = '0';
+           $overtime_status = 'N';
+           $overtime_permit = 'N';
+           $presence->time_in = $time;
+
+            session()->flash('presence_success_late',$employee->name);
+        }
         //MASUK
-      elseif($time > '15:00' AND $time <= '17:00'){
+      elseif($time > '12:00' AND $time <= '15:00'){
       		 $shift = 2;
       		 $info = 'Masuk';
       		 $additional = 'Tepat';
@@ -243,7 +255,7 @@ class PresenceController extends Controller
           	session()->flash('return_presence_success_on',$employee->name);
       	}
         //MASUK
-      elseif($time > '17:00' AND $time <= '20:00'){
+      elseif($time > '15:00' AND $time <= '17:00'){
       		 $shift = 2;
       		 $info = 'Masuk';
       		 $additional = 'Terlambat';
@@ -254,6 +266,19 @@ class PresenceController extends Controller
 
           	session()->flash('presence_success_late',$employee->name);
       	}
+
+        //OTHER
+      elseif($time > '17:00' AND $time <= '24:00'){
+           $shift = 2;
+           $info = 'Masuk';
+           $additional = 'Sangat Terlambat';
+           $overtime = '0';
+           $overtime_status = 'N';
+           $overtime_permit = 'N';
+           $presence->time_in = $time;
+
+            session()->flash('presence_success_late',$employee->name);
+        }
 	      
 	      $presence->employee_id = $employee->id;
 	      $presence->date = $date;
