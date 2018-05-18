@@ -70,7 +70,7 @@
   @endif
 
   <div class="lockscreen-logo">
-    <a href="#"><span id="date_time" style="font-size: 80px; font-weight: bold"></span></a>
+    <a href="#"><span id="date_time" style="font-size: 80px; font-weight: bold"></span></a></br>
     <a href="#"><span id="date" style="font-size: 20px"></span></a>
     <script type="text/javascript">window.onload = date('date');</script>
     <script type="text/javascript">window.onload = date_time('date_time');</script>

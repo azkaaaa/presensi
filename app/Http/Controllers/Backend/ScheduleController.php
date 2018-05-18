@@ -154,7 +154,7 @@ class ScheduleController extends Controller
 						$genetik->Seleksi($fitness);
 						$genetik->StartCrossOver();
 						
-						$fitnessAfterMutation = $genetik->Mutasi();
+						$fitnessAfterMutation = $genetik->Mutasi();  
 
 						
 						for ($j = 0; $j < count($fitnessAfterMutation); $j++){
@@ -164,7 +164,7 @@ class ScheduleController extends Controller
 								// $schedule_del = Schedule::all();
     				// 			$schedule_del ->truncate();
 								
-								$jadwal_kuliah = array(array());
+								$jadwal_kuliah = array(array());                
 								$jadwal_kuliah = $genetik->GetIndividu($j);
 								
 								
@@ -172,7 +172,7 @@ class ScheduleController extends Controller
 								for($k = 0; $k < count($jadwal_kuliah);$k++){
 									
 									$week_id = intval($jadwal_kuliah[$k][0]);
-									$shift_id = intval($jadwal_kuliah[$k][1]);
+									$shift_id = intval($jadwal_kuliah[$k][4]);
 									$employee_id = intval($jadwal_kuliah[$k][2]);
 									$day_id = intval($jadwal_kuliah[$k][3]);
 									
@@ -190,7 +190,7 @@ class ScheduleController extends Controller
 							        $schedule->save();									
 								}
 								
-								//var_dump($jadwal_kuliah);
+								//vdd($jadwal_kuliah);
 								//exit();
 								
 								$found = true;								
