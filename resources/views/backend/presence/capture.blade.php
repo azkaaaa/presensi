@@ -30,9 +30,10 @@
 		</script>
 	
 	<!-- A button for taking snaps -->
-	<form>
+	
 		<input type=button value="Take Snapshot" onClick="take_snapshot()">
-	</form>
+		<input type="hidden" name="_token" value="{{csrf_token()}}">
+	
 	
 	<!-- Code to handle taking the snapshot and displaying it locally -->
 	<script language="JavaScript">

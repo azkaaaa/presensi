@@ -16,7 +16,7 @@
                   <th>Shift</th>
                   <th>Karyawan</th>
                   <th>Libur</th>
-                  <th>Status</th>
+                  <th>Kemungkinan Lembur</th>
                   <th width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -36,7 +36,7 @@
                     {data: 'shift_name', name: 'shifts.name'},
                     {data: 'employee_name', name: 'employees.name'},
                     {data: 'day_name', name: 'days.name'},
-                    {data: 'status', name: 'status'},
+                    {data: 'overtime_name', name: 'overtime_days.name'},
                     {data: 'action', 'searchable': false, 'orderable':false }
                 ],
                 });

@@ -67,7 +67,8 @@ class ScheduleController extends Controller
             ->join('days', 'days.id', '=', 'schedules.day_id')
             ->join('weeks', 'weeks.id', '=', 'schedules.week_id')
             ->join('months', 'months.id', '=', 'schedules.month_id')
-            ->select('schedules.*', 'employees.name as employee_name', 'shifts.name as shift_name', 'days.name as day_name', 'weeks.name as week_name', 'months.name as month_name');
+            ->join('overtime_days', 'overtime_days.id', '=', 'schedules.overtime_id')
+            ->select('schedules.*', 'employees.name as employee_name', 'shifts.name as shift_name', 'days.name as day_name', 'weeks.name as week_name', 'months.name as month_name','overtime_days.name as overtime_name');
 
 	      return Datatables::of($schedules)
 	      ->addColumn('action', function ($schedules) {
@@ -172,9 +173,15 @@ class ScheduleController extends Controller
 								for($k = 0; $k < count($jadwal_kuliah);$k++){
 									
 									$week_id = intval($jadwal_kuliah[$k][0]);
-									$shift_id = intval($jadwal_kuliah[$k][4]);
 									$employee_id = intval($jadwal_kuliah[$k][2]);
 									$day_id = intval($jadwal_kuliah[$k][3]);
+                  $shift_id = intval($jadwal_kuliah[$k][4]);
+                  $overtime_id = intval($jadwal_kuliah[$k][5]);
+
+                  if(($day_id = intval($jadwal_kuliah[$k][3])) == ($overtime_id = intval($jadwal_kuliah[$k][5])))
+                  {
+                    $overtime_id = 8;
+                  }
 									
 									$schedule =  new Schedule();
 									$status = 1;
@@ -184,6 +191,7 @@ class ScheduleController extends Controller
 							        $schedule->day_id = $day_id;
 							        $schedule->week_id = $week_id;
                       $schedule->month_id = $month;
+                      $schedule->overtime_id = $overtime_id;
                       $schedule->year = $year;
 							        $schedule->list = $list;
 							        $schedule->status = $status;

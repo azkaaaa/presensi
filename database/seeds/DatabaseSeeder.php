@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
          $this->call(WeeksSeeder::class);
          $this->call(MonthsSeeder::class);
          $this->call(ShiftsSeeder::class);
+         $this->call(OvertimeDaysSeeder::class);
     }
 }

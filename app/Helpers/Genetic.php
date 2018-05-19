@@ -5,6 +5,7 @@ use App\Employee;
 use App\Shift;
 use App\Week;
 use App\Day;
+use App\OvertimeDay;
 class Genetic {
     //
     private $month;
@@ -19,7 +20,8 @@ class Genetic {
     private $off_day = array();
     private $sum_days = array();
     private $ord_employee = array();
-    private $ord_shift = array();
+    private $overtime_day = array();
+    private $ord_overtime_day = array();
     private $logAmbilData;
     private $logInisialisasi;
     
@@ -90,6 +92,13 @@ class Genetic {
             $this->sum_days[]    = intval($data->id);
             }
         }
+
+        $rs_overtime_day = OvertimeDay::all();
+        for($x=0; $emp_times>$x; $x++){
+        foreach ($rs_overtime_day as $data) {
+            $this->ord_overtime_day[]    = intval($data->id);
+            }
+        }
     
         $i = 0;
         foreach ($rs_week as $data) {
@@ -112,6 +121,7 @@ class Genetic {
         $all_day = count($this->day);
         $all_test = count($this->shift);
         $all_sum_days = count($this->sum_days);
+        $all_ord_overtime_days = count($this->ord_overtime_day);
         //dd($this->sum_days);
         // $jumlah_ruang_reguler = count($this->ruangReguler);
         // $jumlah_ruang_lab = count($this->ruangLaboratorium);
@@ -132,8 +142,12 @@ class Genetic {
                 // Penentuan libur secara acak
                 $this->individu[$i][$j][3] = mt_rand(0,  $all_sum_days - 1);
 
-                // Penentuan karyawan secara urut 
+                // Penentuan shift secara urut 
                 $this->individu[$i][$j][4] = $all_shift[$j];
+
+                // Penentuan lembur secara acak 
+                $this->individu[$i][$j][5] = mt_rand(0,  $all_ord_overtime_days - 1);
+
                 
                 
             }
@@ -157,14 +171,16 @@ class Genetic {
           $employee_a = intval($this->individu[$indv][$i][2]);
           $off_a = intval($this->individu[$indv][$i][3]);
           $shift_true_a = intval($this->individu[$indv][$i][4]);
+          $overtime_day_a = intval($this->individu[$indv][$i][5]);
           
             for ($j = 1; $j < $all_day; $j++) {                 
                 
                 $week_b = intval($this->day[$j]);
                 $shift_b = intval($this->individu[$indv][$j][1]);
                 $employee_b = intval($this->individu[$indv][$j][2]);
-                $off_b = intval($this->individu[$indv][$i][3]);
-                $shift_true_b = intval($this->individu[$indv][$i][4]);
+                $off_b = intval($this->individu[$indv][$j][3]);
+                $shift_true_b = intval($this->individu[$indv][$j][4]);
+                $overtime_day_b = intval($this->individu[$indv][$j][5]);
 
                  //dd($all_week);
                 
@@ -172,59 +188,31 @@ class Genetic {
                 if ($i == $j)
                     continue;
                 //Ketika libur dan minggunya sama, maka penalty + satu
-                
-                if ($shift_a == $shift_true_a && $shift_b == $shift_true_b)
-                {
-                    if (//ketika shift sama
-                    $week_a == $week_b &&
-                    //ketika shift sama
-                    $shift_true_a == $shift_true_b &&
+                if (//ketika shift sama
+                    $overtime_day_a == $overtime_day_b &&
                     //ketika libur sama
                     $off_a == $off_b)
                     {
                         $penalty += 1;
                     }
-                }
 
-                if ($shift_a == $shift_true_a)
-                {
-                    if (//ketika shift sama
-                    $week_a == $week_b &&
-                    //ketika shift sama
-                    $shift_true_a == $shift_true_b &&
-                    //ketika libur sama
-                    $off_a == $off_b)
-                    {
-                        $penalty += 1;
-                    }
-                }
+                // if ($off_a == $overtime_day_a OR $off_b == $overtime_day_b)
+                // {
+                //         $penalty += 1;
+                // }      
 
-                if ($shift_b == $shift_true_b)
-                {
-                    if (//ketika shift sama
-                    $week_a == $week_b &&
-                    //ketika shift sama
-                    $shift_true_a == $shift_true_b &&
-                    //ketika libur sama
-                    $off_a == $off_b)
-                    {
-                        $penalty += 1;
-                    }
-                }
-
-                if ($shift_a == $shift_true_a && $shift_b == $shift_true_b && $shift_a == $shift_true_b && $shift_b == $shift_true_a)
-                {
-                    if (//ketika shift sama
-                    $week_a == $week_b &&
-                    //ketika shift sama
-                    $shift_true_a == $shift_true_b &&
-                    //ketika libur sama
-                    $off_a == $off_b)
-                    {
-                        $penalty += 1;
-                    }
-                }
-                            
+                // if ($shift_a == $shift_true_a OR $shift_b == $shift_true_b OR $shift_a == $shift_true_b OR $shift_b == $shift_true_a)
+                // {
+                //     if (//ketika shift sama
+                //     $week_a == $week_b &&
+                //     //ketika shift sama
+                //     $shift_true_a == $shift_true_b &&
+                //     //ketika libur sama
+                //     $off_a == $off_b)
+                //     {
+                //         $penalty += 1;
+                //     }
+                // }            
             }                  
             
         }      
@@ -256,7 +244,7 @@ class Genetic {
             $fitness[$indv] = $this->CekFitness($indv);            
         }
     
-        // dd($fitness);
+         //dd($fitness);
         return $fitness;
     }
     
@@ -338,7 +326,7 @@ class Genetic {
                 
                 //penentuan jadwal baru dari awal sampai titik pertama
                 for ($j = 0; $j < $a; $j++) {
-                    for ($k = 0; $k < 5; $k++) {                        
+                    for ($k = 0; $k < 6; $k++) {                        
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
                     }
@@ -346,7 +334,7 @@ class Genetic {
                 
                 //Penentuan jadwal baru dari titik pertama sampai titik kedua
                 for ($j = $a; $j < $b; $j++) {
-                    for ($k = 0; $k < 5; $k++) {
+                    for ($k = 0; $k < 6; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i + 1]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i]][$j][$k];
                     }
@@ -354,14 +342,14 @@ class Genetic {
                 
                 //penentuan jadwal baru dari titik kedua sampai akhir
                 for ($j = $b; $j < $all_day; $j++) {
-                    for ($k = 0; $k < 5; $k++) {
+                    for ($k = 0; $k < 6; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
                     }
                 }
             } else { //Ketika nilai random lebih dari nilai probabilitas pertukaran, maka jadwal baru sama dengan jadwal terpilih
                 for ($j = 0; $j < $all_day; $j++) {
-                    for ($k = 0; $k < 5; $k++) {
+                    for ($k = 0; $k < 6; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
                     }
@@ -373,7 +361,7 @@ class Genetic {
         
         for ($i = 0; $i < $this->populasi; $i += 2) {
           for ($j = 0; $j < $all_day ; $j++) {
-            for ($k = 0; $k < 5; $k++) {
+            for ($k = 0; $k < 6; $k++) {
                 $this->individu[$i][$j][$k] = $individu_baru[$i][$j][$k];
                 $this->individu[$i + 1][$j][$k] = $individu_baru[$i + 1][$j][$k];
             }
@@ -391,6 +379,7 @@ class Genetic {
         $all_employee = $this->ord_employee;        
         $all_shift = $this->ord_shift;
         $all_test = count($this->shift);
+        $all_ord_overtime_days = count($this->ord_overtime_day);
         // $jumlah_jam = count($this->jam);
         // $jumlah_hari = count($this->hari);
         // $jumlah_ruang_reguler = count($this->ruangReguler);
@@ -410,6 +399,7 @@ class Genetic {
                 //$this->individu[$i][$krom][2] = $all_employee;
                  //Proses penggantian hari libur
                 $this->individu[$i][$krom][3] = mt_rand(0,  $all_sum_days - 1);    
+                $this->individu[$i][$krom][5] = mt_rand(0,  $all_ord_overtime_days - 1);    
                 //proses penggantian ruang               
                 
                 // if ($this->jenis_mk[$krom] === $this->TEORI) {
@@ -440,6 +430,7 @@ class Genetic {
             $individu_solusi[$j][2] = intval($this->employee[$this->individu[$indv][$j][2]]);       
             $individu_solusi[$j][3] = intval($this->sum_days[$this->individu[$indv][$j][3]]); 
             $individu_solusi[$j][4] = intval($this->shift[$this->individu[$indv][$j][4]]);
+            $individu_solusi[$j][5] = intval($this->ord_overtime_day[$this->individu[$indv][$j][5]]);
 
         }
         // dd($individu_solusi);

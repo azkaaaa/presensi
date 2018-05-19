@@ -18,6 +18,7 @@ class CreateSchedulesTable extends Migration
             $table->integer('shift_id')->unsigned();
             $table->integer('week_id')->unsigned();
             $table->integer('day_id')->unsigned();
+            $table->integer('overtime_id')->unsigned();
             $table->integer('month_id')->unsigned();
             $table->integer('year')->unsigned();
             $table->integer('list')->unsigned();
@@ -29,6 +30,7 @@ class CreateSchedulesTable extends Migration
             $table->foreign('day_id')->references('id')->on('days');
             $table->foreign('week_id')->references('id')->on('weeks');
             $table->foreign('month_id')->references('id')->on('months');
+            $table->foreign('overtime_id')->references('id')->on('overtime_days');
         });
     }
 
