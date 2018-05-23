@@ -24,6 +24,7 @@ class CreatePresencesTable extends Migration
             $table->integer('overtime');
             $table->string('overtime_status');
             $table->string('overtime_permit');
+            $table->string('capture');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');

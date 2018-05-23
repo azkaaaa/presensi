@@ -10,10 +10,10 @@ class Capture extends Model
 
     protected $fillable =
     [
-      'namafoto'
+      'picture',
     ];
 
     public $rules = [
-      'namafoto' => 'required'
+      'picture' => 'required',
     ];
 }

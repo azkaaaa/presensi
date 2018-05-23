@@ -23,15 +23,17 @@ use PDF;
 use Carbon\Carbon;
 
 class PresenceController extends Controller
-{
+{ 
+    private $presence_id;
+
     public function index()
     {
-        return view('backend.presence.presence');
+        return view('backend.presence.presencesss');
     }
 
     public function getDoPresence()
     {
-        return view('backend.presence.presence');
+        return view('backend.presence.presencesss');
     }
 
     public function getPresence()
@@ -46,6 +48,8 @@ class PresenceController extends Controller
 
     public function getList()
     {
+      dd($this->presence_id);
+
       $years = DB::table('presences')
       ->select(DB::raw('YEAR(presences.date) year'))
             ->groupBy('year')
@@ -279,6 +283,14 @@ class PresenceController extends Controller
 
             session()->flash('presence_success_late',$employee->name);
         }
+
+        // $filename = time() .'.jpg';
+
+        // $upload_result = $request->file('webcam')->move(public_path().'/admin/uploads/presence/', $filename);
+
+       
+       // dd($capture->picture);
+       
 	      
 	      $presence->employee_id = $employee->id;
 	      $presence->date = $date;
@@ -287,10 +299,16 @@ class PresenceController extends Controller
         $presence->additional = $additional;
         $presence->overtime = $overtime;
         $presence->overtime_status = $overtime_status;
-	      $presence->overtime_permit = $overtime_permit;
+        $presence->overtime_permit = $overtime_permit;
 	      $presence->save();
+
+         $capture = Capture::latest()->first();
+        $presence->capture = $capture->picture;
+        $presence->save();
+
+
 	     
-	     return redirect('/presence');
+	     return redirect()->route('user.presence.index');
       }
 	  else{
           session()->flash('presence_failed',true);
@@ -329,27 +347,24 @@ class PresenceController extends Controller
 
     public function getCapture()
     {
-        return view('backend.presence.capture');
+        return view('backend.presence.captures');
     }
 
     public function postCapture(Request $request)
     {
-       	$requestData = $request->all();
- 
-            if(!empty($_POST['namafoto'])){
-                  $encoded_data = $_POST['namafoto'];
-                    $binary_data = base64_decode( $encoded_data );
- 
-                    // save to server (beware of permissions // set ke 775 atau 777)
-                    $namafoto = uniqid().".png";
-                    $result = file_put_contents( 'photos/shares/'.$namafoto, $binary_data );
-                    if (!$result) die("Could not save image!  Check file permissions.");
-                }
-        $employee = new Capture;
-        $employee->namafoto = $namafoto;
-        $employee->save();
+        $filename = time() .'.jpg';
+        $upload_result = $request->file('webcam')->move(public_path().'/admin/uploads/presence/',$filename);
 
-  		return redirect()->route('user.profile.index');
+        // $presence = Capture::orderBy('created_at', 'desc')->first();
+   
+        $presence_capture = new Capture;
+        $presence_capture->picture = $filename;
+        $presence_capture->save();
+    
+        
+
+
+  		 return redirect('/admin/presence');
     }
 
     public function printHistoryPresence($history)

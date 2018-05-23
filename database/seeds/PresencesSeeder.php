@@ -23,7 +23,8 @@ class PresencesSeeder extends Seeder
             'additional' => 'Tepat',
             'overtime' => 0,
             'overtime_status' => '-',
-            'overtime_permit' => 'N'
+            'overtime_permit' => 'N',
+            'capture' => '-'
           ],
           [
             'id'=> 2,
@@ -36,7 +37,9 @@ class PresencesSeeder extends Seeder
             'additional' => 'Tepat',
             'overtime' => 1,
             'overtime_status' => 'Lembur',
-            'overtime_permit' => 'Y'
+            'overtime_permit' => 'Y',
+            'capture' => '-'
+
           ],
           [
             'id'=> 3,
@@ -49,7 +52,9 @@ class PresencesSeeder extends Seeder
             'additional' => 'Tepat',
             'overtime' => 2,
             'overtime_status' => 'Lembur',
-            'overtime_permit' => 'Y'
+            'overtime_permit' => 'Y',
+            'capture' => '-'
+
           ],
           [
             'id'=> 4,
@@ -62,7 +67,9 @@ class PresencesSeeder extends Seeder
             'additional' => 'Tepat',
             'overtime' => 0,
             'overtime_status' => '-',
-            'overtime_permit' => 'N'
+            'overtime_permit' => 'N',
+            'capture' => '-'
+            
           ],
         ]);
     }

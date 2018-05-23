@@ -25,12 +25,10 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 //Presence Route
-Route::resource('/presence','Backend\PresenceController');
-Route::get('/dopresence', ['as'=>'user.presence.index','uses'=>'Backend\PresenceController@getDoPresence']);
-
-
 Route::get('/capture', ['as'=>'user.capture.index','uses'=>'Backend\PresenceController@getCapture']);
 Route::post('/capture', ['as'=>'user.capture.save','uses'=>'Backend\PresenceController@postCapture']);
+Route::resource('/presence','Backend\PresenceController');
+Route::get('/dopresence', ['as'=>'user.presence.index','uses'=>'Backend\PresenceController@getDoPresence']);
 
 
 Route::group(['middleware' => ['web', 'auth']], function () {
@@ -99,6 +97,11 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::get('/historyschedule', ['as'=>'admin.historyschedule.index','uses'=>'Backend\ScheduleController@getList']);
 	Route::get('/schedule/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\ScheduleController@printHistorySchedule']);
 	Route::get('/searchschedule', ['as' => 'admin.schedule.search', 'uses' => 'Backend\ScheduleController@searchSchedule']);
+
+	//Topsis Route
+	Route::resource('/topsis','Backend\TopsisController');
+	Route::get('/result', ['as' => 'admin.topsisresult.save', 'uses' => 'Backend\TopsisController@create']);
+
 
 });
 

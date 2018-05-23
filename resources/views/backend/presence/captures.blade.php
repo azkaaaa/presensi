@@ -10,7 +10,7 @@
 	<div id="results">Your captured image will appear here...</div>
 	
 	<h1>Capture Web camera image using WebcamJS and PHP - Theonlytutorials.com</h1>
-	<h3>Demonstrates simple 600x460 capture &amp; display</h3>
+	<h3></h3>
 	
 	<div id="my_camera"></div>
 	
@@ -32,7 +32,7 @@
 	<!-- A button for taking snaps -->
 	
 		<input type=button value="Take Snapshot" onClick="take_snapshot()">
-		<input type="hidden" name="_token" value="{{csrf_token()}}">
+		<input type=hidden value="{{ $presence_id }}" name="presence_id">
 	
 	
 	<!-- Code to handle taking the snapshot and displaying it locally -->
