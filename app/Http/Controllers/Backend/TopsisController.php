@@ -81,24 +81,6 @@ class TopsisController extends Controller
 			}
   			$i++;
 		}
-
-		// while ($dataalternatif = mysql_fetch_array($queryalternatif))
-		// {
-		// 	if (@$_POST['alternatif'.$dataalternatif['id_alternatif']] == "true") {
-		// 		$datakriteria = Kriteria::all();
-		// 		$j=0;
-		// 		while ($datakriteria = mysql_fetch_array($querykriteria))
-		// 		{
-		// 			$queryalternatifkriteria = AlternativeKriteria::where('id_alternatif', $dataalternatif['id_alternatif'])->where('id_kriteria', $datakriteria['id_kriteria'])->first();
-
-		// 			$dataalternatifkriteria = mysql_fetch_array($queryalternatifkriteria);
-					
-		// 			$alternatifkriteria[$i][$j] = $dataalternatifkriteria['nilai'];
-		// 			$j++;
-		// 		}
-		// 		$i++;
-		// 	}
-		// }
 			
 		$pembagi = array();
 		
@@ -273,6 +255,6 @@ class TopsisController extends Controller
 			}
 		}
 
-        return view('backend.topsis.result', ['hasilrangking'=>$hasilrangking[0], 'alternatifrangking'=>$alternatifrangking[0], 'hasilrangkingsemua'=>$hasilrangking, 'alternatifrangkingsemua'=>$alternatifrangking]);
+        return view('backend.topsis.result', ['hasilrangking'=>$hasilrangking[0], 'alternatifrangking'=>$alternatifrangking[0], 'hasilrangkingsemua'=>$hasilrangking, 'alternatifrangkingsemua'=>$alternatifrangking, 'alternatif'=>$alternatif, 'kriteria'=>$kriteria, 'costbenefit'=>$costbenefit, 'kepentingan'=>$kepentingan, 'alternatifkriteria'=>$alternatifkriteria, 'pembagi'=>$pembagi, 'normalisasi'=>$normalisasi, 'terbobot'=>$terbobot, 'aplus'=>$aplus, 'amin'=>$amin, 'dplus'=>$dplus, 'dmin'=>$dmin, 'hasil'=>$hasil]);
     }
 }

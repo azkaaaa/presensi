@@ -34,15 +34,18 @@ Route::get('/dopresence', ['as'=>'user.presence.index','uses'=>'Backend\Presence
 Route::group(['middleware' => ['web', 'auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	
-	Route::get('/', function(){
-		if (Auth::user()->level == 'Admin'){
-			return view('backend.dashboard.dashboard');
-		}elseif (Auth::user()->level == 'Karyawan'){
-			return view('backend.dashboard.dashboard');
-		}elseif (Auth::user()->level == 'Manajer'){
-			return view('backend.dashboard.dashboard');
-		}
-	});
+	Route::get('/', ['as'=>'user.dashboard.index','uses'=>'Backend\DashboardController@dashboard']);
+
+
+	// Route::get('/', function(){
+	// 	if (Auth::user()->level == 'Admin'){
+	// 		Route::get('/', ['as'=>'admin.dashboard.index','uses'=>'Backend\PresenceController@dashboard']);
+	// 	}elseif (Auth::user()->level == 'Karyawan'){
+	// 		return view('backend.dashboard.dashboard');
+	// 	}elseif (Auth::user()->level == 'Manajer'){
+	// 		return view('backend.dashboard.dashboard');
+	// 	}
+	// });
 	
 });
 
