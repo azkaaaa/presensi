@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 
+use App\Employee;
 use App\Alternative;
 use App\AlternativeKriteria;
 use App\Kriteria;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use DB;
 
 class TopsisController extends Controller
 {
@@ -20,14 +23,19 @@ class TopsisController extends Controller
         return view('backend.topsis.index', ['kriteria'=>$kriteria, 'alternative'=>$alternative]);
     }
 
+    public function getFormTopsis()
+    {
+        return view('backend.topsis.create');
+    }
+
     public function create()
     {	
     	$alternatif = array(); //array("Galaxy", "iPhone", "BB", "Lumia");
 	
-		$dataalternatif = Alternative::all();
+		$dataalternatif = Employee::all();
 		$i=0;
 		foreach ($dataalternatif as $row) {
-  			$alternatif[$i] = $row->nama_alternatif;
+  			$alternatif[$i] = $row->name;
 			$i++;
 		}
 		
@@ -63,13 +71,13 @@ class TopsisController extends Controller
 								array(4000, 70, 8, 50, 1500, 60)
 							  ); */
 		
-		$dataalternatif = Alternative::all();
+		$dataalternatif = Employee::all();
 		$i=0;
 		foreach ($dataalternatif as $dataal) {
 			$datakriteria = Kriteria::all();
 			$j=0;
 			foreach ($datakriteria as $datakr) {
-				$queryalternatifkriteria = AlternativeKriteria::where('id_alternatif', $dataal->id_alternatif)->where('id_kriteria', $datakr->id_kriteria)->get();
+				$queryalternatifkriteria = AlternativeKriteria::where('id_alternatif', $dataal->id)->where('id_kriteria', $datakr->id_kriteria)->get();
 
 					// $dataalternatifkriteria = mysql_fetch_array($queryalternatifkriteria);
 
@@ -256,5 +264,87 @@ class TopsisController extends Controller
 		}
 
         return view('backend.topsis.result', ['hasilrangking'=>$hasilrangking[0], 'alternatifrangking'=>$alternatifrangking[0], 'hasilrangkingsemua'=>$hasilrangking, 'alternatifrangkingsemua'=>$alternatifrangking, 'alternatif'=>$alternatif, 'kriteria'=>$kriteria, 'costbenefit'=>$costbenefit, 'kepentingan'=>$kepentingan, 'alternatifkriteria'=>$alternatifkriteria, 'pembagi'=>$pembagi, 'normalisasi'=>$normalisasi, 'terbobot'=>$terbobot, 'aplus'=>$aplus, 'amin'=>$amin, 'dplus'=>$dplus, 'dmin'=>$dmin, 'hasil'=>$hasil]);
+    }
+
+    public function store(Request $request)
+    {   
+      $year =  $request->year;
+      $employee =  Employee::all()->toArray();
+
+      $kerajinan = DB::table('presences')
+            ->select('employee_id', DB::raw('count(presences.id) as total_kerajinan'))
+            ->groupby('employee_id')
+            ->where(DB::raw("DATE_FORMAT(presences.date, '%Y')"), '=', $year)
+            ->get();
+
+       $kedisiplinan = DB::table('presences')
+            ->select('employee_id', DB::raw('count(presences.id) as total_kedisplinan'))
+            ->groupby('employee_id')
+            ->where(DB::raw("DATE_FORMAT(presences.date, '%Y')"), '=', $year)
+            ->where('presences.additional', '=', 'Terlambat')
+            ->get();
+
+        $lembur = DB::table('presences')
+            ->select('presences.employee_id', DB::raw('count(presences.id) as total_lembur'))
+            ->groupby('employee_id')
+            ->where(DB::raw("DATE_FORMAT(presences.date, '%Y')"), '=', $year)
+            ->where('presences.overtime_status', '=', 'Lembur')
+            ->get();
+
+      // dd($lembur);
+
+      foreach($kedisiplinan as $item){
+
+                $altkri =  new AlternativeKriteria();
+                $altkri->id_alternatif = $item->employee_id;
+                $altkri->id_kriteria = 1;
+                $altkri->nilai = $item->total_kedisplinan;
+                $altkri->save();
+      }
+
+      foreach($kerajinan as $item){
+
+      			if ($item->total_kerajinan >= 5) {
+      				$nilai = 70;
+      			}
+      			if ($item->total_kerajinan <= 3 && $item->total_kerajinan > 1) {
+      				$nilai = 50;
+      			}
+      			if ($item->total_kerajinan <= 1) {
+      				$nilai = 20;
+      			}
+
+                $altkri =  new AlternativeKriteria();
+                $altkri->id_alternatif = $item->employee_id;
+                $altkri->id_kriteria = 3;
+                $altkri->nilai = $nilai;
+                $altkri->save();
+      }
+
+      foreach($lembur as $item){
+
+      			if ($item->total_lembur >= 5) {
+      				$nilai = 70;
+      			}
+      			if ($item->total_lembur <= 3 && $item->total_lembur > 1) {
+      				$nilai = 50;
+      			}
+      			if ($item->total_lembur <= 1) {
+      				$nilai = 20;
+      			}
+      			if ($item->total_lembur == NULL) {
+      				$nilai = 0;
+      			}
+
+                $altkri =  new AlternativeKriteria();
+                $altkri->id_alternatif = $item->employee_id;
+                $altkri->id_kriteria = 2;
+                $altkri->nilai = $nilai;
+                $altkri->save();
+      }
+
+      session()->flash('message', 'Anda berhasil menambahkan data alternatif kriteria.');
+
+     return redirect('/admin/topsis');
     }
 }

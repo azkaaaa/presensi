@@ -146,10 +146,7 @@ class Genetic {
                 $this->individu[$i][$j][4] = $all_shift[$j];
 
                 // Penentuan lembur secara acak 
-                $this->individu[$i][$j][5] = mt_rand(0,  $all_ord_overtime_days - 1);
-
-                
-                
+                $this->individu[$i][$j][5] = mt_rand(0,  $all_ord_overtime_days - 1);                
             }
         }
         // dd($this->day);

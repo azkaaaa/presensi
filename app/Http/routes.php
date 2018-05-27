@@ -104,6 +104,7 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	//Topsis Route
 	Route::resource('/topsis','Backend\TopsisController');
 	Route::get('/result', ['as' => 'admin.topsisresult.save', 'uses' => 'Backend\TopsisController@create']);
+	Route::get('/topsis/create', ['as' => 'admin.topsiscreate.index', 'uses' => 'Backend\TopsisController@getFormTopsis']);
 
 
 });
