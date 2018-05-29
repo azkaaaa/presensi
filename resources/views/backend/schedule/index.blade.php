@@ -12,18 +12,25 @@
               <table class="table table-bordered table-striped" id="schedules-data">
                 <thead>
                 <tr>
-                  <th>Minggu</th>
+                  <!-- <th>Minggu</th>
                   <th>Shift</th>
                   <th>Karyawan</th>
                   <th>Libur</th>
                   <th>Kemungkinan Lembur</th>
+                  <th width="15%">Aksi</th> -->
+                  <th>Karyawan</th>
+                  <th>Minggu 1</th>
+                  <th>Minggu 2</th>
+                  <th>Minggu 3</th>
+                  <th>Minggu 4</th>
+                  <th>Shift</th>
                   <th width="15%">Aksi</th>
                 </tr>
                 </thead>
               </table>
             </div>
 
-            <script type="text/javascript">
+            <!-- <script type="text/javascript">
             $(function() {
                 var oTable = $('#schedules-data').DataTable({
                     processing: true,
@@ -37,6 +44,27 @@
                     {data: 'employee_name', name: 'employees.name'},
                     {data: 'day_name', name: 'days.name'},
                     {data: 'overtime_name', name: 'overtime_days.name'},
+                    {data: 'action', 'searchable': false, 'orderable':false }
+                ],
+                });
+            });
+          </script> -->
+          <script type="text/javascript">
+            $(function() {
+                var oTable = $('#schedules-data').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ url("/admin/data-schedule") }}'
+                    },
+                    columns: [
+                    {data: 'employee_name', name: 'employees.name'},
+                    {data: 'first_week', name: 'schedules.first_week'},
+                    {data: 'second_week', name: 'schedules.second_week'},
+                    {data: 'third_week', name: 'schedules.third_week'},
+                    {data: 'fourth_week', name: 'schedules.fourth_week'},
+                    {data: 'shift_name', name: 'shifts.name'},
+
                     {data: 'action', 'searchable': false, 'orderable':false }
                 ],
                 });
