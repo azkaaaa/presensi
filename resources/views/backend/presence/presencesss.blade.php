@@ -101,13 +101,8 @@
     <form method="POST" action="{{url('/presence')}}" class="lockscreen-credentials" onsubmit="return take_snapshot()" enctype="multipart/form-data">
       <input type="hidden" name="_token" value="{{csrf_token()}}">
       <div class="input-group">
-        <input type="password" class="form-control" placeholder="Tap ID Card" name="id_card">
-
-<!--         <div id="results">
-        <input type="hidden" class="form-control" name="webcam">
-        </div> -->
-
-
+        <input type="password" class="form-control" placeholder="Tap ID Card" name="id_card" id="id_card">
+        
         <div class="input-group-btn">
           <button type="button" class="btn"><i class="fa fa-arrow-right text-muted"></i></button>
         </div>
@@ -123,8 +118,15 @@
     <a href="login.html">Or sign in as a different user</a>
   </div> -->
     <!-- <input type=button value="Take Snapshot" onClick="take_snapshot()"> -->
+  <script language="JavaScript">
+        window.onload = init;
 
-<script src="{{ URL::asset('admin/webcam.js') }}"></script>
+        function init(){
+        document.getElementById("id_card").focus();
+        }
+  </script>
+
+  <script src="{{ URL::asset('admin/webcam.js') }}"></script>
 
   <script language="JavaScript">
       Webcam.set({

@@ -59,10 +59,10 @@
                     },
                     columns: [
                     {data: 'employee_name', name: 'employees.name'},
-                    {data: 'first_week', name: 'schedules.first_week'},
-                    {data: 'second_week', name: 'schedules.second_week'},
-                    {data: 'third_week', name: 'schedules.third_week'},
-                    {data: 'fourth_week', name: 'schedules.fourth_week'},
+                    {data: 'first_week_name', name: 'days.name'},
+                    {data: 'second_week_name', name: 'days.name'},
+                    {data: 'third_week_name', name: 'days.name'},
+                    {data: 'fourth_week_name', name: 'days.name'},
                     {data: 'shift_name', name: 'shifts.name'},
 
                     {data: 'action', 'searchable': false, 'orderable':false }

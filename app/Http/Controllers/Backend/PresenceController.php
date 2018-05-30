@@ -111,15 +111,14 @@ class PresenceController extends Controller
     }
 
   	public function show($id){
-        //select * from tugas where id=$id
-        // $data = School::find($id);
-        $employee = DB::table('employees')
-        ->where('employees.id', $id)
-        ->join('users', 'users.id', '=','employees.user_id')
+        $presence = DB::table('presences')
+        ->where('presences.id', $id)
+        ->join('employees', 'employees.id', '=','presences.employee_id')
         ->join('positions', 'positions.id', '=','employees.position_id')
-        ->select('employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','positions.name as position_name','users.email','users.level','users.status')
+        ->select('presences.*','employees.name as employee_name','positions.name as position_name')
         ->first();
-        return view('backend.presence.detail')->with('employee', $employee);
+
+        return view('backend.presence.detail')->with('presence', $presence);
     }
 
 
@@ -139,8 +138,8 @@ class PresenceController extends Controller
 	  // $dt->toFormattedDateString();      // Dec 19, 2015
 	  // $dt->toDateTimeString();           // 2015-12-19 10:10:16
 	  // $dt->toDayDateTimeString();
+      //dd($date_two);
       $employee = Employee::where('id_card',$request->id_card)->first();
-      $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
 	 
       if($employee){
 
@@ -151,7 +150,7 @@ class PresenceController extends Controller
 	  	$have_presence_two = DB::table('presences')
 	    ->where('employee_id', $employee->id)
 	    ->where('date', $date_two)
-	    ->where('time_in', '>=', '15:00')->first();
+	    ->where('time_in', '>=', '17:00')->first();
 
       $have_overtime = DB::table('presences')
       ->where('employee_id', $employee->id)
@@ -159,7 +158,10 @@ class PresenceController extends Controller
       ->where('overtime_permit', 'Y')->first();
 
         //PULANG
-      if($have_presence_two AND $have_overtime AND $time <= '24:00'){
+      if($have_presence_two AND $have_overtime AND $time <= '09:00'){
+           
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date_two));
+
            $shift = 2;
            $info = 'Masuk';
            $date = $presence->date;
@@ -173,7 +175,10 @@ class PresenceController extends Controller
             session()->flash('return_presence_overtime_success_on', $presence->overtime);
         }
         //PULANG
-      elseif($have_presence AND $have_overtime AND $time >= '15:00'){
+      elseif($have_presence AND $have_overtime AND $time >= '20:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
+
            $shift = 1;
            $info = 'Masuk';
            $additional = $presence->additional;
@@ -186,7 +191,10 @@ class PresenceController extends Controller
             session()->flash('return_presence_overtime_success_on', $presence->overtime); 
         }
         //PULANG
-      elseif($have_presence AND $time >= '15:00'){
+      elseif($have_presence AND $time >= '20:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
+
            $shift = 1;
            $info = 'Masuk';
            $additional = $presence->additional;
@@ -198,7 +206,10 @@ class PresenceController extends Controller
             session()->flash('return_presence_normal_success_on',$employee->name);
         }
         //PULANG
-      elseif($have_presence_two AND $time <= '24:00'){
+      elseif($have_presence_two AND $time <= '09:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date_two));
+
            $shift = 2;
            $info = 'Masuk';
            $date = $presence->date;
@@ -211,7 +222,10 @@ class PresenceController extends Controller
             session()->flash('return_presence_normal_success_on',$employee->name);
         }
         //MASUK
-      elseif($time <= '07:00'){
+      elseif($time <= '08:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
+
       		 $shift = 1;
       		 $info = 'Masuk';
       		 $additional = 'Tepat';
@@ -223,7 +237,10 @@ class PresenceController extends Controller
           	session()->flash('presence_success_on',$employee->name);
       	}
         //MASUK
-      elseif($time > '07:00' AND $time <= '10:00'){
+      elseif($time > '08:00' AND $time <= '12:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
+
       		 $shift = 1;
       		 $info = 'Masuk';
       		 $additional = 'Terlambat';
@@ -235,10 +252,13 @@ class PresenceController extends Controller
           	session()->flash('presence_success_late',$employee->name);
       	}
          //OTHERS
-      elseif($time > '10:00' AND $time <= '12:00'){
+      elseif($time > '13:00' AND $time <= '17:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
+
            $shift = 1;
            $info = 'Masuk';
-           $additional = 'Sangat Terlambat';
+           $additional = 'Terlambat';
            $overtime = '0';
            $overtime_status = 'N';
            $overtime_permit = 'N';
@@ -247,7 +267,10 @@ class PresenceController extends Controller
             session()->flash('presence_success_late',$employee->name);
         }
         //MASUK
-      elseif($time > '12:00' AND $time <= '15:00'){
+      elseif($time > '17:00' AND $time <= '20:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
+
       		 $shift = 2;
       		 $info = 'Masuk';
       		 $additional = 'Tepat';
@@ -256,10 +279,13 @@ class PresenceController extends Controller
            $overtime_permit = 'N';
            $presence->time_in = $time;
 
-          	session()->flash('return_presence_success_on',$employee->name);
+          	session()->flash('presence_success_on',$employee->name);
       	}
         //MASUK
-      elseif($time > '15:00' AND $time <= '17:00'){
+      elseif($time > '20:00' AND $time <= '24:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
+
       		 $shift = 2;
       		 $info = 'Masuk';
       		 $additional = 'Terlambat';
@@ -272,10 +298,13 @@ class PresenceController extends Controller
       	}
 
         //OTHER
-      elseif($time > '17:00' AND $time <= '24:00'){
+      elseif($time > '24:00' AND $time <= '08:00'){
+
+           $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
+        
            $shift = 2;
            $info = 'Masuk';
-           $additional = 'Sangat Terlambat';
+           $additional = 'Terlambat';
            $overtime = '0';
            $overtime_status = 'N';
            $overtime_permit = 'N';
@@ -302,19 +331,19 @@ class PresenceController extends Controller
         $presence->overtime_permit = $overtime_permit;
 	      $presence->save();
 
-         $capture = Capture::latest()->first();
+        $capture = Capture::latest()->first();
         $presence->capture = $capture->picture;
         $presence->save();
-
-
 	     
-	     return redirect()->route('user.presence.index');
+	     return redirect()->back();
       }
+
 	  else{
           session()->flash('presence_failed',true);
 	  	  
-	     return redirect()->route('user.presence.index');
+	     return redirect()->back();
 	  }      
+    
     }
 
     public function edit($id)
