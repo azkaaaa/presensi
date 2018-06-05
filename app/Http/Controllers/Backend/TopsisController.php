@@ -23,7 +23,7 @@ class TopsisController extends Controller
         return view('backend.topsis.index', ['kriteria'=>$kriteria, 'alternative'=>$alternative]);
     }
 
-    public function getFormTopsis()
+    public function show()
     {
         return view('backend.topsis.create');
     }

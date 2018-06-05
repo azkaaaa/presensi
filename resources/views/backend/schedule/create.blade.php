@@ -24,7 +24,7 @@
                     <p class="text-danger">{{$errors->first('month')}}</p>
                   </div>
                   </div>
-                  <div class="form-group {{($errors->has('schedule_week')?'has-error':'')}}">
+                  <!-- <div class="form-group {{($errors->has('schedule_week')?'has-error':'')}}">
                   <label for="inputName" class="col-sm-2 control-label">Jadwal Minggu</label>
                   <div class="col-sm-10">
                     <select class="form-control pull-left" style="width: 300px" name="schedule_week">
@@ -34,7 +34,7 @@
                     <p class="text-danger">{{$errors->first('schedule_week')}}</p>
                   </div>
 
-                </div>
+                </div> -->
                 <div class="form-group {{($errors->has('jumlah_populasi')?'has-error':'')}}">
                   <label for="inputName" class="col-sm-2 control-label">Jumlah Populasi</label>
 

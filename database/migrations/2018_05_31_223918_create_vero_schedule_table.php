@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGeneticScheduleTable extends Migration
+class CreateVeroScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,25 +12,24 @@ class CreateGeneticScheduleTable extends Migration
      */
     public function up()
     {
-        Schema::create('genetic_schedule', function (Blueprint $table) {
+        Schema::create('vero_schedule', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
             $table->integer('first_week')->unsigned();
             $table->integer('second_week')->unsigned();
             $table->integer('third_week')->unsigned();
             $table->integer('fourth_week')->unsigned();
-            $table->integer('shift_id')->unsigned();
-            $table->integer('month_id')->unsigned();
+            $table->integer('day_id')->unsigned();
             $table->integer('year')->unsigned();
             $table->integer('list')->unsigned();
             $table->string('status');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees');
-            $table->foreign('shift_id')->references('id')->on('shifts');
-            $table->foreign('month_id')->references('id')->on('months');
+            $table->foreign('day_id')->references('id')->on('days');
             // $table->foreign('day_id')->references('id')->on('days');
             // $table->foreign('week_id')->references('id')->on('weeks');
+            // $table->foreign('month_id')->references('id')->on('months');
             // $table->foreign('overtime_id')->references('id')->on('overtime_days');
         });
     }
@@ -42,6 +41,6 @@ class CreateGeneticScheduleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('genetic_schedule');
+        Schema::dropIfExists('vero_schedule');
     }
 }

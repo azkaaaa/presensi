@@ -4,7 +4,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Daftar Schedule</h3>
+              <h3 class="box-title">Daftar Jadwal Bulan</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -12,11 +12,11 @@
                 <thead>
                 <tr>
                   <th>Bulan</th>
-                  <th>Minggu</th>
+                  <th>Libur Minggu 1</th>
+                  <th>Libur Minggu 2</th>
+                  <th>Libur Minggu 3</th>
+                  <th>Libur Minggu 4</th>
                   <th>Shift</th>
-                  <th>Karyawan</th>
-                  <th>Libur</th>
-                  <th>Status</th>
                 </tr>
                 </thead>
               </table>
@@ -32,11 +32,11 @@
                     },
                     columns: [
                     {data: 'month_name', name: 'months.name'},
-                    {data: 'week_name', name: 'weeks.name'},
+                    {data: 'first_week_name', name: 'days.name'},
+                    {data: 'second_week_name', name: 'days.name'},
+                    {data: 'third_week_name', name: 'days.name'},
+                    {data: 'fourth_week_name', name: 'days.name'},
                     {data: 'shift_name', name: 'shifts.name'},
-                    {data: 'employee_name', name: 'employees.name'},
-                    {data: 'day_name', name: 'days.name'},
-                    {data: 'status', name: 'status'}
                 ],
                 });
             });

@@ -43,12 +43,13 @@ class PresenceController extends Controller
 
     public function getPresencesEmployee()
     {
-        return view('backend.presence.employee_index');
+        $dt = Carbon::now();
+        return view('backend.presence.employee_index', ['dt'=>$dt]);
     }
 
     public function getList()
     {
-      dd($this->presence_id);
+      // dd($this->presence_id);
 
       $years = DB::table('presences')
       ->select(DB::raw('YEAR(presences.date) year'))

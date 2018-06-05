@@ -5,7 +5,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Daftar Schedule</h3>
-              <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/schedule/create ')}}'"><i class="icon-plus"><span> Tambah Schedule</span></i></button>
+              <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/schedule/create ')}}'"><i class="icon-plus"><span> Buat Jadwal</span></i></button>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -24,7 +24,7 @@
                   <th>Minggu 3</th>
                   <th>Minggu 4</th>
                   <th>Shift</th>
-                  <th width="15%">Aksi</th>
+                  <!-- <th width="15%">Aksi</th> -->
                 </tr>
                 </thead>
               </table>
@@ -65,7 +65,7 @@
                     {data: 'fourth_week_name', name: 'days.name'},
                     {data: 'shift_name', name: 'shifts.name'},
 
-                    {data: 'action', 'searchable': false, 'orderable':false }
+                    // {data: 'action', 'searchable': false, 'orderable':false }
                 ],
                 });
             });

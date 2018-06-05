@@ -32,6 +32,10 @@ class DaysSeeder extends Seeder
             'id'=> 5,
             'name'=>'Jumat'
           ],
+          [
+            'id'=> 6,
+            'name'=>'Sabtu'
+          ],
         ]);
     }
 }

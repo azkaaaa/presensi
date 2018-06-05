@@ -132,36 +132,6 @@ class EmployeesSeeder extends Seeder
             'position_id' => '1',
             'user_id' => '2'
           ],
-          [
-            'id'=> 9,
-            'name'=>'Karyawan Lima',
-            'nik'=>'1244123412340628',
-            'id_card'=>'id12341375',
-            'birthday' => '2018-03-16',
-            'religion' => 'Islam',
-            'address' => 'Bekasi',
-            'phone' => '089983526735',
-            'education' => 'Sarjana',
-            'account_number' => '12341777',
-            'profile_picture' => '',
-            'position_id' => '1',
-            'user_id' => '2'
-          ],
-          [
-            'id'=> 10,
-            'name'=>'Karyawan Enam',
-            'nik'=>'1244123412347777',
-            'id_card'=>'id12342345',
-            'birthday' => '2018-03-16',
-            'religion' => 'Islam',
-            'address' => 'Bekasi',
-            'phone' => '0899835272345',
-            'education' => 'Sarjana',
-            'account_number' => '12348633',
-            'profile_picture' => '',
-            'position_id' => '1',
-            'user_id' => '2'
-          ],
         ]);
     }
 }

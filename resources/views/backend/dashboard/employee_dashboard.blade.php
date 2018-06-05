@@ -1,45 +1,62 @@
 @extends ('backend.layouts.master') @section ('content')
 <!-- Small boxes (Stat box) -->
-      <div class="row">
+     <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
-            @if($salary)
+            @if($kehadiran)
             <div class="inner">
-              <h3>Sudah Dibuat</h3>
-              <p>Gaji Bulan Ini</p>
+              <h3>{{ $kehadiran->total_kehadiran }}</h3>
+              <p>Total Kehadiran Bulan Ini</p>
             </div>
             @else
             <div class="inner">
-              <h3 style="color: #000000">Belum Dibuat</h3>
-              <p>Gaji Bulan Ini</p>
+              <h3 style="color: #000000">0</h3>
+              <p>Total Kehadiran Bulan Ini</p>
             </div>
             @endif
             <div class="icon">
-              <i class="ion ion-cash"></i>
+              <i class="ion ion-person"></i>
             </div>
-            <a href="{{ url('/admin/salary') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
-            @if($schedule)
+            @if($terlambat==null)
             <div class="inner">
-              <h3>Sudah Dibuat</h3>
-              <p>Jadwal Bulan Ini</p>
+              <h3>0</h3>
+              <p>Total Terlambat Bulan Ini</p>
             </div>
             @else
             <div class="inner">
-              <h3 style="color: #000000">Belum Dibuat</h3>
-              <p>Jadwal Bulan Ini</p>
+              <h3>{{ $terlambat->total_terlambat }}</h3>
+              <p>Total Terlambat Bulan Ini</p>
             </div>
             @endif
             <div class="icon">
-              <i class="ion ion-calendar"></i>
+              <i class="ion ion-speedometer"></i>
             </div>
-            <a href="{{ url('/admin/schedule') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            @if($lembur==null)
+            <div class="inner">
+              <h3>0</h3>
+              <p>Total Lembur Bulan Ini</p>
+            </div>
+            @else
+            <div class="inner">
+              <h3>{{ $lembur->total_lembur }}</h3>
+              <p>Total Lembur Bulan Ini</p>
+            </div>
+            @endif
+            <div class="icon">
+              <i class="ion ion-star"></i>
+            </div>
           </div>
         </div>
         <!-- ./col -->
@@ -54,27 +71,9 @@
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>65</h3>
-
-              <p>Unique Visitors</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-
-
       </div>
 
       <!-- TABLE: LATEST ORDERS -->
@@ -121,7 +120,7 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
               <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
-              <a href="{{ url('admin/presence/data') }}" class="btn btn-sm btn-info btn-flat pull-right">Lihat Semua Presensi</a>
+              <a href="{{ url('employee/presence') }}" class="btn btn-sm btn-info btn-flat pull-right">Lihat Semua Presensi</a>
             </div>
             <!-- /.box-footer -->
           </div>

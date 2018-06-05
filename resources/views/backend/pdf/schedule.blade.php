@@ -18,7 +18,7 @@ td, th {
 </style>
 <table>
             <tr>
-                <td colspan="4">
+                <td colspan="6">
                     <table>
                         <tr>
                             <td><a style="font-weight: bold; font-size: 20px;"><center>Cafe Omboy</a><br>
@@ -32,17 +32,21 @@ td, th {
                 </td>
             </tr>
   <tr>
-    <th><center>Minggu</center></th>
-    <th><center>Shift</center></th>
     <th><center>Karyawan</center></th>
-    <th><center>Libur</center></th>
+    <th><center>Libur Minggu 1</center></th>
+    <th><center>Libur Minggu 2</center></th>
+    <th><center>Libur Minggu 3</center></th>
+    <th><center>Libur Minggu 4</center></th>
+    <th><center>Shift</center></th>
   </tr>
   @foreach($schedule as $row)
   <tr>
-    <td>{{ $row->week_name }}</td>
-    <td>{{ $row->shift_name }}</td>
     <td>{{ $row->employee_name }}</td>
-    <td>{{ $row->day_name }}</td>
+    <td>{{ $row->first_week_name }}</td>
+    <td>{{ $row->second_week_name }}</td>
+    <td>{{ $row->third_week_name }}</td>
+    <td>{{ $row->fourth_week_name }}</td>
+    <td>{{ $row->shift_name }}</td>
   </tr>
   @endforeach
 </table>
