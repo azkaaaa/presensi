@@ -65,6 +65,7 @@ class ScheduleController extends Controller
 
   public function dataSchedules()
     { 
+      $dt = Carbon::now();
        $schedules = DB::table('genetic_schedule')
             ->join('employees', 'employees.id', '=', 'genetic_schedule.employee_id')
             ->join('shifts', 'shifts.id', '=', 'genetic_schedule.shift_id')
@@ -72,8 +73,9 @@ class ScheduleController extends Controller
             ->join('days as days_two', 'days_two.id', '=', 'genetic_schedule.second_week')
             ->join('days as days_three', 'days_three.id', '=', 'genetic_schedule.third_week')
             ->join('days as days_four', 'days_four.id', '=', 'genetic_schedule.fourth_week')
+            ->where('genetic_schedule.month_id', $dt->month)
             ->select('genetic_schedule.*', 'employees.name as employee_name', 'shifts.name as shift_name', 'days.name as first_week_name', 'days_two.name as second_week_name', 'days_three.name as third_week_name', 'days_four.name as fourth_week_name');
-
+            
         return Datatables::of($schedules)
         ->addColumn('action', function ($schedules) {
                 return '<a href="'.url('admin/schedule/'. $schedules->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit Libur</a>';

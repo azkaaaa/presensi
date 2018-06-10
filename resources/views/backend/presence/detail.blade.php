@@ -57,7 +57,7 @@
                           </thead>
                         </table>
                         <div class="box-footer">
-                              <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/admin/presence ')}}'">Cancel</button>
+                              <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/admin/presence/data ')}}'">Cancel</button>
                          </div>
                        </div>
                     </div>

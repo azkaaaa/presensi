@@ -24,7 +24,7 @@ class EmployeesSeeder extends Seeder
             'education' => 'Sarjana',
             'account_number' => '12341234',
             'profile_picture' => '',
-            'position_id' => '1',
+            'position_id' => '2',
             'user_id' => '1'
           ],
           [
@@ -39,7 +39,7 @@ class EmployeesSeeder extends Seeder
             'education' => 'Sarjana',
             'account_number' => '12341235',
             'profile_picture' => '',
-            'position_id' => '2',
+            'position_id' => '1',
             'user_id' => '2'
           ],
           [
@@ -54,7 +54,7 @@ class EmployeesSeeder extends Seeder
             'education' => 'Sarjana',
             'account_number' => '12341236',
             'profile_picture' => '',
-            'position_id' => '3',
+            'position_id' => '5',
             'user_id' => '3'
           ],
           [
@@ -69,7 +69,7 @@ class EmployeesSeeder extends Seeder
             'education' => 'Sarjana',
             'account_number' => '12341237',
             'profile_picture' => '',
-            'position_id' => '1',
+            'position_id' => '2',
             'user_id' => '4'
           ],
           [
@@ -99,7 +99,7 @@ class EmployeesSeeder extends Seeder
             'education' => 'Sarjana',
             'account_number' => '12345566',
             'profile_picture' => '',
-            'position_id' => '1',
+            'position_id' => '3',
             'user_id' => '2'
           ],
           [
@@ -114,7 +114,7 @@ class EmployeesSeeder extends Seeder
             'education' => 'Sarjana',
             'account_number' => '12341629',
             'profile_picture' => '',
-            'position_id' => '1',
+            'position_id' => '4',
             'user_id' => '2'
           ],
           [
@@ -129,7 +129,22 @@ class EmployeesSeeder extends Seeder
             'education' => 'Sarjana',
             'account_number' => '12348634',
             'profile_picture' => '',
-            'position_id' => '1',
+            'position_id' => '3',
+            'user_id' => '2'
+          ],
+          [
+            'id'=> 9,
+            'name'=>'Karyawan Lima',
+            'nik'=>'1244123412345672',
+            'id_card'=>'id12340987',
+            'birthday' => '2018-03-16',
+            'religion' => 'Islam',
+            'address' => 'Bekasi',
+            'phone' => '089983528725',
+            'education' => 'Sarjana',
+            'account_number' => '12340936',
+            'profile_picture' => '',
+            'position_id' => '4',
             'user_id' => '2'
           ],
         ]);

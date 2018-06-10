@@ -14,18 +14,30 @@ class PositionsSeeder extends Seeder
         DB::table('positions')->insert([
           [
             'id'=> 1,
-            'name'=>'Pegawai Cafe',
+            'name'=>'Koki',
             'salary'=>'70000',
             'transport'=>'10000'
           ],
           [
             'id'=> 2,
-            'name'=>'Pegawai Warnet',
+            'name'=>'Pelayan',
             'salary'=>'50000',
             'transport'=>'15000'
           ],
           [
             'id'=> 3,
+            'name'=>'OB',
+            'salary'=>'100000',
+            'transport'=>'20000'
+          ],
+          [
+            'id'=> 4,
+            'name'=>'Kasir',
+            'salary'=>'100000',
+            'transport'=>'20000'
+          ],
+          [
+            'id'=> 5,
             'name'=>'Manajer',
             'salary'=>'100000',
             'transport'=>'20000'

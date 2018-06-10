@@ -30,7 +30,7 @@ class GeneticForSchedule {
     public function AmbilData()
     {
          //Fill Array of Employee Variables
-        $rs_employee = Employee::all();
+        $rs_employee = Employee::all()->except(3);
         $i = 0;
         foreach ($rs_employee as $data) {
             $this->employee[$i]    = intval($data->id);
