@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('charts', 'Backend\DashboardController@getChart');
 
 Route::get('/', function () {
     return view('backend/layouts/master');

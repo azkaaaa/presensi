@@ -158,6 +158,7 @@ return [
 
         Yajra\Datatables\DatatablesServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
 
     ],
 
@@ -206,6 +207,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
 
     ],
 

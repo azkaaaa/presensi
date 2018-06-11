@@ -76,6 +76,15 @@
 
 
       </div>
+      <div class="row">
+        <div class="col-md-12">
+        <div class="box">
+        <div id="perf_div"></div>
+        @columnchart('Finances', 'perf_div')
+      </div>
+      </div>
+      </div>
+
 
       <!-- TABLE: LATEST ORDERS -->
           <div class="box box-info">

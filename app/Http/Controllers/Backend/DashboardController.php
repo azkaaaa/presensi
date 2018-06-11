@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\Salary;
+
 use Carbon\Carbon;
 use DB;
 use Auth;
+use Khill\Lavacharts\Lavacharts;
 
 class DashboardController extends Controller
 {
@@ -37,6 +41,34 @@ class DashboardController extends Controller
             ->orderBy('presences.date', 'desc')
 	        ->where('presences.date', '=', $today)
 	        ->get();
+            
+
+        $lava = new Lavacharts; // See note below for Laravel
+
+        $finances = \Lava::DataTable();
+
+        $user = Salary::select('month','total_salary')->groupBy('month')->get()->toArray(); 
+
+        $salary = DB::table('salaries')
+            ->select('salaries.month', DB::raw('sum(salaries.total_salary) as total_all'))
+            ->groupBy('salaries.list')
+            ->get();
+
+        $finances->addDateColumn('Month')
+         ->addNumberColumn('Payment')
+         ->setDateTimeFormat('m');
+
+         foreach ($salary as $data) {
+            $finances->addRow(["$data->month", "$data->total_all"]);
+        }
+
+        $chart = \Lava::ColumnChart('Finances', $finances, [
+            'title' => 'Payment Graphic',
+            'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 14
+            ]
+        ]);
 
 	    // dd($presences);
 
@@ -96,5 +128,54 @@ class DashboardController extends Controller
 
     	}
     }
+
+    public function getChart()
+    {
+    //  $stocksTable = \Lava::DataTable();
+    // $stocksTable->addDateColumn('Day of Month')
+    //     ->addNumberColumn('Projected')
+    //     ->addNumberColumn('Official');
+
+    // // Random Data For Example
+    // for ($a = 1; $a < 30; $a++) {
+    //     $stocksTable->addRow(["2014-8-$a", rand(800, 1000), rand(800, 1000)]);
+    // }
+
+    // //DON'T pass $Chart object to view, you get it via its label
+    // //options here: http://lavacharts.com/#datatables
+    // $Chart = \Lava::ScatterChart('this_is_the_label', $stocksTable, [
+    //     'title'    => 'This works in laravel 5.2',
+    //     'fontSize' => 24,
+    // ]);
+        $lava = new Lavacharts; // See note below for Laravel
+
+        $finances = \Lava::DataTable();
+
+        $user = Salary::select('month','total_salary')->groupBy('month')->get()->toArray(); 
+
+        $salary = DB::table('salaries')
+            ->select('salaries.month', DB::raw('sum(salaries.total_salary) as total_all'))
+            ->groupBy('salaries.list')
+            ->get();
+
+        $finances->addDateColumn('Month')
+         ->addNumberColumn('Payment')
+         ->setDateTimeFormat('m');
+
+         foreach ($salary as $data) {
+            $finances->addRow(["$data->month", "$data->total_all"]);
+        }
+
+        $chart = \Lava::ColumnChart('Finances', $finances, [
+            'title' => 'Payment Graphic',
+            'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 14
+            ]
+        ]);
+
+        return view('backend.dashboard.chart');
+
+        }
 
 }
