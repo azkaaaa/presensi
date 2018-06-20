@@ -6,7 +6,7 @@
           <div class="small-box bg-aqua">
             @if($salary)
             <div class="inner">
-              <h3>Sudah Dibuat</h3>
+              <h3>Telah Dibuat</h3>
               <p>Gaji Bulan Ini</p>
             </div>
             @else
@@ -27,7 +27,7 @@
           <div class="small-box bg-green">
             @if($schedule)
             <div class="inner">
-              <h3>Sudah Dibuat</h3>
+              <h3>Telah Dibuat</h3>
               <p>Jadwal Bulan Ini</p>
             </div>
             @else

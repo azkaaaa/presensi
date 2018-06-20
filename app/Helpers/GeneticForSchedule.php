@@ -5,6 +5,9 @@ use App\Employee;
 use App\Shift;
 use App\Week;
 use App\Day;
+
+use DB;
+
 class GeneticForSchedule {
     //
     private $month;
@@ -30,7 +33,14 @@ class GeneticForSchedule {
     public function AmbilData()
     {
          //Fill Array of Employee Variables
-        $rs_employee = Employee::all()->except(3);
+        //$rs_employee = Employee::all()->where('status', 1)->except(3);
+        $rs_employee = DB::table('employees')
+        ->join('users', 'users.id', '=','employees.user_id')
+        ->where('status', 1)
+        ->where('employees.id','!=', 3)
+        ->get();
+        //dd($rs_employee);
+
         $i = 0;
         foreach ($rs_employee as $data) {
             $this->employee[$i]    = intval($data->id);

@@ -63,7 +63,7 @@ class SalaryController extends Controller
             ->orderBy('salaries.created_at', 'desc')
             ->get();
             // ->whereMonth('presences.date', '=', $dt->month);
-        return view('backend.salary.history', ['salary'=>$salary, 'years'=>$years]);
+        return view('backend.salary.history_salary', ['salary'=>$salary, 'years'=>$years]);
     }
 
 	public function dataSalaries()
@@ -248,7 +248,7 @@ class SalaryController extends Controller
           session()->flash('salary_not_found', true);
         }
         
-        return view('backend.salary.history', ['salary'=>$salary, 'years'=>$years]);
+        return view('backend.salary.history_salary', ['salary'=>$salary, 'years'=>$years]);
     }
 
     public function printEmployeeSalary($id)

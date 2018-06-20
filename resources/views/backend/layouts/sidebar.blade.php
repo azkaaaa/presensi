@@ -105,7 +105,7 @@
         {{ Request::is('admin/employee') ? 'active' : '' }}
         {{ Request::is('admin/position') ? 'active' : '' }}">
           <a href="#">
-            <i class="fa fa-edit"></i> <span>Manage Data</span>
+            <i class="fa fa-edit"></i> <span>Kelola Data</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -122,7 +122,7 @@
         {{ Request::is('admin/presence/data') ? 'active' : '' }} 
         {{ Request::is('admin/historypresence') ? 'active' : '' }}">
           <a href="#">
-            <i class="fa fa-clock-o"></i> <span>Manage Presensi</span>
+            <i class="fa fa-clock-o"></i> <span>Kelola Presensi</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -138,7 +138,7 @@
         {{ Request::is('admin/historysalary') ? 'active' : '' }}
         ">
           <a href="#">
-            <i class="fa fa-dollar"></i> <span>Manage Penggajian</span>
+            <i class="fa fa-dollar"></i> <span>Kelola Penggajian</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -153,7 +153,7 @@
         {{ Request::is('admin/schedule') ? 'active' : '' }}
         {{ Request::is('admin/historyschedule') ? 'active' : '' }}">
           <a href="#">
-            <i class="fa fa-calendar-plus-o"></i> <span>Manage Jadwal</span>
+            <i class="fa fa-calendar-plus-o"></i> <span>Kelola Jadwal</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -162,6 +162,13 @@
             <li class="{{ Request::is('admin/schedule') ? 'active' : '' }}"><a href="{{ url('/admin/schedule')}}"><i class="fa fa-circle-o"></i> Penjadwalan</a></li>
             <li class="{{ Request::is('admin/historyschedule') ? 'active' : '' }}"><a href="{{ url('/admin/historyschedule')}}"><i class="fa fa-circle-o"></i> Daftar Penjadwalan</a></li>
           </ul>
+        </li>
+        <li class="header">Navigasi Lain</li>
+        <li>
+          <a href="{{ route('user.presence.index') }}">
+            <i class="fa fa-laptop"></i>
+            <span>Presensi</span>
+          </a>
         </li>
         @elseif (Auth::user()->level == 'Karyawan')
         <li class="{{ Request::is('employee/presence') ? 'active' : '' }}">
@@ -187,7 +194,7 @@
         {{ Request::is('manager/presence/data') ? 'active' : '' }}
         {{ Request::is('manager/historypresence') ? 'active' : '' }}">
           <a href="#">
-            <i class="fa fa-clock-o"></i> <span>Manage Presensi</span>
+            <i class="fa fa-clock-o"></i> <span>Kelola Presensi</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -201,7 +208,7 @@
         {{ Request::is('manager/salary') ? 'active' : '' }}
         {{ Request::is('manager/historysalary') ? 'active' : '' }}">
           <a href="#">
-            <i class="fa fa-dollar"></i> <span>Manage Penggajian</span>
+            <i class="fa fa-dollar"></i> <span>Kelola Penggajian</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -212,13 +219,6 @@
           </ul>
         </li>
         @endif
-        <li class="header">OTHER NAVIGATION</li>
-        <li>
-          <a href="{{ route('user.presence.index') }}">
-            <i class="fa fa-laptop"></i>
-            <span>Presensi</span>
-          </a>
-        </li>
        <!--  <li class="treeview">
           <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>

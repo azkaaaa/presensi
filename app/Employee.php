@@ -14,10 +14,8 @@ class Employee extends Model
       'nik',
       'id_card',
       'birthday',
-      'religion',
       'address',
       'phone',
-      'education',
       'account_number',
       'profile_picture',
       'position_id',
@@ -29,10 +27,8 @@ class Employee extends Model
       'nik' => 'required|min:16|max:16|unique:employees',
       'id_card' => 'required|unique:employees',
       'birthday' => 'required',
-      'religion' => 'required',
       'address' => 'required',
       'phone' => 'required|numeric|unique:employees',
-      'education' => 'required',
       'account_number' => 'required|numeric|min:10|unique:employees'
       // 'status' => 'required'
     ];
@@ -44,10 +40,8 @@ class Employee extends Model
             'nik' => 'required|min:16|max:16|unique:employees,nik,'.$id,
             'id_card' => 'required|unique:employees,id_card,'.$id,
             'birthday' => 'required',
-            'religion' => 'required',
             'address' => 'required',
             'phone' => 'required|numeric|unique:employees,phone,'.$id,
-            'education' => 'required',
             'account_number' => 'required|numeric|min:10|unique:employees,account_number,'.$id
         ], $merge);
   }

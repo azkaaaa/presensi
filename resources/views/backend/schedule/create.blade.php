@@ -39,7 +39,7 @@
                   <label for="inputName" class="col-sm-2 control-label">Jumlah Populasi</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="Jumlah Populasi" name="jumlah_populasi" value="10">
+                    <input type="text" class="form-control" placeholder="Jumlah Populasi" name="jumlah_populasi" value="20">
 		                <p class="text-danger">{{$errors->first('jumlah_populasi')}}</p>
                   </div>
                 </div>
@@ -47,7 +47,7 @@
                   <label for="inputSalary" class="col-sm-2 control-label">Probabilitas Crossover</label>
 
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" placeholder="Probabilitas Crossover" name="probabilitas_crossover" value="0.70">
+                    <input type="number" class="form-control" placeholder="Probabilitas Crossover" name="probabilitas_crossover" value="0.80">
 		                <p class="text-danger">{{$errors->first('probabilitas_crossover')}}</p>
                   </div>
                 </div>
@@ -55,7 +55,7 @@
                   <label for="inputTransport" class="col-sm-2 control-label">Probabilitas Mutasi</label>
 
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" placeholder="Probabilitas Mutasi" name="probabilitas_mutasi" value="0.40">
+                    <input type="number" class="form-control" placeholder="Probabilitas Mutasi" name="probabilitas_mutasi" value="0.10">
                     <p class="text-danger">{{$errors->first('probabilitas_mutasi')}}</p>
                   </div>
                 </div>

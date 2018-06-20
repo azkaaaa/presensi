@@ -44,6 +44,46 @@ class UsersSeeder extends Seeder
             'level' => 'Admin',
             'status' => '1'
           ],
+          [
+            'id'=> 5,
+            'name'=>'Karyawan Satu',
+            'email'=>'karyawansatu@gmail.com',
+            'password'=>Hash::make('12341234'),
+            'level' => 'Karyawan',
+            'status' => '1'
+          ],
+          [
+            'id'=> 6,
+            'name'=>'Karyawan Dua',
+            'email'=>'karyawandua@gmail.com',
+            'password'=>Hash::make('12341234'),
+            'level' => 'Karyawan',
+            'status' => '1'
+          ],
+          [
+            'id'=> 7,
+            'name'=>'Karyawan Tiga',
+            'email'=>'karyawantiga@gmail.com',
+            'password'=>Hash::make('12341234'),
+            'level' => 'Karyawan',
+            'status' => '1'
+          ],
+          [
+            'id'=> 8,
+            'name'=>'Karyawan Empat',
+            'email'=>'karyawanempat@gmail.com',
+            'password'=>Hash::make('12341234'),
+            'level' => 'Karyawan',
+            'status' => '1'
+          ],
+          [
+            'id'=> 9,
+            'name'=>'Karyawan Lima',
+            'email'=>'karyawanlima@gmail.com',
+            'password'=>Hash::make('12341234'),
+            'level' => 'Karyawan',
+            'status' => '1'
+          ],
         ]);
     }
 }

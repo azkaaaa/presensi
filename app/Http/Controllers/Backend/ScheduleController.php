@@ -30,12 +30,14 @@ class ScheduleController extends Controller
 
 	public function index()
     {
-        return view('backend.schedule.index');
+        $dt = Carbon::now();
+        return view('backend.schedule.index_schedule', ['dt'=>$dt]);
     }
 
   	public function getIndex()
     {
-        return view('backend.schedule.index');
+        $dt = Carbon::now();
+        return view('backend.schedule.index_schedule', ['dt'=>$dt]);
     }
 
     public function getSchedulesEmployee()
@@ -181,11 +183,13 @@ class ScheduleController extends Controller
             $genetik->Seleksi($fitness);
             $genetik->StartCrossOver();
             
-            $fitnessAfterMutation = $genetik->Mutasi();  
+            $fitnessAfterMutation = $genetik->Mutasi();   
 
             for ($j = 0; $j < count($fitnessAfterMutation); $j++){
               //test here
               if($fitnessAfterMutation[$j] == 1){
+
+                   //dd($i); 
                 
                 // $schedule_del = Schedule::all();
             //      $schedule_del ->truncate();

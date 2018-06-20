@@ -18,10 +18,8 @@ class CreateEmployeesTable extends Migration
             $table->string('nik')->unique();
             $table->string('id_card')->unique();
             $table->date('birthday');
-            $table->string('religion');
             $table->text('address');
             $table->string('phone')->unique();
-            $table->string('education');
             $table->string('account_number')->unique();
             $table->string('profile_picture');
             $table->integer('position_id')->unsigned();

@@ -29,9 +29,9 @@ class DashboardController extends Controller
 	        ->whereMonth('salaries.created_at', '=', $dt->month)
 	        ->first();
 
-	    $schedule = DB::table('schedules')
-	        ->select('schedules.*')
-	        ->whereMonth('schedules.created_at', '=', $dt->month)
+	    $schedule = DB::table('genetic_schedule')
+	        ->select('genetic_schedule.*')
+	        ->whereMonth('genetic_schedule.created_at', '=', $dt->month)
 	        ->first();
 
 	    $presences = DB::table('presences')
@@ -72,7 +72,7 @@ class DashboardController extends Controller
 
 	    // dd($presences);
 
-        return view('backend.dashboard.dashboard', ['salary'=>$salary, 'schedule'=>$schedule, 'presences'=>$presences, 'dt'=>$dt]);
+        return view('backend.dashboard.dashboard_admin', ['salary'=>$salary, 'schedule'=>$schedule, 'presences'=>$presences, 'dt'=>$dt]);
     	}
 
     	if (Auth::user()->level == 'Karyawan'){

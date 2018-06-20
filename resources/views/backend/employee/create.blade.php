@@ -40,19 +40,6 @@
                     <p class="text-danger">{{$errors->first('birthday')}}</p>
                   </div>
                 </div>
-                <div class="form-group{{ $errors->has('religion') ? ' has-error' : '' }}">
-                    <label for="level" class="col-md-2 control-label">Agama</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="religion">
-                              <option value="Islam">Islam</option>
-                              <option value="Kristen">Kristen</option>
-                              <option value="Protestan">Protestan</option>
-                              <option value="Hindu">Hindu</option>
-                              <option value="Budha">Budha</option>
-                        </select>
-                        <p class="text-danger">{{$errors->first('religion')}}</p>
-                    </div>
-                </div>
                 <div class="form-group {{($errors->has('address')?'has-error':'')}}">
                   <label for="inputAddress" class="col-sm-2 control-label">Alamat</label>
                   <div class="col-sm-10">
@@ -66,17 +53,6 @@
                     <input type="number" class="form-control" placeholder="Nomor Telepon" name="phone">
                     <p class="text-danger">{{$errors->first('phone')}}</p>
                   </div>
-                </div>
-                <div class="form-group{{ $errors->has('education') ? ' has-error' : '' }}">
-                    <label for="level" class="col-md-2 control-label">Pendidikan Terakhir</label>
-                    <div class="col-md-10">
-                        <select class="form-control" name="education">
-                              <option value="SMA">SMA</option>
-                              <option value="D3">D3</option>
-                              <option value="Sarjana">Sarjana</option>
-                        </select>
-                        <p class="text-danger">{{$errors->first('education')}}</p>
-                    </div>
                 </div>
                 <div class="form-group {{($errors->has('account_number')?'has-error':'')}}">
                   <label for="inputAccount" class="col-sm-2 control-label">Nomor Rekening</label>

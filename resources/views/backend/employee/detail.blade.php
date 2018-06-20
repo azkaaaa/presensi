@@ -16,7 +16,7 @@
               <p class="text-muted text-center">{{ $employee->position_name}}</p>
 
               <ul class="list-group list-group-unbordered">
-                <center><li class="list-group-item">{{ $employee->religion}}</li>
+                <center>
                 <li class="list-group-item">{{ date('d M Y', strtotime($employee->birthday)) }}
                 </li>
                 <li class="list-group-item">{{ $employee->phone}}</li>
@@ -52,17 +52,19 @@
                               <td style="font-weight: bold">Jabatan</td>
                               <td>{{$employee->position_name}}</td>
                              </tr>
-                             <tr class="active">
+                             <tr class="">
                               <td style="font-weight: bold">Alamat</td>
                               <td>{{$employee->address}}</td>
-                             </tr>
-                             <tr>
-                              <td style="font-weight: bold">Pendidikan Terakhir</td>
-                              <td>{{$employee->education}}</td>
                              </tr>
                              <tr class="active">
                               <td style="font-weight: bold">Nomor Rekening</td>
                               <td>{{$employee->account_number}}</td>
+                             </tr>
+                             <tr class="">
+                              <td style="font-weight: bold">Status</td>
+                              @if($employee->status == 1)<td><span class="label label-success">Aktif</span></td>
+                              @elseif($employee->status == 0)<td><span class="label label-danger">Tidak Aktif</span></td>
+                              @endif
                              </tr>
                           </thead>
                         </table>

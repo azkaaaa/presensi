@@ -63,7 +63,6 @@ class PositionController extends Controller
       $position =  new Position();
       $this->validate($request,$position->rules);
       $position->fill($request->all());
-      $position->user_id = $user;
       $position->save();
 
       session()->flash('message', 'Anda berhasil menambahkan data jabatan.');
@@ -86,7 +85,6 @@ class PositionController extends Controller
         $position = Position::find($id);
         $this->validate($request,$position->rules);
         $position->fill($request->all());
-        $position->user_id = $user;
         $position->save();
 
         session()->flash('message', 'Data jabatan berhasil diperbarui.');
@@ -98,6 +96,7 @@ class PositionController extends Controller
   	{
   		$delete = Position::findOrFail($id);
       $employees = Employee::all();
+      $match = '';
 
       foreach ($employees as $employee)
       {

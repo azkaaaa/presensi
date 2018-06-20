@@ -38,7 +38,8 @@ class PresenceController extends Controller
 
     public function getPresence()
     {
-        return view('backend.presence.index');
+        $dt = Carbon::now();
+        return view('backend.presence.index_presence', ['dt'=>$dt]);
     }
 
     public function getPresencesEmployee()
@@ -50,6 +51,7 @@ class PresenceController extends Controller
     public function getList()
     {
       // dd($this->presence_id);
+      $dt = Carbon::now();
 
       $years = DB::table('presences')
       ->select(DB::raw('YEAR(presences.date) year'))
@@ -69,11 +71,13 @@ class PresenceController extends Controller
 
     public function dataPresences()
   	{
+       $dt = Carbon::now();
 
     	 $presences = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
             ->select('presences.*', DB::raw("DATE_FORMAT(presences.date, '%d %M %Y') new_date"), 'employees.name as employee_name', 'positions.name as position_name')
+            ->where(DB::raw('MONTH(presences.date)'), $dt->month)
             ->orderBy('presences.date', 'desc');
 
 	      return Datatables::of($presences)
@@ -140,7 +144,12 @@ class PresenceController extends Controller
 	  // $dt->toDateTimeString();           // 2015-12-19 10:10:16
 	  // $dt->toDayDateTimeString();
       //dd($date_two);
-      $employee = Employee::where('id_card',$request->id_card)->first();
+      //$employee = Employee::where('id_card',$request->id_card)->where('status',$request->id_card)->first();
+      $employee = DB::table('employees')
+      ->join('users', 'users.id', '=','employees.user_id')
+      ->where('id_card',$request->id_card)
+      ->where('status', 1)
+      ->first();
 	 
       if($employee){
 
@@ -335,6 +344,8 @@ class PresenceController extends Controller
         $capture = Capture::latest()->first();
         $presence->capture = $capture->picture;
         $presence->save();
+
+        session()->flash('message', 'Anda berhasil melakukan presensi.');
 	     
 	     return redirect()->back();
       }

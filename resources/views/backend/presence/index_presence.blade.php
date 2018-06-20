@@ -4,7 +4,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Daftar Presensi</h3>
+              <h3 class="box-title">Daftar Presensi Bulan {{ $dt->format('F') }}</h3>
               <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/presence/create ')}}'"><i class="icon-plus"><span> Tambah Presensi</span></i></button>
             </div>
             <!-- /.box-header -->

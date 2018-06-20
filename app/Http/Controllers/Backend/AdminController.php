@@ -32,7 +32,7 @@ class AdminController extends Controller
         ->where('employees.id', $employee->id)
         ->join('users', 'users.id', '=','employees.user_id')
         ->join('positions', 'positions.id', '=','employees.position_id')
-        ->select('employees.id','employees.name','employees.nik','employees.id_card','employees.birthday','employees.religion','employees.address','employees.phone','employees.education','employees.account_number','employees.profile_picture', 'positions.id as position_id','positions.name as position_name','users.email','users.level','users.status')
+        ->select('employees.id','employees.name','employees.nik','employees.id_card','employees.birthday','employees.address','employees.phone','employees.account_number','employees.profile_picture', 'positions.id as position_id','positions.name as position_name','users.email','users.level','users.status')
         ->first();
 
         return view('backend.profile.index', ['employee'=>$employee, 'position'=>$position, 'user'=>$user]);
