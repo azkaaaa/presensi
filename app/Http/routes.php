@@ -12,8 +12,8 @@
 */
 Route::get('charts', 'Backend\DashboardController@getChart');
 
-Route::get('/', function () {
-    return view('backend/layouts/master');
+Route::get('/landing', function () {
+    return view('frontend.home.home');
 });
 
 Route::get('/home', 'HomeController@index');

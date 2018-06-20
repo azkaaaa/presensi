@@ -1,0 +1,481 @@
+
+
+/* #Media Queries
+================================================== */
+
+	@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+		.caption-style-1 img{
+			width:100%;
+		}
+		.caption-style-1 .caption-text{
+			width: 250px;
+    		height: 170px;	
+		}
+		.caption-style-1 .caption-text h2{
+			margin-top: 30px;
+		}
+		.flex-direction-nav .flex-next{
+			    right: 0px;
+		}
+		.flex-direction-nav .flex-prev {
+    left: 0px;
+		}
+		}
+		@media only screen and (min-width: 960px) and (max-width: 1023px) {
+			
+			.topsocial{
+			margin-right:5px;
+		}
+		.mainheader nav ul li {
+    		margin: 0 0 0 20px;
+		}
+		.mainheader .logo{
+			margin-left:5px;
+		}
+		#banner h2{
+			    width: 500px;
+				font-size: 36px;
+    			line-height: 50px;
+		}
+		#banner{
+		    min-height: 600px;
+		}
+		#banner p{
+		    margin-top: 200px;
+		}
+		#banner a.btn{
+			margin:60px auto 0;
+		}
+		#about {
+ 		   padding: 50px 0;
+		}
+		.fleft span{
+			height: 60px;
+    		width: 60px;
+			font-size: 25px;
+			line-height: 60px;
+	}
+	.fright{
+		font-size:16px;
+	}
+	#middle p {
+    line-height: 40px;
+    margin: 80px 0 25px;
+}
+.caption-style-1 img{
+	width:100%;
+}
+.caption-style-1 .caption-text{
+	    width: 180px;
+    height: 120px;
+}
+.caption-style-1 .caption-text h2 {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+.caption-style-1 .caption-text a {
+    height: 40px;
+    width: 40px;
+    margin: 10px 10px 0;
+    font-size: 24px;
+    line-height: 40px;
+}
+#food{
+	padding: 50px 0 0;
+	}
+	.fooddesc {
+    margin: 0 0 110px 50px;
+}
+.fooddesc2 {
+    margin: 0 0 110px 50px;
+}
+.fooddesc3 {
+    margin: 0 0 110px 100px;
+}
+.touch {
+    width: 710px;
+}
+#contact {
+    padding: 50px 0;
+	}
+	.mainheader nav ul li a{
+		font-size:16px;
+	}
+			
+		}
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) {
+		
+		}
+
+	/* Tablet Portrait size to standard 960 (devices and browsers) */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {
+		.topsocial{
+			margin-right:5px;
+		}
+		.mainheader nav ul li {
+    		margin: 0 0 0 20px;
+		}
+		.mainheader .logo{
+			margin-left:5px;
+		}
+		#banner h2{
+			    width: 500px;
+				font-size: 36px;
+    			line-height: 50px;
+		}
+		#banner{
+		    min-height: 600px;
+		}
+		#banner p{
+		    margin-top: 200px;
+		}
+		#banner a.btn{
+			margin:60px auto 0;
+		}
+		#about {
+ 		   padding: 50px 0;
+		}
+		.fleft span{
+			height: 60px;
+    		width: 60px;
+			font-size: 25px;
+			line-height: 60px;
+	}
+	.fright{
+		font-size:16px;
+	}
+	#middle p {
+    line-height: 40px;
+    margin: 80px 0 25px;
+}
+.caption-style-1 img{
+	width:100%;
+}
+.caption-style-1 .caption-text{
+	    width: 180px;
+    height: 120px;
+}
+.caption-style-1 .caption-text h2 {
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+.caption-style-1 .caption-text a {
+    height: 40px;
+    width: 40px;
+    margin: 10px 10px 0;
+    font-size: 24px;
+    line-height: 40px;
+}
+#food{
+	padding: 50px 0 0;
+	}
+	.fooddesc {
+    margin: 0 0 110px 50px;
+}
+.fooddesc2 {
+    margin: 0 0 110px 50px;
+}
+.fooddesc3 {
+    margin: 0 0 110px 100px;
+}
+.touch {
+    width: 710px;
+}
+#contact {
+    padding: 50px 0;
+	}
+	.mainheader nav ul li a{
+		font-size:16px;
+	}
+	}
+
+	/* All Mobile Sizes (devices and browser) */
+	@media only screen and (max-width: 767px) {
+		.topsocial{
+			margin-right:10px;
+		}
+		.mainheader nav{
+			text-align:center;
+			    width: 100%;
+		}
+		.serach{
+			display:none;
+		}
+		.mainheader .logo{
+			margin-left:10px;
+		}
+		.mainheader nav ul li{
+			display:block;
+			margin:0;
+		}
+		.mainheader .logo{
+			margin-top:10px;
+		}
+		#banner p{
+		margin-top: 250px;
+		}
+		#banner h2 {
+    font-size: 26px;
+    line-height: 40px;
+    width: 100%;
+    margin: 25px auto 0;
+}
+#banner a.btn{
+	margin: 40px auto 0;
+}
+.flex-direction-nav .flex-next{
+	display:none;
+}
+.flex-direction-nav .flex-prev{
+	display:none;
+}
+#banner{
+	    min-height: 600px;
+}
+.flex-control-nav{
+	    bottom: -60px;
+}
+#banner p {
+    margin-top: 225px;
+}	
+#about {
+    padding: 30px 0 0;
+}	
+.fright p{
+	font-size:16px;
+}
+.fleft span {
+    height: 60px;
+    width: 60px;
+    font-size: 35px;
+    line-height: 60px;
+}
+#middle p {
+    font-size: 22px;
+    margin: 90px 0 25px;
+}
+#menu {
+    padding: 30px 0 0;
+
+
+}
+.caption-style-1 .imageeffect {
+    float: none;
+    padding: 0px;
+    position: relative;
+    overflow: hidden;
+    width: 400px;
+    margin: 0 auto;
+    display: block;
+}
+.caption-style-1 img{
+	width:100%;
+}
+.caption-style-1 .caption-text{
+	    width: 360px;
+    height: 250px;
+}
+#food {
+    background: none;
+    min-height: auto;
+	    padding: 30px 0 0;
+}
+p.foodtext{
+	width:100%;
+}
+.fooddesc {
+    margin: 0 0 50px 0;
+}
+.foodleft span {
+    height: 60px;
+    width: 60px;
+    font-size: 25px;
+    line-height: 60px;
+}
+.fooddesc1 {
+    margin: 0 0 50px 0;
+}
+.fooddesc2 {
+    margin: 0 0 50px 0;
+}
+.fooddesc3 {
+    margin: 0 0 50px 0;
+}
+.foodright p {
+    width: auto;
+    font-size: 16px;
+}
+.like{
+	margin:10px 0;
+}
+.touch {
+    width: 100%;
+}
+#contact {
+    padding: 30px 0 70px;
+		}
+	}
+
+	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+	@media only screen and (min-width: 480px) and (max-width: 767px) {
+		
+		}
+
+	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+	@media only screen and (max-width: 479px) {
+		.mainheader {
+    padding: 5px 0;
+		}
+		.mainheader .logo {
+    width: 50%;
+	margin-top: 12px;
+		}
+		.logo img{
+			width:100%;
+		}
+		#banner p {
+    margin-top: 170px;
+	    letter-spacing: 2px;
+		font-size:18px;
+		line-height:26px;	
+	}
+	#banner h2 {
+    font-size: 20px;
+    line-height: 30px;
+	}
+	#banner {
+    min-height: 470px;
+}
+#banner a.btn {
+    height: 40px;
+    width: 140px;
+    line-height: 40px; 
+    font-size: 18px;
+}
+#about h3 {
+    font-size: 24px;
+}
+.fright {
+    width: 100%;
+    float: none;
+    display: block;
+    text-align: center;
+}
+.fleft {
+    width: 100%;
+    float: none;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.fleft span {
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px;
+}
+.frow {
+    margin-bottom: 30px;
+}
+#middle p {
+    font-size: 20px;
+    margin: 77px 0 25px;
+}
+#menu h3 {
+    font-size: 24px;
+}
+.caption-style-1 .imageeffect{
+	width:280px;
+}
+.caption-style-1 .caption-text {
+    width: 240px;
+    height: 155px;
+}
+.caption-style-1 .caption-text h2 {
+    font-size: 26px;
+    line-height: 30px;
+    font-weight: 400;
+    margin-top: 35px;
+}
+.imagemargin {
+    margin-bottom: 20px;
+}
+#food h3 {
+    font-size: 24px;
+}
+.foodleft {
+    width: 100%;
+    float: none;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.foodleft span {
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px;
+}
+.foodright {
+    width: 100%;
+    float: none;
+    display: block;
+    text-align: center;
+}
+.fooddesc {
+    margin: 0 0 30px 0;
+}
+.like {
+    height: 251px;
+    padding-top: 40px;
+    color: #ffffff;
+}
+#contact h3 {
+    font-size: 24px;
+}
+.col {
+    width: 100%;
+    float: none;
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}
+footer p {
+    font-size: 14px;
+}
+footer{
+	padding-bottom:10px;
+}
+footer p span {
+    font-size: 22px;
+    line-height: 24px;
+}
+.mainheader nav ul li a{
+	font-size:16px;
+}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
