@@ -62,7 +62,7 @@
                   </div>
                 </div>
                 <div class="form-group{{ $errors->has('position_id') ? ' has-error' : '' }}">
-                    <label for="level" class="col-md-2 control-label">Jabatan</label>
+                    <label for="level" class="col-md-2 control-label">Posisi</label>
                     <div class="col-md-10">
                         <select class="form-control" name="position_id">
                               @foreach($position as $data)

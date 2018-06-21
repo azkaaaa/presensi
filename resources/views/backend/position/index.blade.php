@@ -4,15 +4,15 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Daftar Jabatan</h3>
-              <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/position/create ')}}'"><i class="icon-plus"><span> Tambah Jabatan</span></i></button>
+              <h3 class="box-title">Daftar Posisi</h3>
+              <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/position/create ')}}'"><i class="icon-plus"><span> Tambah Posisi</span></i></button>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table class="table table-bordered table-striped" id="positions-data">
                 <thead>
                 <tr>
-                  <th>Nama Jabatan</th>
+                  <th>Nama Posisi</th>
                   <th>Gaji Pokok</th>
                   <th>Uang Transport</th>
                   <th width="15%">Aksi</th>

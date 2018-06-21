@@ -12,7 +12,7 @@
                 <thead>
                 <tr>
                   <th width="160px">Nama Karyawan</th>
-                  <th>Jabatan</th>
+                  <th>Posisi</th>
                   <th>Tanggal</th>
                   <th>Jam Masuk</th>
                   <th>Jam Keluar</th>

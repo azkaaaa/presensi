@@ -49,7 +49,7 @@
                               <td>{{$employee->email}}</td>
                              </tr>
                             <tr class="active">
-                              <td style="font-weight: bold">Jabatan</td>
+                              <td style="font-weight: bold">Posisi</td>
                               <td>{{$employee->position_name}}</td>
                              </tr>
                              <tr class="">

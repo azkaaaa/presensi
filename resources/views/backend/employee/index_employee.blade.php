@@ -16,7 +16,7 @@
                   <th>NIK</th>
                   <th>Alamat</th>
                   <th>No Telepon</th>
-                  <th>Jabatan</th>
+                  <th>Posisi</th>
                   <th width="18%">Aksi</th>
                 </tr>
                 </thead>

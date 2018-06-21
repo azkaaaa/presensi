@@ -148,8 +148,8 @@
                     <p class="text-danger">{{$errors->first('account_number')}}</p>
                   </div>
                 </div>
-                <div class="form-group{{ $errors->has('position_id') ? ' has-error' : '' }}">
-                    <label for="level" class="col-md-2 control-label">Jabatan</label>
+                <!-- <div class="form-group{{ $errors->has('position_id') ? ' has-error' : '' }}">
+                    <label for="level" class="col-md-2 control-label">Posisi</label>
                     <div class="col-md-10">
                         <select class="form-control" name="position_id">
                               <option value="{{$employee->position_id}}">{{$employee->position_name}}</option>
@@ -159,7 +159,7 @@
                         </select>
                         <p class="text-danger">{{$errors->first('position_id')}}</p>
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <div class="col-md-10 control-label">
                       <div class="col-sm-10">

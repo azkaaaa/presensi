@@ -63,7 +63,7 @@ class DashboardController extends Controller
         }
 
         $chart = \Lava::ColumnChart('Finances', $finances, [
-            'title' => 'Payment Graphic',
+            'title' => 'Grafik Penggajian',
             'titleTextStyle' => [
                 'color'    => '#eb6b2c',
                 'fontSize' => 14

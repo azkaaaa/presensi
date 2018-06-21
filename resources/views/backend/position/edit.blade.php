@@ -5,7 +5,7 @@
           <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Form Edit Jabatan</h3>
+              <h3 class="box-title">Form Edit Posisi</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -14,7 +14,7 @@
               <input type="hidden" name="_token" value="{{csrf_token()}}">
               <div class="box-body">
                 <div class="form-group {{($errors->has('name')?'has-error':'')}}">
-                  <label for="inputName" class="col-sm-2 control-label">Nama Jabatan</label>
+                  <label for="inputName" class="col-sm-2 control-label">Nama Posisi</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" placeholder="Jabatan" name="name" value="{{ $position->name}}">
 		           <p class="text-danger">{{$errors->first('name')}}</p>

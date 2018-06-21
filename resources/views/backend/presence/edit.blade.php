@@ -20,7 +20,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputSalary" class="col-sm-2 control-label">Jabatan</label>
+                  <label for="inputSalary" class="col-sm-2 control-label">Posisi</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" value="{{ $position->name}}" readonly="">
                   </div>
