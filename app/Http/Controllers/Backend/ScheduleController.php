@@ -106,7 +106,7 @@ class ScheduleController extends Controller
 
   	public function dataSchedulesEmployee()
   	{	
-  		$user = Auth::id();
+  		  $user = Auth::id();
         $dt = Carbon::now();
         $date = $dt->toDateString();
 
@@ -185,10 +185,12 @@ class ScheduleController extends Controller
             
             $fitnessAfterMutation = $genetik->Mutasi();   
 
+
             for ($j = 0; $j < count($fitnessAfterMutation); $j++){
               //test here
               if($fitnessAfterMutation[$j] == 1){
 
+            // dd($fitnessAfterMutation);
                    //dd($i); 
                 
                 // $schedule_del = Schedule::all();

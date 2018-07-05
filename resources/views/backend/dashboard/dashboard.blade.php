@@ -6,7 +6,7 @@
           <div class="small-box bg-aqua">
             @if($salary)
             <div class="inner">
-              <h3>Telah Dibuat</h3>
+              <h3>Sudah Dibuat</h3>
               <p>Gaji Bulan Ini</p>
             </div>
             @else
@@ -27,7 +27,7 @@
           <div class="small-box bg-green">
             @if($schedule)
             <div class="inner">
-              <h3>Telah Dibuat</h3>
+              <h3>Sudah Dibuat</h3>
               <p>Jadwal Bulan Ini</p>
             </div>
             @else
@@ -46,11 +46,17 @@
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
+            @if($spk)
             <div class="inner">
-              <h3>44</h3>
-
-              <p>User Registrations</p>
+              <h3>Sudah Dibuat</h3>
+              <p>SPK Bulan Ini</p>
             </div>
+            @else
+            <div class="inner">
+              <h3 style="color: #000000">Belum Dibuat</h3>
+              <p>SPK Bulan Ini</p>
+            </div>
+            @endif
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
@@ -61,11 +67,17 @@
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-red">
+            @if($total_transaction)
             <div class="inner">
-              <h3>65</h3>
-
-              <p>Unique Visitors</p>
+              <h3>Rp. {{ number_format($total_transaction->total_all ,2, ',' , '.')  }}</h3>
+              <p>Total Transaksi Bulan Ini</p>
             </div>
+            @else
+            <div class="inner">
+              <h3 style="color: #000000">0</h3>
+              <p>Total Transaksi Bulan Ini</p>
+            </div>
+            @endif
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
@@ -80,7 +92,16 @@
         <div class="col-md-12">
         <div class="box">
         <div id="perf_div"></div>
-        @columnchart('Finances', 'perf_div')
+@columnchart('Finances', 'perf_div')
+      </div>
+      </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+        <div class="box">
+        <div id="trans_div"></div>
+@columnchart('Transaction', 'trans_div')
       </div>
       </div>
       </div>

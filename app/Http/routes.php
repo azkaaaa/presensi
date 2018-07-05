@@ -1,5 +1,10 @@
 <?php
 
+if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+    // Ignores notices and reports all other kinds... and warnings
+    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+    // error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+}
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -24,13 +29,6 @@ Route::auth();
 Route::group(['middleware' => 'web'], function () {
  	
 });
-
-//Presence Route
-Route::get('/capture', ['as'=>'user.capture.index','uses'=>'Backend\PresenceController@getCapture']);
-Route::post('/capture', ['as'=>'user.capture.save','uses'=>'Backend\PresenceController@postCapture']);
-Route::resource('/presence','Backend\PresenceController');
-Route::get('/dopresence', ['as'=>'user.presence.index','uses'=>'Backend\PresenceController@getDoPresence']);
-
 
 Route::group(['middleware' => ['web', 'auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
@@ -63,6 +61,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () {
 	// Route::get('/dashboard', ['as'=>'admin.dashboard.index', 'uses'=>'Backend\AdminController@getDashboard']);
+
+	//Presence Route
+	Route::get('/capture', ['as'=>'user.capture.index','uses'=>'Backend\PresenceController@getCapture']);
+	Route::post('/capture', ['as'=>'user.capture.save','uses'=>'Backend\PresenceController@postCapture']);
+	Route::resource('/presence','Backend\PresenceController');
+	Route::get('/dopresence', ['as'=>'user.presence.index','uses'=>'Backend\PresenceController@getDoPresence']);
 
 	//Position Route
 	Route::resource('/position','Backend\PositionController');
@@ -102,10 +106,44 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::get('/schedule/print/{id}', ['as' => 'admin.printsalary.save', 'uses' => 'Backend\ScheduleController@printHistorySchedule']);
 	Route::get('/searchschedule', ['as' => 'admin.schedule.search', 'uses' => 'Backend\ScheduleController@searchSchedule']);
 
-	//Topsis Route
+	//Menu Route
+	Route::resource('/menu','Backend\MenuController');
+	Route::get('/data-menu', ['as'=>'admin.menu.data','uses'=>'Backend\MenuController@dataMenus']);
+
+	//Transaction Route
+	Route::resource('/transaction','Frontend\OrderController');
+	Route::get('/data-transaction', ['as'=>'admin.transaction.data','uses'=>'Frontend\OrderController@dataTransactions']);
+	Route::get('/receipt/print/{id}', ['as' => 'admin.printreceipt.save', 'uses' => 'Frontend\OrderController@printReceipt']);
+
+	//Transaction: Order Detail Route
+	Route::get('/detail_order/{id}', 'Frontend\OrderController@detail');
+
+	// History Transaksi Route
+	Route::get('/historytransaction', ['as'=>'admin.historytransaction.data','uses'=>'Frontend\OrderController@getList']);
+	Route::get('/searchtransaction', ['as' => 'admin.transaction.search', 'uses' => 'Frontend\OrderController@searchTransaction']);
+	Route::get('/transaction/print/{id}', ['as' => 'admin.printtransaction.save', 'uses' => 'Frontend\OrderController@printHistoryTransaction']);
+
+	//Customer Route
+	Route::resource('/customer','Backend\CustomerController');
+	Route::get('/data-customer', ['as'=>'admin.customer.data','uses'=>'Backend\CustomerController@dataCustomers']);
+
+	// Topsis Route
 	Route::resource('/topsis','Backend\TopsisController');
 	Route::get('/result', ['as' => 'admin.topsisresult.save', 'uses' => 'Backend\TopsisController@create']);
 	Route::get('/topsis/createtopsis', ['as' => 'admin.topsiscreate.index', 'uses' => 'Backend\TopsisController@getFormTopsis']);
+	Route::get('/topsiskriteria', ['as' => 'admin.topsiskriteria.index', 'uses' => 'Backend\TopsisController@getKriteria']);
+	Route::get('/data-kriteria', ['as'=>'admin.kriteria.data','uses'=>'Backend\TopsisController@dataKriteria']);
+
+	Route::get('/topsiskriteria/{id}', ['as'=>'admin.topsiskriteria.edit','uses'=>'Backend\TopsisController@editkriteria']);
+
+	Route::put('/topsiskriteria/change/{id}', ['as'=>'admin.topsiskriteria.editsave','uses'=>'Backend\TopsisController@updateKriteria']);
+	Route::put('/storetopsis', ['as'=>'admin.storetopsis.save','uses'=>'Backend\TopsisController@storeTopsis']);
+	// Route::post('/topsis/post', ['as' => 'admin.quantitytopsis.save', 'uses' => 'Backend\TopsisController@postTopsis']);
+
+	// History TOPSIS
+	Route::get('/searchtopsis', ['as' => 'admin.topsis.search', 'uses' => 'Backend\TopsisController@searchTopsis']);
+	Route::get('/historytopsis', ['as'=>'admin.historytopsis.data','uses'=>'Backend\TopsisController@getList']);
+	Route::get('/topsis/print/{id}', ['as' => 'admin.printtopsis.save', 'uses' => 'Backend\TopsisController@printHistoryTopsis']);
 
 
 });
@@ -147,4 +185,13 @@ Route::group(['prefix'=>'manager','middleware' => ['auth', 'manager']], function
 	Route::get('/employeesalary', ['as'=>'manager.employeesalary.index','uses'=>'Backend\SalaryController@getEmployeeSalary']);
 	Route::get('/employeesalary/print/{id}', ['as' => 'manager.printemployeesalary.save', 'uses' => 'Backend\SalaryController@printEmployeeSalary']);
 });
+
+Route::resource('shop', 'Frontend\CartController');
+Route::delete('emptyCart','Frontend\CartController@emptyCart');
+Route::delete('deleteCart/{id}', 'Frontend\CartController@destroy');
+
+// Checkout Route
+Route::resource('checkout', 'Frontend\CheckoutController');
+Route::post('ordermenu', ['as'=>'user.menu.order', 'uses'=>'Frontend\OrderController@postCheckout']);
+Route::get('/receipt', 'Frontend\CartController@indexx');
 

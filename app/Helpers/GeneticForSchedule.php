@@ -271,6 +271,7 @@ class GeneticForSchedule {
         }
         
         $jumlah_rank = count($rank);
+
         for ($i = 0; $i < $this->populasi; $i++)
         {
             //proses seleksi berdasarkan ranking yang telah dibuat
@@ -281,6 +282,8 @@ class GeneticForSchedule {
             $cek    = 0;
             for ($j = 0; $j < $jumlah_rank; $j++) {
                 $cek += $rank[$j];
+                //dd($rank);
+
                 if (intval($cek) >= intval($target)) {
                     $this->induk[$i] = $j;
                     break;
@@ -413,10 +416,12 @@ class GeneticForSchedule {
                 
                 
             }
-            
+
+
             $fitness[$i] = $this->CekFitness($i);
         }
         return $fitness;
+        
     }
     
     

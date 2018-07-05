@@ -163,11 +163,49 @@
             <li class="{{ Request::is('admin/historyschedule') ? 'active' : '' }}"><a href="{{ url('/admin/historyschedule')}}"><i class="fa fa-circle-o"></i> Daftar Penjadwalan</a></li>
           </ul>
         </li>
+        <li class="treeview
+        {{ Request::is('admin/menu') ? 'active' : '' }}
+        {{ Request::is('admin/transaction') ? 'active' : '' }}
+        {{ Request::is('admin/historytransaction') ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-cutlery"></i> <span>Kelola Transaksi</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('admin/menu') ? 'active' : '' }}"><a href="{{ url('/admin/menu')}}"><i class="fa fa-circle-o"></i> Menu</a></li>
+            <li class="{{ Request::is('admin/transaction') ? 'active' : '' }}"><a href="{{ url('/admin/transaction')}}"><i class="fa fa-circle-o"></i> Transaksi</a></li>
+            <li class="{{ Request::is('admin/historytransaction') ? 'active' : '' }}"><a href="{{ url('/admin/historytransaction')}}"><i class="fa fa-circle-o"></i> Daftar Transaksi</a></li>
+          </ul>
+        </li>
+        <li class="treeview
+        {{ Request::is('admin/topsiskriteria') ? 'active' : '' }}
+        {{ Request::is('admin/result') ? 'active' : '' }}
+        {{ Request::is('admin/historytopsis') ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-star"></i> <span>Kelola Peringkat Karyawan</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('admin/topsiskriteria') ? 'active' : '' }}"><a href="{{ url('admin/topsiskriteria') }}"><i class="fa fa-circle-o"></i> Buat Peringkat Karyawan</a></li>
+            <li class="{{ Request::is('admin/result') ? 'active' : '' }}"><a href="{{ url('admin/result') }}"><i class="fa fa-circle-o"></i> Hasil Peringkat Bulan Ini</a></li>
+            <li class="{{ Request::is('admin/historytopsis') ? 'active' : '' }}"><a href="{{ url('/admin/historytopsis')}}"><i class="fa fa-circle-o"></i> Daftar Peringkat Karyawan</a></li>
+          </ul>
+        </li>
         <li class="header">Navigasi Lain</li>
         <li>
           <a href="{{ route('user.presence.index') }}">
             <i class="fa fa-laptop"></i>
             <span>Presensi</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url('/shop')}}">
+            <i class="fa fa-laptop"></i>
+            <span>Kasir</span>
           </a>
         </li>
         @elseif (Auth::user()->level == 'Karyawan')

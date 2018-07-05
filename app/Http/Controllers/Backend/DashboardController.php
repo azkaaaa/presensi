@@ -18,29 +18,40 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-		if (Auth::user()->level == 'Admin' OR Auth::user()->level == 'Manajer'){
+        $year = date("Y");
+        if (Auth::user()->level == 'Admin' OR Auth::user()->level == 'Manajer'){
 
-    	$dt = Carbon::now();
-		$date = $dt->toDateString(); 
-		$today = Carbon::today();
+        $dt = Carbon::now();
+        $date = $dt->toDateString(); 
+        $today = Carbon::today();
 
-	    $salary = DB::table('salaries')
-	        ->select('salaries.*')
-	        ->whereMonth('salaries.created_at', '=', $dt->month)
-	        ->first();
+        $salary = DB::table('salaries')
+            ->select('salaries.*')
+            ->whereMonth('salaries.created_at', '=', $dt->month)
+            ->first();
 
-	    $schedule = DB::table('genetic_schedule')
-	        ->select('genetic_schedule.*')
-	        ->whereMonth('genetic_schedule.created_at', '=', $dt->month)
-	        ->first();
+        $schedule = DB::table('genetic_schedule')
+            ->select('genetic_schedule.*')
+            ->whereMonth('genetic_schedule.created_at', '=', $dt->month)
+            ->first();
 
-	    $presences = DB::table('presences')
+        $spk = DB::table('topsis_result')
+            ->select('topsis_result.*')
+            ->whereMonth('topsis_result.created_at', '=', $dt->month)
+            ->first();
+
+        $presences = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
             ->select('presences.*', DB::raw("DATE_FORMAT(presences.date, '%d %M %Y') new_date"), 'employees.name as employee_name', 'positions.name as position_name')
             ->orderBy('presences.date', 'desc')
-	        ->where('presences.date', '=', $today)
-	        ->get();
+            ->where('presences.date', '=', $today)
+            ->get();
+
+        $total_transaction = DB::table('orders')
+            ->select('orders.*', DB::raw('sum(orders.total_price) as total_all'))
+            ->where('orders.order_date', '=', $today)
+            ->first();
             
 
         $lava = new Lavacharts; // See note below for Laravel
@@ -63,40 +74,69 @@ class DashboardController extends Controller
         }
 
         $chart = \Lava::ColumnChart('Finances', $finances, [
-            'title' => 'Grafik Penggajian',
+            'title' => 'Payment Graphic',
             'titleTextStyle' => [
                 'color'    => '#eb6b2c',
                 'fontSize' => 14
             ]
         ]);
 
-	    // dd($presences);
+        //Transaksi Penjualan
+        // $lava_transaction = new Lavacharts; // See note below for Laravel
 
-        return view('backend.dashboard.dashboard_admin', ['salary'=>$salary, 'schedule'=>$schedule, 'presences'=>$presences, 'dt'=>$dt]);
-    	}
+        $lava_transaction = \Lava::DataTable(); 
 
-    	if (Auth::user()->level == 'Karyawan'){
+        $transaction = DB::table('orders')
+            ->select(DB::raw('MONTH(orders.order_date) month'), DB::raw('sum(orders.total_price) as total_all'))
+            ->where(DB::raw("DATE_FORMAT(orders.order_date, '%Y')"), $year)
+            ->groupBy(DB::raw("DATE_FORMAT(orders.order_date, '%m-%Y')"))
+            ->get();
 
-    		$user = Auth::id();
-    		$dt = Carbon::now();
-			$today = Carbon::today();
 
-    		$presences = DB::table('presences')
+
+        $lava_transaction->addDateColumn('Month')
+         ->addNumberColumn('Transaction')
+         ->setDateTimeFormat('m');
+
+         foreach ($transaction as $data) {
+            $lava_transaction->addRow(["$data->month", "$data->total_all"]);
+        }
+
+        $chart = \Lava::ColumnChart('Transaction', $lava_transaction, [
+            'title' => 'Transaction Graphic',
+            'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 14
+            ]
+        ]);
+
+        // dd($presences);
+
+        return view('backend.dashboard.dashboard_user', ['salary'=>$salary, 'schedule'=>$schedule, 'spk'=>$spk,'presences'=>$presences, 'total_transaction'=>$total_transaction, 'dt'=>$dt]);
+        }
+
+        if (Auth::user()->level == 'Karyawan'){
+
+            $user = Auth::id();
+            $dt = Carbon::now();
+            $today = Carbon::today();
+
+            $presences = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
             ->select('presences.*', DB::raw("DATE_FORMAT(presences.date, '%d %M %Y') new_date"), 'employees.name as employee_name', 'positions.name as position_name')
             ->orderBy('presences.date', 'desc')
-	        ->where('presences.date', '=', $today)
-	        ->where('presences.employee_id', '=', $user)
-	        ->get();
+            ->where('presences.date', '=', $today)
+            ->where('presences.employee_id', '=', $user)
+            ->get();
 
-	    	$kehadiran = DB::table('presences')
+            $kehadiran = DB::table('presences')
             ->select('employee_id', DB::raw('count(presences.id) as total_kehadiran'))
             ->whereMonth('presences.date', '=', $dt->month)
             ->where('employee_id', '=', $user)
             ->first();
 
-       		$terlambat = DB::table('presences')
+            $terlambat = DB::table('presences')
             ->select('employee_id', DB::raw('count(presences.id) as total_terlambat'))
             ->groupby('employee_id')
             ->whereMonth('presences.date', '=', $dt->month)
@@ -104,7 +144,7 @@ class DashboardController extends Controller
             ->where('employee_id', '=', $user)
             ->first();
 
-        	$lembur = DB::table('presences')
+            $lembur = DB::table('presences')
             ->select('presences.employee_id', DB::raw('count(presences.id) as total_lembur'))
             ->groupby('employee_id')
             ->whereMonth('presences.date', '=', $dt->month)
@@ -113,20 +153,20 @@ class DashboardController extends Controller
             ->first();
 
             if($kehadiran==NULL){
-            	$kehadiran = 0;
+                $kehadiran = 0;
      
             }
             if($terlambat==NULL){
-            	$terlambat = 0;
+                $terlambat = 0;
      
             }
             if($lembur==NULL){
-            	$lembur = 0;
+                $lembur = 0;
             }
 
-	    	return view('backend.dashboard.employee_dashboard', ['presences'=>$presences, 'dt'=>$dt, 'kehadiran'=>$kehadiran, 'terlambat'=>$terlambat, 'lembur'=>$lembur]);
+            return view('backend.dashboard.employee_dashboard', ['presences'=>$presences, 'dt'=>$dt, 'kehadiran'=>$kehadiran, 'terlambat'=>$terlambat, 'lembur'=>$lembur]);
 
-    	}
+        }
     }
 
     public function getChart()
