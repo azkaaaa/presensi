@@ -31,7 +31,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header">NAVIGASI UTAMA</li>
         <li class="{{ Request::is('/') ? 'active' : '' }}">
           <a href="{{ url('/')}}">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
@@ -128,7 +128,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ Request::is('admin/presence/data') ? 'active' : '' }}"><a href="{{ url('/admin/presence/data')}}"><i class="fa fa-circle-o"></i> Presensi Bulan Ini</a></li>
+            <li class="{{ Request::is('admin/presencedata') ? 'active' : '' }}"><a href="{{ url('/admin/presencedata')}}"><i class="fa fa-circle-o"></i> Presensi Bulan Ini</a></li>
             <li class="{{ Request::is('admin/historypresence') ? 'active' : '' }}"><a href="{{ url('/admin/historypresence')}}"><i class="fa fa-circle-o"></i> Daftar Presensi</a></li>
           </ul>
         </li>
@@ -195,7 +195,7 @@
             <li class="{{ Request::is('admin/historytopsis') ? 'active' : '' }}"><a href="{{ url('/admin/historytopsis')}}"><i class="fa fa-circle-o"></i> Daftar Peringkat Karyawan</a></li>
           </ul>
         </li>
-        <li class="header">Navigasi Lain</li>
+        <li class="header">NAVIGASI LAIN</li>
         <li>
           <a href="{{ route('user.presence.index') }}">
             <i class="fa fa-laptop"></i>
@@ -219,6 +219,13 @@
           <a href="{{ url('/employee/schedule')}}">
             <i class="fa fa-calendar-check-o"></i>
             <span>Daftar Jadwal</span>
+          </a>
+        </li>
+        <li class="header">NAVIGASI LAIN</li>
+        <li>
+          <a href="{{ url('/shop')}}">
+            <i class="fa fa-laptop"></i>
+            <span>Kasir</span>
           </a>
         </li>
         @elseif (Auth::user()->level == 'Manajer')

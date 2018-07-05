@@ -5,7 +5,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Daftar Posisi</h3>
-              <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/position/create ')}}'"><i class="icon-plus"><span> Tambah Posisi</span></i></button>
+              <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/position/create ')}}'">Tambah Posisi</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

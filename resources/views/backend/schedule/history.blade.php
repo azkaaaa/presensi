@@ -78,7 +78,7 @@
                   <td>{{$no}}</td>
                   <td>{{ $row->month_name }}</td>
                   <td>{{ $row->year }}</td>
-                  <td style="width: 20px; float: left"><a href="{{route('admin.printsalary.save', $row->list)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
+                  <td style="width: 20px; float: left"><a href="{{route('admin.printsalary.save', $row->list)}}" class="btn-sm btn-primary"> Print</a></td>
                 </tr>
                 </tbody>
                 <?php $no++; ?>

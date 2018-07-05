@@ -94,7 +94,8 @@ class OrderController extends Controller
 
         $orders = DB::table('orders')
         ->join('users','users.id', '=','orders.user_id')
-        ->select('orders.*', 'users.name as user_name');
+        ->select('orders.*', 'users.name as user_name')
+        ->orderBy('orders.id', 'desc');
         
 
         
@@ -109,8 +110,9 @@ class OrderController extends Controller
     public function show($id)
     {
         $orders = DB::table('orders')
+        ->join('users', 'users.id', '=','orders.user_id')
         ->where('orders.id', $id)
-        ->select('orders.*')
+        ->select('orders.*', 'users.name as user_name')
         ->first();
 
         $order_detail = DB::table('order_detail')

@@ -35,7 +35,7 @@
                         </tr>
                         <tr>
                             <td>User ID</td>
-                            <td>: {{ $orders->user_id }}</td>
+                            <td>: {{ $orders->user_name }}</td>
                         </tr>
                         <tr>
                             <td>Total Pembayaran</td>
@@ -43,7 +43,7 @@
                         </tr>
                         <tr>
                             <td>Status</td>
-                            <td>: {{ $orders->status }}</td>
+                            <td>: <span class="label label-success">{{ $orders->status }}</span></td>
                         </tr>
                     </table>
                 </div>

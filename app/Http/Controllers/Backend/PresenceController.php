@@ -87,9 +87,9 @@ class PresenceController extends Controller
                 $date = $dt->toDateString();
 
                 if ($presences->date == $date){
-                    return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>
+                    return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn-sm btn-info"> Detail</a>
                   
-                    <a href="'.url('admin/presence/'. $presences->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Lembur</a>';
+                    <a href="'.url('admin/presence/'. $presences->id .'/edit').'" class="btn-sm btn-primary"> Lembur</a>';
                 }
                 else{
                     return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>';
@@ -383,7 +383,7 @@ class PresenceController extends Controller
 
         session()->flash('message', 'Karyawan berhasil diberikan lembur.');
 
-        return redirect('/admin/presence/data');
+        return redirect('/admin/presencedata');
     }
 
     public function getCapture()

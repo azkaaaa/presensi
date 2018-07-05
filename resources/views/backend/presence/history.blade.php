@@ -92,9 +92,9 @@
                   <td>{{ $row->total_overtime }}</td>
                   <!-- <td><span class="label label-success">Approved</span></td> -->
                   @if (Auth::user()->level == 'Admin')
-                  <td style="width: 20px; float: left"><a href="{{route('admin.printpresence.save', $row->new_date)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
+                  <td style="width: 20px; float: left"><a href="{{route('admin.printpresence.save', $row->new_date)}}" class="btn-sm btn-primary" > Print</a></td>
                   @elseif (Auth::user()->level == 'Manajer')
-                  <td style="width: 20px; float: left"><a href="{{route('manager.printpresence.save', $row->new_date)}}" class="btn btn-primary" ><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Print</a></td>
+                  <td style="width: 20px; float: left"><a href="{{route('manager.printpresence.save', $row->new_date)}}" class="btn-sm btn-primary" > Print</a></td>
                   @endif
                 </tr>
                 </tbody>

@@ -44,9 +44,9 @@ class EmployeeController extends Controller
 
 	      return Datatables::of($employees)
 	      ->addColumn('action', function ($employees) {
-                return '<a href="'.url('admin/employee/'. $employees->id).'" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>
+                return '<a href="'.url('admin/employee/'. $employees->id).'" class="btn-sm btn-info"> Detail</a>
 
-                		<a href="'.url('admin/employee/'. $employees->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>';
+                		<a href="'.url('admin/employee/'. $employees->id .'/edit').'" class="btn-sm btn-primary"> Edit</a>';
             }
             )
             ->make(true);

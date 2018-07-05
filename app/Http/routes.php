@@ -81,7 +81,7 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::get('/data-employee', ['as'=>'admin.employee.data','uses'=>'Backend\EmployeeController@dataEmployees']);
 
 	//Presence Route
-	Route::get('/presence/data', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);
+	Route::get('/presencedata', ['as'=>'admin.presence.index', 'uses'=>'Backend\PresenceController@getPresence']);
 	Route::resource('/presence','Backend\PresenceController');
 	Route::get('/data-presence', ['as'=>'admin.presence.data','uses'=>'Backend\PresenceController@dataPresences']);
 	Route::get('/historypresence', ['as'=>'admin.historypresence.data','uses'=>'Backend\PresenceController@getList']);
@@ -145,6 +145,16 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', 'admin']], function () 
 	Route::get('/historytopsis', ['as'=>'admin.historytopsis.data','uses'=>'Backend\TopsisController@getList']);
 	Route::get('/topsis/print/{id}', ['as' => 'admin.printtopsis.save', 'uses' => 'Backend\TopsisController@printHistoryTopsis']);
 
+	// Shop Route
+	Route::resource('shop', 'Frontend\CartController');
+	Route::delete('emptyCart','Frontend\CartController@emptyCart');
+	Route::delete('deleteCart/{id}', 'Frontend\CartController@destroy');
+
+	// Checkout Route
+	Route::resource('checkout', 'Frontend\CheckoutController');
+	Route::post('ordermenu', ['as'=>'user.menu.order', 'uses'=>'Frontend\OrderController@postCheckout']);
+	Route::get('/receipt', 'Frontend\CartController@indexx');
+
 
 });
 
@@ -157,6 +167,17 @@ Route::group(['prefix'=>'employee','middleware' => ['auth', 'employee']], functi
 	//Schedule Route
 	Route::get('/schedule', ['as' => 'employee.schedule.index', 'uses' => 'Backend\ScheduleController@getSchedulesEmployee']);
 	Route::get('/data-schedule-employee', ['as'=>'employee.schedule.data','uses'=>'Backend\ScheduleController@dataSchedulesEmployee']);
+
+	// Shop Route
+	Route::resource('shop', 'Frontend\CartController');
+	Route::delete('emptyCart','Frontend\CartController@emptyCart');
+	Route::delete('deleteCart/{id}', 'Frontend\CartController@destroy');
+
+	// Checkout Route
+	Route::resource('checkout', 'Frontend\CheckoutController');
+	Route::post('ordermenu', ['as'=>'user.menu.order', 'uses'=>'Frontend\OrderController@postCheckout']);
+	Route::get('/receipt', 'Frontend\CartController@indexx');
+
 });
 
 Route::group(['prefix'=>'manager','middleware' => ['auth', 'manager']], function () {
@@ -186,12 +207,4 @@ Route::group(['prefix'=>'manager','middleware' => ['auth', 'manager']], function
 	Route::get('/employeesalary/print/{id}', ['as' => 'manager.printemployeesalary.save', 'uses' => 'Backend\SalaryController@printEmployeeSalary']);
 });
 
-Route::resource('shop', 'Frontend\CartController');
-Route::delete('emptyCart','Frontend\CartController@emptyCart');
-Route::delete('deleteCart/{id}', 'Frontend\CartController@destroy');
-
-// Checkout Route
-Route::resource('checkout', 'Frontend\CheckoutController');
-Route::post('ordermenu', ['as'=>'user.menu.order', 'uses'=>'Frontend\OrderController@postCheckout']);
-Route::get('/receipt', 'Frontend\CartController@indexx');
 

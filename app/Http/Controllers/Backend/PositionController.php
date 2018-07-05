@@ -36,12 +36,12 @@ class PositionController extends Controller
 
 	      return Datatables::of($positions)
 	      ->addColumn('action', function ($positions) {
-                return '<a href="'.url('admin/position/'. $positions->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
+                return '<a href="'.url('admin/position/'. $positions->id .'/edit').'" class="btn-sm btn-primary"> Edit</a>
                 
                 <form method="POST" action="'.url('admin/position/'. $positions->id).'" style="display: inline">  
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="' .csrf_token(). '">
-                        <button class="btn-sm btn-danger" type="submit" style="border: none" onclick="return myFunction();"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+                        <button class="btn-sm" type="submit" style="border: none" onclick="return myFunction();"> Delete</button>
                  </form>';
             }
             )
