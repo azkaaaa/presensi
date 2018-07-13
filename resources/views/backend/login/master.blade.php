@@ -33,6 +33,11 @@
     <a href="../../index2.html"><b>Cafe</b>OMBOY</a>
   </div>
   <!-- /.login-logo -->
+  @if ($flash = session('message'))
+        <div id="flash-message" class="alert alert-success" role="alert">
+           {{ $flash }}
+        </div>
+       @endif
   @yield('content')
   <!-- /.login-box-body -->
 </div>

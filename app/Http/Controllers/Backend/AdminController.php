@@ -23,12 +23,12 @@ class AdminController extends Controller
 {
     public function getProfile()
     {
-    	$id = Auth::id();
+        $id = Auth::id();
         $user = User::find($id);
-    	$employee = Employee::where('user_id',$id)->first();
+        $employee = Employee::where('user_id',$id)->first();
         $position = Position::all();
 
-    	$employee = DB::table('employees')
+        $employee = DB::table('employees')
         ->where('employees.id', $employee->id)
         ->join('users', 'users.id', '=','employees.user_id')
         ->join('positions', 'positions.id', '=','employees.position_id')
@@ -40,100 +40,100 @@ class AdminController extends Controller
 
     public function postChangeProfile(Request $request, $id)
     {
-    	// $employee_id = Employee::where('user_id',$id)->first();
+        // $employee_id = Employee::where('user_id',$id)->first();
 
         $employee = Employee::find($id);
         $user_id = $employee->user->id;
         $user = User::find($user_id);
 
-      	$this->validate($request,$employee->update_rules($id));
-      	$employee->name = $request->name;
-      	$employee->save();
+        $this->validate($request,$employee->update_rules($id));
+        $employee->name = $request->name;
+        $employee->save();
 
-      	$user->name = $request->name;
-      	$user->save();
+        $user->name = $request->name;
+        $user->save();
 
         session()->flash('message', 'Profile anda berhasil diperbarui.');
 
-  		return redirect()->route('user.profile.index');
+        return redirect()->route('user.profile.index');
     }
 
     public function postChangePassword(Request $request)
-	{
-		$id = Auth::id();
+    {
+        $id = Auth::id();
         $user = User::find($id);
-		// $user = User::where('id',$customer->user_id)->first();
+        // $user = User::where('id',$customer->user_id)->first();
 
-		$passwordrules = [
-            	'oldpassword' => 'required',
-	    		'newpassword' => 'required|min:8',
-	    		'confirmpassword' => 'required||same:newpassword'
+        $passwordrules = [
+                'oldpassword' => 'required',
+                'newpassword' => 'required|min:8',
+                'confirmpassword' => 'required||same:newpassword'
         ];
 
-	    $validator = Validator::make($request->all(), $passwordrules);
+        $validator = Validator::make($request->all(), $passwordrules);
 
-	    if($validator->fails())
+        if($validator->fails())
         {
-        	session()->flash('password_not_same',true);
+            session()->flash('password_not_same',true);
             return Redirect::to(URL::previous() . "#password")
             ->withErrors($validator)
             ->withInput();
         }
         else{
 
-        	$userdata = $request->all();
-		    if(!Hash::check($userdata['oldpassword'], $user->password))
-		    {
-		     session()->flash('password_incorrect',true); 
-	         return Redirect::to(URL::previous() . "#password");
-		    
-		    }else{
-		        $user->password = Hash::make($request->newpassword);
-		    	$user->save();
-		    	session()->flash('password_correct',true); 
-		    }
+            $userdata = $request->all();
+            if(!Hash::check($userdata['oldpassword'], $user->password))
+            {
+             session()->flash('password_incorrect',true); 
+             return Redirect::to(URL::previous() . "#password");
+            
+            }else{
+                $user->password = Hash::make($request->newpassword);
+                $user->save();
+                session()->flash('password_correct',true); 
+            }
         }
 
         session()->flash('message', 'Password anda berhasil diperbarui.');
 
-	    return Redirect::to(URL::previous() . "#password");
-	}
+        return Redirect::to(URL::previous() . "#password");
+    }
 
-	public function postChangePicture(Request $request)
+    public function postChangePicture(Request $request)
     {
-    	$id = Auth::id();
-    	$employee_id = Employee::where('user_id',$id)->first();
+        $id = Auth::id();
+        $employee_id = Employee::where('user_id',$id)->first();
 
         $employee = Employee::find($employee_id->id);
 
         if($request->hasfile('profile_picture')){
-        	$files = public_path().'/admin/uploads/profile_picture/'.$employee->profile_picture;
+            $files = public_path().'/admin/uploads/profile_picture/'.$employee->profile_picture;
             File::delete($files);
             
             $filename = md5('profile_picture'.$employee_id).'.'.$request->file('profile_picture')->getClientOriginalExtension();
             $upload_result = $request->file('profile_picture')->move(public_path().'/admin/uploads/profile_picture/',$filename);
-			if($upload_result){
-				$employee->profile_picture = $filename;
-			}
+            if($upload_result){
+                $employee->profile_picture = $filename;
+            }
         }
 
-	    else{
-        	session()->flash('profile_picture_failed',true);
+        else{
+            session()->flash('profile_picture_failed',true);
 
-  			return redirect()->route('user.profile.index');
-	    }
+            return redirect()->route('user.profile.index');
+        }
 
-      	// $this->validate($request,$employee->update_rules($id));
-      	// $employee->profile_picture = $request->profile_picture;
-      	$employee->save();
+        // $this->validate($request,$employee->update_rules($id));
+        // $employee->profile_picture = $request->profile_picture;
+        $employee->save();
 
         session()->flash('message', 'Foto profil anda berhasil diperbarui.');
 
-  		return redirect()->route('user.profile.index');
+        return redirect()->route('user.profile.index');
     }
 
     public function getChangePicture(Request $request)
     {
-    	return view('backend.profile.picture');
+        return view('backend.profile.picture');
     }
 }

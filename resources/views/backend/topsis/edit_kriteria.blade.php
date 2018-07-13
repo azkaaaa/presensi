@@ -9,7 +9,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form method="POST" action="{{ url('/admin/topsiskriteria/change/'.$kriteria->id_kriteria)}}" class="form-horizontal">
+            <form method="POST" action="{{ url('/manager/topsiskriteria/change/'.$kriteria->id_kriteria)}}" class="form-horizontal">
               <input type="hidden" name="_method" value="PUT">
               <input type="hidden" name="_token" value="{{csrf_token()}}">
               <div class="box-body">
@@ -37,7 +37,7 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/admin/topsiskriteria')}}'">Kembali</button>
+                <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/manager/topsiskriteria')}}'">Kembali</button>
                 <!-- <button type="submit" class="btn btn-info pull-right">Sign in</button> -->
                 <button type="submit" class="btn btn-primary">Simpan</button>
               </div>

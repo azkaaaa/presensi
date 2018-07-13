@@ -70,18 +70,18 @@ class PresenceController extends Controller
     }
 
     public function dataPresences()
-  	{
+    {
        $dt = Carbon::now();
 
-    	 $presences = DB::table('presences')
+       $presences = DB::table('presences')
             ->join('employees', 'employees.id', '=', 'presences.employee_id')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
             ->select('presences.*', DB::raw("DATE_FORMAT(presences.date, '%d %M %Y') new_date"), 'employees.name as employee_name', 'positions.name as position_name')
             ->where(DB::raw('MONTH(presences.date)'), $dt->month)
             ->orderBy('presences.date', 'desc');
 
-	      return Datatables::of($presences)
-	      ->addColumn('action', function ($presences) {
+        return Datatables::of($presences)
+        ->addColumn('action', function ($presences) {
 
                 $dt = Carbon::now();
                 $date = $dt->toDateString();
@@ -92,12 +92,12 @@ class PresenceController extends Controller
                     <a href="'.url('admin/presence/'. $presences->id .'/edit').'" class="btn-sm btn-primary"> Lembur</a>';
                 }
                 else{
-                    return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn btn-info"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Detail</a>';
+                    return '<a href="'.url('admin/presence/'. $presences->id).'" class="btn-sm btn-info"> Detail</a>';
                 }                
             }
             )
             ->make(true);
-  	}
+    }
 
     public function dataPresencesEmployee()
     {
@@ -115,7 +115,7 @@ class PresenceController extends Controller
         return Datatables::of($presences)->make(true);
     }
 
-  	public function show($id){
+    public function show($id){
         $presence = DB::table('presences')
         ->where('presences.id', $id)
         ->join('employees', 'employees.id', '=','presences.employee_id')
@@ -129,7 +129,7 @@ class PresenceController extends Controller
 
     // public function create()
     // {
-    // 	$position = Position::all();
+    //  $position = Position::all();
     //     return view('backend.employee.create', ['position'=>$position]);
     // }
 
@@ -137,30 +137,31 @@ class PresenceController extends Controller
     {   
       $dt = Carbon::now();
       $dt_two = Carbon::now()->subDays(1);
-	    $date = $dt->toDateString();               // 2015-12-19
-	    $date_two = $dt_two->toDateString();               // 2015-13-19
-	    $time = $dt->toTimeString();               // 10:10:16
-	  // $dt->toFormattedDateString();      // Dec 19, 2015
-	  // $dt->toDateTimeString();           // 2015-12-19 10:10:16
-	  // $dt->toDayDateTimeString();
+      $date = $dt->toDateString();               // 2015-12-19
+      $date_two = $dt_two->toDateString();               // 2015-13-19
+      $time = $dt->toTimeString();               // 10:10:16
+    // $dt->toFormattedDateString();      // Dec 19, 2015
+    // $dt->toDateTimeString();           // 2015-12-19 10:10:16
+    // $dt->toDayDateTimeString();
       //dd($date_two);
       //$employee = Employee::where('id_card',$request->id_card)->where('status',$request->id_card)->first();
       $employee = DB::table('employees')
       ->join('users', 'users.id', '=','employees.user_id')
       ->where('id_card',$request->id_card)
+      ->orWhere('no_ktp',$request->id_card)
       ->where('status', 1)
       ->first();
-	 
+   
       if($employee){
 
       $have_presence = DB::table('presences')
-	    ->where('employee_id', $employee->id)
-	    ->where('date', $date)->first();
+      ->where('employee_id', $employee->id)
+      ->where('date', $date)->first();
 
-	  	$have_presence_two = DB::table('presences')
-	    ->where('employee_id', $employee->id)
-	    ->where('date', $date_two)
-	    ->where('time_in', '>=', '17:00')->first();
+      $have_presence_two = DB::table('presences')
+      ->where('employee_id', $employee->id)
+      ->where('date', $date_two)
+      ->where('time_in', '>=', '17:00')->first();
 
       $have_overtime = DB::table('presences')
       ->where('employee_id', $employee->id)
@@ -236,31 +237,31 @@ class PresenceController extends Controller
 
            $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
 
-      		 $shift = 1;
-      		 $info = 'Masuk';
-      		 $additional = 'Tepat';
+           $shift = 1;
+           $info = 'Masuk';
+           $additional = 'Tepat';
            $overtime = '0';
            $overtime_status = 'N';
            $overtime_permit = 'N';
            $presence->time_in = $time;
 
-          	session()->flash('presence_success_on',$employee->name);
-      	}
+            session()->flash('presence_success_on',$employee->name);
+        }
         //MASUK
       elseif($time > '08:00' AND $time <= '12:00'){
 
            $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
 
-      		 $shift = 1;
-      		 $info = 'Masuk';
-      		 $additional = 'Terlambat';
+           $shift = 1;
+           $info = 'Masuk';
+           $additional = 'Terlambat';
            $overtime = '0';
            $overtime_status = 'N';
            $overtime_permit = 'N';
            $presence->time_in = $time;
 
-          	session()->flash('presence_success_late',$employee->name);
-      	}
+            session()->flash('presence_success_late',$employee->name);
+        }
          //OTHERS
       elseif($time > '13:00' AND $time <= '17:00'){
 
@@ -281,31 +282,31 @@ class PresenceController extends Controller
 
            $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
 
-      		 $shift = 2;
-      		 $info = 'Masuk';
-      		 $additional = 'Tepat';
+           $shift = 2;
+           $info = 'Masuk';
+           $additional = 'Tepat';
            $overtime = '0';
            $overtime_status = 'N';
            $overtime_permit = 'N';
            $presence->time_in = $time;
 
-          	session()->flash('presence_success_on',$employee->name);
-      	}
+            session()->flash('presence_success_on',$employee->name);
+        }
         //MASUK
       elseif($time > '20:00' AND $time <= '24:00'){
 
            $presence = Presence::firstOrNew(array('employee_id' => $employee->id, 'date' => $date));
 
-      		 $shift = 2;
-      		 $info = 'Masuk';
-      		 $additional = 'Terlambat';
+           $shift = 2;
+           $info = 'Masuk';
+           $additional = 'Terlambat';
            $overtime = '0';
            $overtime_status = 'N';
            $overtime_permit = 'N';
            $presence->time_in = $time;
 
-          	session()->flash('presence_success_late',$employee->name);
-      	}
+            session()->flash('presence_success_late',$employee->name);
+        }
 
         //OTHER
       elseif($time > '24:00' AND $time <= '08:00'){
@@ -330,31 +331,31 @@ class PresenceController extends Controller
        
        // dd($capture->picture);
        
-	      
-	      $presence->employee_id = $employee->id;
-	      $presence->date = $date;
-	      $presence->shift = $shift;
-	      $presence->info = $info;
+        
+        $presence->employee_id = $employee->id;
+        $presence->date = $date;
+        $presence->shift = $shift;
+        $presence->info = $info;
         $presence->additional = $additional;
         $presence->overtime = $overtime;
         $presence->overtime_status = $overtime_status;
         $presence->overtime_permit = $overtime_permit;
-	      $presence->save();
+        $presence->save();
 
         $capture = Capture::latest()->first();
         $presence->capture = $capture->picture;
         $presence->save();
 
         session()->flash('message', 'Anda berhasil melakukan presensi.');
-	     
-	     return redirect()->back();
+       
+       return redirect()->back();
       }
 
-	  else{
+    else{
           session()->flash('presence_failed',true);
-	  	  
-	     return redirect()->back();
-	  }      
+        
+       return redirect()->back();
+    }      
     
     }
 
@@ -405,7 +406,7 @@ class PresenceController extends Controller
         
 
 
-  		 return redirect('/admin/presence');
+       return redirect('/admin/presence');
     }
 
     public function printHistoryPresence($history)

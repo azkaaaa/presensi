@@ -20,13 +20,13 @@
       </div>
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
+        <!--<div class="input-group">-->
+        <!--  <input type="text" name="q" class="form-control" placeholder="Search...">-->
+        <!--  <span class="input-group-btn">-->
+        <!--        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>-->
+        <!--        </button>-->
+        <!--      </span>-->
+        <!--</div>-->
       </form>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -179,22 +179,7 @@
             <li class="{{ Request::is('admin/historytransaction') ? 'active' : '' }}"><a href="{{ url('/admin/historytransaction')}}"><i class="fa fa-circle-o"></i> Daftar Transaksi</a></li>
           </ul>
         </li>
-        <li class="treeview
-        {{ Request::is('admin/topsiskriteria') ? 'active' : '' }}
-        {{ Request::is('admin/result') ? 'active' : '' }}
-        {{ Request::is('admin/historytopsis') ? 'active' : '' }}">
-          <a href="#">
-            <i class="fa fa-star"></i> <span>Kelola Peringkat Karyawan</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{ Request::is('admin/topsiskriteria') ? 'active' : '' }}"><a href="{{ url('admin/topsiskriteria') }}"><i class="fa fa-circle-o"></i> Buat Peringkat Karyawan</a></li>
-            <li class="{{ Request::is('admin/result') ? 'active' : '' }}"><a href="{{ url('admin/result') }}"><i class="fa fa-circle-o"></i> Hasil Peringkat Bulan Ini</a></li>
-            <li class="{{ Request::is('admin/historytopsis') ? 'active' : '' }}"><a href="{{ url('/admin/historytopsis')}}"><i class="fa fa-circle-o"></i> Daftar Peringkat Karyawan</a></li>
-          </ul>
-        </li>
+      
         <li class="header">NAVIGASI LAIN</li>
         <li>
           <a href="{{ route('user.presence.index') }}">
@@ -202,12 +187,12 @@
             <span>Presensi</span>
           </a>
         </li>
-        <li>
-          <a href="{{ url('/shop')}}">
+    <!--     <li>
+          <a href="{{ url('/admin/shop')}}">
             <i class="fa fa-laptop"></i>
             <span>Kasir</span>
           </a>
-        </li>
+        </li> -->
         @elseif (Auth::user()->level == 'Karyawan')
         <li class="{{ Request::is('employee/presence') ? 'active' : '' }}">
           <a href="{{ url('/employee/presence')}}">
@@ -223,7 +208,7 @@
         </li>
         <li class="header">NAVIGASI LAIN</li>
         <li>
-          <a href="{{ url('/shop')}}">
+          <a href="{{ url('/employee/shop')}}">
             <i class="fa fa-laptop"></i>
             <span>Kasir</span>
           </a>
@@ -261,6 +246,36 @@
           <ul class="treeview-menu">
             <li class="{{ Request::is('manager/salary') ? 'active' : '' }}"><a href="{{ url('/manager/salary')}}"><i class="fa fa-circle-o"></i> Penggajian Bulan Ini</a></li>
             <li class="{{ Request::is('manager/historysalary') ? 'active' : '' }}"><a href="{{ url('/manager/historysalary')}}"><i class="fa fa-circle-o"></i> Daftar Penggajian</a></li>
+          </ul>
+        </li>
+        <li class="treeview
+        {{ Request::is('manager/transaction') ? 'active' : '' }}
+        {{ Request::is('manager/historytransaction') ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-cutlery"></i> <span>Kelola Transaksi</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('manager/transaction') ? 'active' : '' }}"><a href="{{ url('/manager/transaction')}}"><i class="fa fa-circle-o"></i> Transaksi</a></li>
+            <li class="{{ Request::is('manager/historytransaction') ? 'active' : '' }}"><a href="{{ url('/manager/historytransaction')}}"><i class="fa fa-circle-o"></i> Daftar Transaksi</a></li>
+          </ul>
+        </li>
+          <li class="treeview
+        {{ Request::is('manager/topsiskriteria') ? 'active' : '' }}
+        {{ Request::is('manager/result') ? 'active' : '' }}
+        {{ Request::is('manager/historytopsis') ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-star"></i> <span>Kelola Peringkat Karyawan</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('manager/topsiskriteria') ? 'active' : '' }}"><a href="{{ url('manager/topsiskriteria') }}"><i class="fa fa-circle-o"></i> Buat Peringkat Karyawan</a></li>
+            <li class="{{ Request::is('manager/result') ? 'active' : '' }}"><a href="{{ url('manager/result') }}"><i class="fa fa-circle-o"></i> Hasil Peringkat Bulan Ini</a></li>
+            <li class="{{ Request::is('manager/historytopsis') ? 'active' : '' }}"><a href="{{ url('/manager/historytopsis')}}"><i class="fa fa-circle-o"></i> Daftar Peringkat Karyawan</a></li>
           </ul>
         </li>
         @endif

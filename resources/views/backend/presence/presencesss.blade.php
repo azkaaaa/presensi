@@ -44,6 +44,11 @@
     }
     #results {  }
   </style>
+  @if ($flash = session('message'))
+        <div id="flash-message" class="alert alert-success" role="alert">
+           {{ $flash }}
+        </div>
+       @endif
 
   @if(session()->has('presence_success_on'))
   <div class="alert alert-success" role="alert">
@@ -133,7 +138,7 @@
         width: 150,
         height: 230,
         image_format: 'jpeg',
-        jpeg_quality: 90
+        jpeg_quality: 1000
       });
       Webcam.attach( '#my_camera' );
     </script>

@@ -16,7 +16,7 @@ use Auth;
 class UserController extends Controller
 {
 
-	public function index()
+  public function index()
     {
         return view('backend.user.index');
     }
@@ -27,12 +27,12 @@ class UserController extends Controller
     }
 
 
-	public function dataUsers()
-  	{
-    	 $users = User::select(['id', 'name', 'email', 'level', 'status', 'created_at', 'updated_at']);
+  public function dataUsers()
+    {
+       $users = User::select(['id', 'name', 'email', 'level', 'status', 'created_at', 'updated_at']);
 
-	      return Datatables::of($users)
-	      ->addColumn('action', function ($users) {
+        return Datatables::of($users)
+        ->addColumn('action', function ($users) {
                 return '<a href="'.url('admin/user/'. $users->id .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
                 
                 <form method="POST" action="'.url('admin/user/'. $users->id).'" style="display: inline">  
@@ -45,7 +45,7 @@ class UserController extends Controller
             ->make(true);
     
   
-  	}
+    }
 
 
     public function create()
@@ -91,12 +91,12 @@ class UserController extends Controller
 
     public function destroy($id)
 
-	{
-		Position::find($id)->delete();
+  {
+    Position::find($id)->delete();
 
         session()->flash('message', 'Your Position price has been deleted.');
 
-		return redirect('/admin/position');
-	}
+    return redirect('/admin/position');
+  }
 
 }

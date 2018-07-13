@@ -20,7 +20,7 @@ use DB;
 class EmployeeController extends Controller
 {
 
-	public function index()
+  public function index()
     {
         return view('backend.employee.index_employee');
     }
@@ -36,23 +36,23 @@ class EmployeeController extends Controller
     }
 
 
-	public function dataEmployees()
-  	{
+  public function dataEmployees()
+    {
       $employees = DB::table('employees')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
             ->select('employees.*', 'positions.name as position_name');
 
-	      return Datatables::of($employees)
-	      ->addColumn('action', function ($employees) {
+        return Datatables::of($employees)
+        ->addColumn('action', function ($employees) {
                 return '<a href="'.url('admin/employee/'. $employees->id).'" class="btn-sm btn-info"> Detail</a>
 
-                		<a href="'.url('admin/employee/'. $employees->id .'/edit').'" class="btn-sm btn-primary"> Edit</a>';
+                    <a href="'.url('admin/employee/'. $employees->id .'/edit').'" class="btn-sm btn-primary"> Edit</a>';
             }
             )
             ->make(true);
     
   
-  	}
+    }
 
     public function dataEmployeesManager()
     {
@@ -70,7 +70,7 @@ class EmployeeController extends Controller
   
     }
 
-  	public function show($id){
+    public function show($id){
         //select * from tugas where id=$id
         // $data = School::find($id);
         $employee = DB::table('employees')
@@ -97,7 +97,7 @@ class EmployeeController extends Controller
 
     public function create()
     {
-    	$position = Position::all();
+      $position = Position::all();
         return view('backend.employee.create', ['position'=>$position]);
     }
 
@@ -128,7 +128,7 @@ class EmployeeController extends Controller
 
 
     public function edit($id)
-    {	
+    { 
         $employee = Employee::find($id);
         $user_id = $employee->user->id;
         $user = User::find($user_id);
@@ -143,20 +143,20 @@ class EmployeeController extends Controller
         $user_id = $employee->user->id;
         $user = User::find($user_id);
 
-		    $status = $request->status;
-      	$registration_rules = array_merge($user->update_rules($user_id),$employee->update_rules($id));
+        $status = $request->status;
+        $registration_rules = array_merge($user->update_rules($user_id),$employee->update_rules($id));
 
-      	$this->validate($request,$registration_rules);
+        $this->validate($request,$registration_rules);
 
-      	$user->fill($request->all());
-      	$password = Hash::make($request->password);
-      	$user->password = $password;
-      	$user->status = $status;
-      	$user->save();
+        $user->fill($request->all());
+        $password = Hash::make($request->password);
+        $user->password = $password;
+        $user->status = $status;
+        $user->save();
 
-      	$employee->fill($request->all());
-      	$employee->user_id = $user->id;
-      	$employee->save();
+        $employee->fill($request->all());
+        $employee->user_id = $user->id;
+        $employee->save();
 
         session()->flash('message', 'Data jabatan berhasil diperbarui.');
 
@@ -164,12 +164,12 @@ class EmployeeController extends Controller
     }
 
     public function destroy($id)
-  	{
-  		Employee::find($id)->delete();
+    {
+      Employee::find($id)->delete();
 
           session()->flash('message', 'Data jabatan berhasil dihapus.');
 
-  		return redirect('/admin/employee');
-  	}
+      return redirect('/admin/employee');
+    }
 
 }

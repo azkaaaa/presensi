@@ -17,6 +17,7 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->string('nik')->unique();
             $table->string('id_card')->unique();
+            $table->string('no_ktp')->unique();
             $table->date('birthday');
             $table->text('address');
             $table->string('phone')->unique();

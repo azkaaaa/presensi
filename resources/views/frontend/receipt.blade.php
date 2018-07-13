@@ -23,7 +23,7 @@
     <tr><th><br><br></th></tr>
     <tr>
         <th colspan="3" ><center>
-            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">Daftar Menu</a>
+            <a href="{{ url('/employee/shop') }}" class="btn btn-primary btn-lg">Daftar Menu</a>
         </th>
         <th colspan="3" ><center>
             <a href="{{route('admin.printreceipt.save', $order_id)}}" class="btn btn-primary btn-lg">Print Struk</a>

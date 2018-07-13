@@ -46,11 +46,11 @@ class CartController extends Controller
         });
 
         if (!$duplicates->isEmpty()) {
-            return redirect('shop')->withSuccessMessage('Item is already in your cart!');
+            return redirect('/employee/shop')->withSuccessMessage('Item is already in your cart!');
         }
 
         Cart::add($request->id, $request->name, 1, $request->price)->associate('App\Product');
-        return redirect('shop')->withSuccessMessage('Item was added to your cart!');
+        return redirect('/employee/shop')->withSuccessMessage('Item was added to your cart!');
     }
 
     public function update(Request $request, $id)
@@ -75,12 +75,12 @@ class CartController extends Controller
     public function destroy($id)
     {
         Cart::remove($id);
-        return redirect('shop')->withSuccessMessage('Item has been removed!');
+        return redirect('/employee/shop')->withSuccessMessage('Item has been removed!');
     }
 
     public function emptyCart()
     {
         Cart::destroy();
-        return redirect('shop')->withSuccessMessage('Your cart has been cleared!');
+        return redirect('/employee/shop')->withSuccessMessage('Your cart has been cleared!');
     }
 }

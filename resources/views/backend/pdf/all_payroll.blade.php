@@ -18,7 +18,7 @@ td, th {
 </style>
 <table>
             <tr>
-                <td colspan="7">
+                <td colspan="8">
                     <table>
                         <tr>
                             <td><a style="font-weight: bold; font-size: 20px;"><center>Cafe Omboy</a><br>
@@ -38,6 +38,7 @@ td, th {
     <th>Gaji Pokok</th>
     <th>Transport</th>
     <th>Lembur</th>
+    <th>Bonus</th>
     <th>Gaji</th>
   </tr>
   @foreach($salary as $row)
@@ -48,11 +49,12 @@ td, th {
     <td>Rp {{ number_format($row->salary, 2, ',', '.') }}</td>
     <td>Rp {{ number_format($row->total_transport, 2, ',', '.') }}</td>
     <td>Rp {{ number_format($row->total_overtime, 2, ',', '.') }}</td>
+    <td>Rp {{ number_format($row->extra, 2, ',', '.') }}</td>
     <td>Rp {{ number_format($row->total_salary, 2, ',', '.') }}</td>
   </tr>
   @endforeach
   <tr>
-    <td colspan="6"><center><b>Total</b></center></td>
+    <td colspan="7"><center><b>Total</b></center></td>
     <td><b>Rp {{ number_format($total->total_all, 2, ',', '.') }}</b></td>
   </tr>
 </table>

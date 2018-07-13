@@ -5,7 +5,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Daftar Kriteria</h3>
-        <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/topsis')}}'"><span> Buat Peringkat Karyawan</span></button>
+        <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/manager/topsis')}}'"><span> Buat Peringkat Karyawan</span></button>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

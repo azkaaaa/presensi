@@ -34,6 +34,10 @@
                               <td style="font-weight: bold">Total Lembur</td>
                               <td>Rp {{number_format($salary->total_overtime,2,",",".")}}</td>
                              </tr>
+                             <tr class="active">
+                              <td style="font-weight: bold">Gaji Bonus</td>
+                              <td>Rp {{number_format($salary->extra,2,",",".")}}</td>
+                             </tr>
                              <tr class="">
                               <td style="font-weight: bold">Total Gaji</td>
                               <td><b>Rp {{ number_format($salary->total_salary,2,",",".")}}</b></td>

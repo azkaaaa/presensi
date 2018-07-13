@@ -65,14 +65,14 @@
                 </td>
               
                 <td> 
-                  <a href="{{url('admin/topsis/'.$data->id.'/edit')}}" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
+                  <a href="{{url('manager/topsis/'.$data->id.'/edit')}}" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
                 </td>
               </tr>
               @endforeach
 
               <tr>
                 <td colspan="2">
-                  <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/admin/topsis/createtopsis')}}'"><i class="icon-plus"><span> Tambah Topsis</span></i></button>
+                  <button style="float:right" class="btn btn-primary" onclick="location.href='{{ url('/manager/topsis/createtopsis')}}'"><i class="icon-plus"><span> Tambah Topsis</span></i></button>
                 </td>
               </tr>
             </tbody>

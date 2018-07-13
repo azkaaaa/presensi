@@ -55,7 +55,7 @@ class TopsisController extends Controller
 
 	      return Datatables::of($kriterias)
 	      ->addColumn('action', function ($kriterias) {
-                return '<a href="'.url('admin/topsiskriteria/'. $kriterias->id_kriteria .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>';
+                return '<a href="'.url('manager/topsiskriteria/'. $kriterias->id_kriteria .'/edit').'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>';
             }
             )
             ->make(true);
@@ -80,7 +80,7 @@ class TopsisController extends Controller
 
         session()->flash('message', 'Data kriterias berhasil diperbarui.');
 
-        return redirect('/admin/topsiskriteria');
+        return redirect('/manager/topsiskriteria');
     }
 
     public function create()
@@ -424,10 +424,10 @@ class TopsisController extends Controller
       				$nilai = 50;
       			}
       			if ($item->total_kerajinan <= 3 && $item->total_kerajinan > 1) {
-      				$nilai = 40;
+      				$nilai = 30;
       			}
       			if ($item->total_kerajinan <= 1) {
-      				$nilai = 20;
+      				$nilai = 10;
       			}
 
                 $altkri =  new AlternativeKriteria();
@@ -446,10 +446,10 @@ class TopsisController extends Controller
       				$nilai = 50;
       			}
       			if ($item->total_lembur <= 1) {
-      				$nilai = 20;
+      				$nilai = 30;
       			}
       			if ($item->total_lembur == NULL) {
-      				$nilai = 0;
+      				$nilai = 10;
       			}
 
                 $altkri =  new AlternativeKriteria();
@@ -468,10 +468,10 @@ class TopsisController extends Controller
       				$nilai = 50;
       			}
       			if ($item->in_date <= 100) {
-      				$nilai = 20;
+      				$nilai = 30;
       			}
       			if ($item->in_date == NULL) {
-      				$nilai = 0;
+      				$nilai = 10;
       			}
 
                 $altkri =  new AlternativeKriteria();
@@ -483,7 +483,7 @@ class TopsisController extends Controller
 
       session()->flash('message', 'Anda berhasil menambahkan data alternatif kriteria.');
 
-     return redirect('/admin/result');
+     return redirect('/manager/result');
      // }
     }
 
@@ -549,7 +549,7 @@ class TopsisController extends Controller
 
         session()->flash('message', 'Data Kriteria berhasil ditambah.');
 
-        return redirect('/admin/topsis');
+        return redirect('/manager/topsis');
         }
     }
 

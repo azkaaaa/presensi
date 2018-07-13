@@ -272,6 +272,8 @@ class GeneticForSchedule {
         
         $jumlah_rank = count($rank);
 
+       
+
         for ($i = 0; $i < $this->populasi; $i++)
         {
             //proses seleksi berdasarkan ranking yang telah dibuat
@@ -282,17 +284,19 @@ class GeneticForSchedule {
             $cek    = 0;
             for ($j = 0; $j < $jumlah_rank; $j++) {
                 $cek += $rank[$j];
-                //dd($rank);
-
+                
+                    // dd($rank);
                 if (intval($cek) >= intval($target)) {
                     $this->induk[$i] = $j;
+                    // dd($rank);
                     break;
                 }
+
             }
         }
     }
     //#endregion
-    
+
     public function StartCrossOver()
     {
         $individu_baru = array(array(array()));
@@ -319,12 +323,12 @@ class GeneticForSchedule {
                 }
                 
                 
-                //var_dump($this->induk);
+                //dd($this->induk);
                 
                 
                 //penentuan jadwal baru dari awal sampai titik pertama
                 for ($j = 0; $j < $a; $j++) {
-                    for ($k = 0; $k < 3; $k++) {                        
+                    for ($k = 0; $k < 4; $k++) {                        
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
                     }
@@ -332,7 +336,7 @@ class GeneticForSchedule {
                 
                 //Penentuan jadwal baru dai titik pertama sampai titik kedua
                 for ($j = $a; $j < $b; $j++) {
-                    for ($k = 0; $k < 3; $k++) {
+                    for ($k = 0; $k < 4; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i + 1]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i]][$j][$k];
                     }
@@ -340,14 +344,14 @@ class GeneticForSchedule {
                 
                 //penentuan jadwal baru dari titik kedua sampai akhir
                 for ($j = $b; $j < $all_employee; $j++) {
-                    for ($k = 0; $k < 3; $k++) {
+                    for ($k = 0; $k < 4; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
                     }
                 }
             } else { //Ketika nilai random lebih dari nilai probabilitas pertukaran, maka jadwal baru sama dengan jadwal terpilih
                 for ($j = 0; $j < $all_employee; $j++) {
-                    for ($k = 0; $k < 3; $k++) {
+                    for ($k = 0; $k < 4; $k++) {
                         $individu_baru[$i][$j][$k]     = $this->individu[$this->induk[$i]][$j][$k];
                         $individu_baru[$i + 1][$j][$k] = $this->individu[$this->induk[$i + 1]][$j][$k];
                     }
@@ -363,7 +367,7 @@ class GeneticForSchedule {
         
         for ($i = 0; $i < $this->populasi; $i += 2) {
           for ($j = 0; $j < $all_employee ; $j++) {
-            for ($k = 0; $k < 3; $k++) {
+            for ($k = 0; $k < 4; $k++) {
                 $this->individu[$i][$j][$k] = $individu_baru[$i][$j][$k];
                 $this->individu[$i + 1][$j][$k] = $individu_baru[$i + 1][$j][$k];
             }

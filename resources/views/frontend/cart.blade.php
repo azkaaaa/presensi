@@ -97,7 +97,7 @@
                             <td><b>{{ $items->name }}</b></td>
                             <td align="right">{{ number_format($items->price ,2, ',' , '.')  }}</td>
                             <td align="right">
-                                <form action="{{ url('/shop') }}" method="POST" class="side-by-side">
+                                <form action="{{ url('/employee/shop') }}" method="POST" class="side-by-side">
                                                         {!! csrf_field() !!}
                                                         <input type="hidden" name="id" value="{{ $items->id }}">
                                                         <input type="hidden" name="name" value="{{ $items->name }}">
@@ -120,7 +120,7 @@
                             <td><b>{{ $items->name }}</b></td>
                             <td align="right">{{ number_format($items->price ,2, ',' , '.')  }}</td>
                             <td align="right">
-                                <form action="{{ url('/shop') }}" method="POST" class="side-by-side">
+                                <form action="{{ url('/employee/shop') }}" method="POST" class="side-by-side">
                                                         {!! csrf_field() !!}
                                                         <input type="hidden" name="id" value="{{ $items->id }}">
                                                         <input type="hidden" name="name" value="{{ $items->name }}">
@@ -175,7 +175,7 @@
                     </td>
                     <td>{{ number_format($item->subtotal ,2, '.' , ',')  }}</td>
                     <td>
-                        <form action="{{ url('shop', [$item->rowId]) }}" method="POST" class="side-by-side">
+                        <form action="{{ url('/employee/shop', [$item->rowId]) }}" method="POST" class="side-by-side">
                             {!! csrf_field() !!}
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="submit" class="btn btn-danger btn-sm" value="Hapus">
@@ -192,7 +192,7 @@
                 <tr>
                     <td colspan="2" class="small-caps table-bg" style="text-align: right">Jumlah Dibayar</td>
                     <td colspan="2" >
-                        <form action="{{ url('/checkout') }}" method="GET">
+                        <form action="{{ url('/employee/checkout') }}" method="GET">
                             {!! csrf_field() !!}
                             <!-- <input type="text" class="form-control" placeholder="" name="cash" required=""> -->
                             <input type="text" class="form-control" id="userinput">
@@ -212,7 +212,7 @@
         </form>
 
         <div style="float:right">
-            <form action="{{ url('/emptyCart') }}" method="POST">
+            <form action="{{ url('/employee/emptyCart') }}" method="POST">
                 {!! csrf_field() !!}
                 <input type="hidden" name="_method" value="DELETE">
                 <input type="submit" class="btn btn-danger btn-lg" value="Kosongkan Daftar Pesanan">
@@ -246,12 +246,12 @@
         var id = $(this).attr('data-id')
         $.ajax({
           type: "PATCH",
-          url: '{{ url("/shop") }}' + '/' + id,
+          url: '{{ url("/employee/shop") }}' + '/' + id,
           data: {
             'quantity': this.value,
         },
         success: function(data) {
-            window.location.href = '{{ url('/shop') }}';
+            window.location.href = '{{ url('/employee/shop') }}';
         }
     });
 

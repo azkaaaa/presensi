@@ -52,12 +52,12 @@
                              </tr>
                              <tr class="">
                               <td style="font-weight: bold">Webcam</td>
-                              <td><img width="100px" src="{{ URL::asset('admin/uploads/presence/'.$presence->capture) }}" alt="User profile picture"></td>
+                              <td><img width="200px" height="200px" src="{{ URL::asset('admin/uploads/presence/'.$presence->capture) }}" alt="User profile picture"></td>
                              </tr>
                           </thead>
                         </table>
                         <div class="box-footer">
-                              <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/admin/presence/data ')}}'">Cancel</button>
+                              <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/admin/presencedata')}}'">Cancel</button>
                          </div>
                        </div>
                     </div>

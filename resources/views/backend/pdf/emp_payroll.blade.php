@@ -65,6 +65,12 @@ td, th {
     </tr>
 
     <tr>
+    <th>Gaji Bonus</th>
+    <td>-</td>
+    <td>Rp {{ number_format($salary->extra, 2, ',', '.') }}</td>
+    </tr>
+
+    <tr>
     <td colspan="2"><b>Total Gaji</b></td>
     <td><b>Rp {{ number_format($salary->total_salary, 2, ',', '.') }}</b></td>
     </tr>

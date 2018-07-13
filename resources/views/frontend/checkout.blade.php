@@ -35,12 +35,12 @@
                     @endforeach
                 </tbody>
             </table>
-        <button class="btn-sm btn-primary" onclick="location.href='{{ url('/shop') }}'"><span> Tambah Pesanan</span></button>
+        <button class="btn-sm btn-primary" onclick="location.href='{{ url('/employee/shop') }}'"><span> Tambah Pesanan</span></button>
 
             @else
 
             <h4>Tidak ada produk dalam daftar pesanan</h4>
-            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">Pilih Menu</a>
+            <a href="{{ url('/employee/shop') }}" class="btn btn-primary btn-lg">Pilih Menu</a>
 
             @endif
         </div>

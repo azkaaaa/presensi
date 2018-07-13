@@ -19,7 +19,7 @@ use Carbon\Carbon;
 class PositionController extends Controller
 {
 
-	public function index()
+  public function index()
     {
         return view('backend.position.index');
     }
@@ -30,12 +30,12 @@ class PositionController extends Controller
     }
 
 
-	public function dataPositions()
-  	{
-    	 $positions = Position::select(['id', 'name', 'salary', 'transport', 'created_at', 'updated_at']);
+  public function dataPositions()
+    {
+       $positions = Position::select(['id', 'name', 'salary', 'transport', 'created_at', 'updated_at']);
 
-	      return Datatables::of($positions)
-	      ->addColumn('action', function ($positions) {
+        return Datatables::of($positions)
+        ->addColumn('action', function ($positions) {
                 return '<a href="'.url('admin/position/'. $positions->id .'/edit').'" class="btn-sm btn-primary"> Edit</a>
                 
                 <form method="POST" action="'.url('admin/position/'. $positions->id).'" style="display: inline">  
@@ -48,7 +48,7 @@ class PositionController extends Controller
             ->make(true);
     
   
-  	}
+    }
 
 
     public function create()
@@ -93,8 +93,8 @@ class PositionController extends Controller
     }
 
     public function destroy($id)
-  	{
-  		$delete = Position::findOrFail($id);
+    {
+      $delete = Position::findOrFail($id);
       $employees = Employee::all();
       $match = '';
 
@@ -114,7 +114,7 @@ class PositionController extends Controller
       else {
           $delete->delete();
           session()->flash('message', 'Data jabatan berhasil dihapus');
-  		    return redirect('/admin/position');
-  	   }
+          return redirect('/admin/position');
+       }
     }
 }

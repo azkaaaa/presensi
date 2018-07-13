@@ -7,7 +7,7 @@
         <h3 class="box-title">Metode TOPSIS</h3>
       </div>
       <div class="box-body">
-        <form name="form1" method="post" action="{{ url('/admin/topsis/'.$employee->id)}}"><br>
+        <form name="form1" method="post" action="{{ url('/manager/topsis/'.$employee->id)}}"><br>
           <input type="hidden" name="_method" value="PUT">
           <input type="hidden" name="_token" value="{{csrf_token()}}">
           <br/>
@@ -112,7 +112,7 @@
           </table>
           <br>
         </form>
-        <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/admin/topsis/createtopsis')}}'">Penilaian Kuantitatif Kriteria</button>
+        <button class="btn-default btn" type="reset" onclick="window.location='{{ url('/manager/topsis/createtopsis')}}'">Penilaian Kuantitatif Kriteria</button>
       </div>
     </div>
     <!-- /.box -->

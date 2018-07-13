@@ -91,9 +91,9 @@
                   <td>{{ $row->years }}</td>
                   <td>{{ number_format($row->total_all, 2, ',', '.') }}</td>
                   @if (Auth::user()->level == 'Admin')
-                  <td style="width: 20px; float: left"><a href="{{route('admin.printsalary.save', $row->list)}}" class="btn-sm btn-primary"> Print</a></td>
+                  <td style="width: 20px; float: left"><a href="{{url('/admin/salary/print', $row->list)}}" class="btn-sm btn-primary"> Print</a></td>
                   @elseif (Auth::user()->level == 'Manajer')
-                  <td style="width: 20px; float: left"><a href="{{route('manager.printsalary.save', $row->list)}}" class="btn-sm btn-primary"> Print</a></td>
+                  <td style="width: 20px; float: left"><a href="{{url('/manager/salary/print', $row->list)}}" class="btn-sm btn-primary"> Print</a></td>
                   @endif
                 </tr>
                 </tbody>

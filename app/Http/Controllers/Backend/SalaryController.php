@@ -88,13 +88,15 @@ class SalaryController extends Controller
 
        $salary = DB::table('salaries')
             ->join('employees', 'employees.id', '=', 'salaries.employee_id')
-            ->select('salaries.*', 'employees.name as employee_name');
+            ->select('salaries.*', 'employees.name as employee_name')
+            ->whereMonth('salaries.created_at', '=', $dt->month);
 
         if (Auth::user()->level == 'Admin'){
           return Datatables::of($salary)
           ->addColumn('action', function ($salary) {
-                return '<a href="'.url('admin/salary/'. $salary->id).'" class="btn btn-info"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Detail</a>
-                        <a href="'.url('admin/employeesalary/print/'. $salary->id).'" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Print</a>';
+                return '<a href="'.url('admin/salary/'. $salary->id .'/edit').'" class="btn-sm btn-success"> Bonus</a>
+                        <a href="'.url('admin/salary/'. $salary->id).'" class="btn-sm btn-info"> Detail</a>
+                        <a href="'.url('admin/employeesalary/print/'. $salary->id).'" class="btn-sm btn-primary"> Print</a>';
               }
             )
           ->make(true);
@@ -267,5 +269,35 @@ class SalaryController extends Controller
 
         $pdf = PDF::loadView('backend/pdf/emp_payroll', ['salary' => $salary, 'date' => $date, 'month' => $month->name]);
         return $pdf->stream('Payroll_'.$salary->employee_name.'_'.$salary->month.'_'.$salary->years.'.pdf');
+    }
+
+    public function edit($id)
+    {
+        //$salary = Salary::find($id);
+        $salary = DB::table('salaries')
+        ->where('salaries.id', $id)
+        ->join('employees', 'employees.id', '=','salaries.employee_id')
+        // ->join('positions', 'positions.id', '=','employees.position_id')
+        ->select('salaries.*','employees.name as employee_name')
+        ->first();
+
+        return view('backend.salary.edit')->with('salary', $salary);
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $user = Auth::id();
+
+
+        $total_salary = $request->extra + $request->total_salary;
+
+        $salary = Salary::find($id);
+        $salary->extra = $request->extra;
+        $salary->total_salary = $total_salary;
+        $salary->save();
+
+        session()->flash('message', 'Anda berhasil menambah bonus');
+
+        return redirect('/admin/employeesalary');
     }
 }
